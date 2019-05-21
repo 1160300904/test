@@ -1,0 +1,13 @@
+Game ::= 100
+NumOfTracks ::= 5 
+Athlete ::= <a,1,JAM,20,0.10>
+Athlete ::= <b,1,JAM,20,0.20>
+Athlete ::= <c,1,JAM,20,0.30>
+Athlete ::= <d,1,JAM,20,0.40>
+Athlete ::= <e,1,JAM,20,0.50>
+Athlete ::= <f,1,JAM,20,0.60>
+Athlete ::= <g,1,JAM,20,0.70>
+Athlete ::= <h,1,JAM,20,0.80>
+Athlete ::= <i,1,JAM,20,0.90>
+Athlete ::= <j,1,JAM,20,1.00>
+

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="GBK" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101251</millis>
+  <sequence>0</sequence>
+  <level>INFO</level>
+  <class>applications.TrackGame</class>
+  <method>initFromFile</method>
+  <thread>1</thread>
+  <message>Exception,FileSyntaxException,FileSyntaxException: Athlete ::= &lt;Cliton,8,USA,21,20/19&gt; ,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101287</millis>
+  <sequence>1</sequence>
+  <level>INFO</level>
+  <class>applications.TrackGame</class>
+  <method>initFromFile</method>
+  <thread>1</thread>
+  <message>Exception,RepeatedObjectsException,Repeated athlete: Bolt,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101545</millis>
+  <sequence>2</sequence>
+  <level>INFO</level>
+  <class>applications.AtomStructure</class>
+  <method>initWithFile</method>
+  <thread>1</thread>
+  <message>Exception,FileSyntaxException,file syntax error: ElementName ::= Rba,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101548</millis>
+  <sequence>3</sequence>
+  <level>INFO</level>
+  <class>applications.AtomStructure</class>
+  <method>initWithFile</method>
+  <thread>1</thread>
+  <message>Exception,FileInfoConflictException,Self conflict on number of tracks of the atom: From file is 6 from track info is: 5,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101572</millis>
+  <sequence>4</sequence>
+  <level>INFO</level>
+  <class>applications.PersonalAppEcosystem</class>
+  <method>initFromFile</method>
+  <thread>1</thread>
+  <message>Exception,FileSyntaxException,FileSyntaxException: App ::= &lt;BaiduMap,Baidu,2.9000000.20v03,"The most popular map App in China","Travel&gt;,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101579</millis>
+  <sequence>5</sequence>
+  <level>INFO</level>
+  <class>applications.PersonalAppEcosystem</class>
+  <method>installSimu</method>
+  <thread>1</thread>
+  <message>Exception,FileInfoConflictException,Wechat is already installed in the phone.,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101587</millis>
+  <sequence>6</sequence>
+  <level>INFO</level>
+  <class>applications.PersonalAppEcosystem</class>
+  <method>initFromFile</method>
+  <thread>1</thread>
+  <message>Exception,RepeatedObjectsException,duplicated apps in the file: Wechat,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101634</millis>
+  <sequence>7</sequence>
+  <level>INFO</level>
+  <class>applications.PersonalAppEcosystem</class>
+  <method>installSimu</method>
+  <thread>1</thread>
+  <message>Exception,FileInfoConflictException,JingDong is not declared in the file.,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101642</millis>
+  <sequence>8</sequence>
+  <level>INFO</level>
+  <class>applications.PersonalAppEcosystem</class>
+  <method>UninstallSimu</method>
+  <thread>1</thread>
+  <message>Exception,FileInfoConflictException,Meituan is not declared in the file.,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101654</millis>
+  <sequence>9</sequence>
+  <level>INFO</level>
+  <class>applications.PersonalAppEcosystem</class>
+  <method>UninstallSimu</method>
+  <thread>1</thread>
+  <message>Exception,FileInfoConflictException,Didi is already uninstalled from the phone.,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101663</millis>
+  <sequence>10</sequence>
+  <level>INFO</level>
+  <class>applications.PersonalAppEcosystem</class>
+  <method>useSimu</method>
+  <thread>1</thread>
+  <message>Exception,FileInfoConflictException,Taobao is not declared in the file.,try again</message>
+</record>
+<record>
+  <date>2019-05-21T19:28:21</date>
+  <millis>1558438101681</millis>
+  <sequence>11</sequence>
+  <level>INFO</level>
+  <class>applications.PersonalAppEcosystem</class>
+  <method>useSimu</method>
+  <thread>1</thread>
+  <message>Exception,FileInfoConflictException,Eleme is not installed in the phone currently.,try again</message>
+</record>
+</log>
