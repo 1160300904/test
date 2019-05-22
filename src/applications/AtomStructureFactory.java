@@ -10,10 +10,10 @@ import circularOrbit.CircularOrbit;
  */
 public class AtomStructureFactory implements ApplicationFactory {
 
-    @Override
-    public CircularOrbit getApplication() {
-        // TODO Auto-generated method stub
-        return new AtomStructure();
-    }
+  @Override
+  public CircularOrbit getApplication() {
+    // TODO Auto-generated method stub
+    return new AtomStructure();
+  }
 
 }

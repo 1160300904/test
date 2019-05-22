@@ -10,10 +10,10 @@ import circularOrbit.CircularOrbit;
  */
 public class AppEcosystemFactory implements ApplicationFactory {
 
-    @Override
-    public CircularOrbit getApplication() {
-        // TODO Auto-generated method stub
-        return new PersonalAppEcosystem();
-    }
+  @Override
+  public CircularOrbit getApplication() {
+    // TODO Auto-generated method stub
+    return new PersonalAppEcosystem();
+  }
 
 }

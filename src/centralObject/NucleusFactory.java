@@ -5,10 +5,10 @@ package centralObject;
  *
  */
 public class NucleusFactory {
-    /**
-     * get an instance of an Nucleus.
-     */
-    public static Nucleus getInstance(String name) {
-        return new ConcreteNucleus(name);
-    }
+  /**
+   * get an instance of an Nucleus.
+   */
+  public static Nucleus getInstance(String name) {
+    return new ConcreteNucleus(name);
+  }
 }

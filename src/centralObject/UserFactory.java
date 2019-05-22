@@ -5,10 +5,10 @@ package centralObject;
  *
  */
 public class UserFactory {
-    /**
-     * get an instance of an user.
-     */
-    public static User getInstance(String name) {
-        return new ConcreteUser(name);
-    }
+  /**
+   * get an instance of an user.
+   */
+  public static User getInstance(String name) {
+    return new ConcreteUser(name);
+  }
 }

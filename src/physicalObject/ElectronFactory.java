@@ -5,10 +5,10 @@ package physicalObject;
  *
  */
 public class ElectronFactory {
-    /**
-     * get an instance of an Electron.
-     */
-    public static Electron getInstance(int track) {
-        return new ConcreteElectron(track);
-    }
+  /**
+   * get an instance of an Electron.
+   */
+  public static Electron getInstance(int track) {
+    return new ConcreteElectron(track);
+  }
 }

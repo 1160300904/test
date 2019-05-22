@@ -10,10 +10,10 @@ import circularOrbit.CircularOrbit;
  */
 public class TrackGameFactory implements ApplicationFactory {
 
-    @Override
-    public CircularOrbit getApplication() {
-        // TODO Auto-generated method stub
-        return new TrackGame();
-    }
+  @Override
+  public CircularOrbit getApplication() {
+    // TODO Auto-generated method stub
+    return new TrackGame();
+  }
 
 }

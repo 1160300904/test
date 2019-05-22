@@ -10,10 +10,10 @@ import circularOrbit.CircularOrbit;
  */
 public interface ApplicationFactory {
 
-    /**
-     * Factory method of all applications.
-     * 
-     * @return
-     */
-    public CircularOrbit getApplication();
+  /**
+   * Factory method of all applications.
+   * 
+   * @return
+   */
+  public CircularOrbit getApplication();
 }
