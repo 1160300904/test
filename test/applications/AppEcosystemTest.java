@@ -19,16 +19,26 @@ import java.util.*;
 public class AppEcosystemTest {
 
     /*
-     * Testing Strategy: 1.isRelated: 1）ecosystem中是否有输入的字符串 2）两个字符串是否在ecosystem中有关系
-     * (3)PersonalAppEcosystem类 ①boolean initFromFile(File file)
-     * 1)输入文件中是否存在一下异常：语法错误，文件信息自矛盾，存在重复物体 ② boolean addRelation(String s1,String
-     * s2) 1)S1,s2是否相同 2)S1，s2是否已经存在着关系 3)S1，s2是否代表了不存在输入文件中的app ③ boolean
-     * isRelated(String s1,String s2) 1)S1,s2是否相同 2)S1，s2是否已经存在着关系
-     * 3)S1，s2是否代表了不存在输入文件中的app ④int getMinMyDate(int i,int j,int k,int is,int
-     * js,int ks) 1)是否存在着要取得元素得索引超过该元素列表得size的情况 2)输入信息中是否存在负数 3)三者中相等的个数 ⑤boolean
-     * synthensisLegal(CircularOrbit<User, PersonalApp> c,String appname1,String
-     * appname2,int orbitlistindex) 1)输入两个轨道系统是否合法 2)输入的两个app名字是否不存在两个轨道系统中
-     * 3)两个app名字是否相同 4)轨道系统在列表中的索引是否超界
+     * Testing Strategy: 1.isRelated: 1）ecosystem中是否有输入的字符串 
+     *                                2）两个字符串是否在ecosystem中有关系
+     * (3)PersonalAppEcosystem类
+     *               ①boolean initFromFile(File file)
+     *               1)输入文件中是否存在一下异常：语法错误，文件信息自矛盾，存在重复物体
+     *               ② boolean addRelation(String s1,Strings2) 
+     *               1)S1,s2是否相同 2)S1，s2是否已经存在着关系 3)S1，s2是否代表了不存在输入文件中的app
+     *               ③ boolean isRelated(String s1,String s2)
+     *                  1)S1,s2是否相同 
+     *                  2)S1，s2是否已经存在着关系
+     *                  3)S1，s2是否代表了不存在输入文件中的app 
+     *               ④int getMinMyDate(int i,int j,int k,int is,int js,int ks) 
+     *                  1)是否存在着要取得元素得索引超过该元素列表得size的情况 
+     *                  2)输入信息中是否存在负数
+     *                  3)三者中相等的个数 ⑤boolean
+     * synthensisLegal(CircularOrbit<User, PersonalApp> c,String appname1,Stringappname2,int orbitlistindex) 
+     *                      1)输入两个轨道系统是否合法
+     *                      2)输入的两个app名字是否不存在两个轨道系统中
+     *                      3)两个app名字是否相同 
+     *                      4)轨道系统在列表中的索引是否超界
      */
     @Test
     public void appEcosystemTest()
