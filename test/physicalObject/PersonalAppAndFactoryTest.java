@@ -4,37 +4,35 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class PersonalAppAndFactoryTest {
-	/*Testing stragegy:
-	 * 	1.appÃû×ÖÊÇ·ñÏàÍ¬
-	 * 	2.appµÄÊäÈëĞÅÏ¢ÊÇ·ñºÏ·¨
-	 * 	3.appÅĞÖØÊ±£¬ÊÇ·ñ´æÔÚ×ÅÒıÓÃ²»Í¬µ«ÄÚÈİÏàÍ¬µÄÇé¿ö
-	 */
-	@Test
-	public void testPersonalAppAndFactory() {
-		PersonalApp p11=PersonalAppFactory.getInstance("wechat", "tencent", "1.2.0",
-				"communication", "for common people");
-		PersonalApp p12=PersonalAppFactory.getInstance("wechat", "tencent", "1.2.0",
-				"communication", "for common people");
-		PersonalApp p2=PersonalAppFactory.getInstance("wechat2", "tencent", "1.2.0",
-				"communication", "for business communication");
-		PersonalApp p3=PersonalAppFactory.getInstance("wechat2", "tencent1", "1.2.0",
-				"communication", "for business communication");
-		PersonalApp p4=PersonalAppFactory.getInstance("wechat2", "tencent", "1.2.01",
-				"communication", "for business communication");
-		PersonalApp p5=PersonalAppFactory.getInstance("wechat2", "tencent", "1.2.0",
-				"communication1", "for business communication");
-		PersonalApp p6=PersonalAppFactory.getInstance("wechat2", "tencent", "1.2.0",
-				"communication", "for business communication1");
-		
-		assertTrue(p11.equals(p12));
-		assertFalse(p11.equals(p2));
-		assertFalse(p3.equals(p2));
-		assertFalse(p4.equals(p2));
-		assertFalse(p5.equals(p2));
-		assertFalse(p6.equals(p2));
-		assertFalse(p3.equals("A"));
-		
-		assertEquals("wechat",p11.toString());
-		assertEquals(-791770330,p11.hashCode());
-	}
+    /*
+     * Testing stragegy: 1.appåå­—æ˜¯å¦ç›¸åŒ 2.appçš„è¾“å…¥ä¿¡æ¯æ˜¯å¦åˆæ³• 3.appåˆ¤é‡æ—¶ï¼Œæ˜¯å¦å­˜åœ¨ç€å¼•ç”¨ä¸åŒä½†å†…å®¹ç›¸åŒçš„æƒ…å†µ
+     */
+    @Test
+    public void testPersonalAppAndFactory() {
+        PersonalApp p11 = PersonalAppFactory.getInstance("wechat", "tencent", "1.2.0", "communication",
+                "for common people");
+        PersonalApp p12 = PersonalAppFactory.getInstance("wechat", "tencent", "1.2.0", "communication",
+                "for common people");
+        PersonalApp p2 = PersonalAppFactory.getInstance("wechat2", "tencent", "1.2.0", "communication",
+                "for business communication");
+        PersonalApp p3 = PersonalAppFactory.getInstance("wechat2", "tencent1", "1.2.0", "communication",
+                "for business communication");
+        PersonalApp p4 = PersonalAppFactory.getInstance("wechat2", "tencent", "1.2.01", "communication",
+                "for business communication");
+        PersonalApp p5 = PersonalAppFactory.getInstance("wechat2", "tencent", "1.2.0", "communication1",
+                "for business communication");
+        PersonalApp p6 = PersonalAppFactory.getInstance("wechat2", "tencent", "1.2.0", "communication",
+                "for business communication1");
+
+        assertTrue(p11.equals(p12));
+        assertFalse(p11.equals(p2));
+        assertFalse(p3.equals(p2));
+        assertFalse(p4.equals(p2));
+        assertFalse(p5.equals(p2));
+        assertFalse(p6.equals(p2));
+        assertFalse(p3.equals("A"));
+
+        assertEquals("wechat", p11.toString());
+        assertEquals(-791770330, p11.hashCode());
+    }
 }

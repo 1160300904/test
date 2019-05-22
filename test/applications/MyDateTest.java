@@ -11,147 +11,134 @@ import java.util.*;
 
 public class MyDateTest {
 
-	/*Testing Strategy:
-	 * 	1.Óë¼ÓÓĞ¹ØµÄµÄº¯Êı£º	1)ÊäÈë£º0£¬>0;
-	 * 						2)ÊäÈëµÄÊ±¼ä£ºÊÇ·ñ±È×î´óÖµ´ó£¬¼´£¬ÊÇ·ñĞèÒª½øÎ»¡£
-	 * 	2.Óë½×¶ÎÓĞ¹ØµÄº¯Êı£º	1£©±»½Ø¶ÏµÄÊ±¼äÔÚÖ¸¶¨Ìõ¼şÏÂ»¹ÊÇ·ñĞèÒª±»½Ø¶Ï£¬Àı£¬ÈôÊ±¼äÎª1999:01:01  13:00:00
-	 * 							¶øÒªÇó½Ø¶Ïµ½·ÖÖÓ¡£
-	 * 	3.observer·½·¨£º		1£©»ñÈ¡µÄÊ±¿ÌÀàĞÍµÄÊ±¼äÖµ£º0, ·Ç0.
-	 * 	4.getmin·½·¨£º		1£©ÄÄ¸öÊ±¼äµã×î¿¿Ç°£ºµÚÒ»¸ö£¬µÚ¶ş¸ö£¬µÚÈı¸ö
-	 * 						2£©Èı¸öÊäÈëÊ±¼äÏàÍ¬µÄ¸öÊı£ºÒ»¸ö£¬Á½¸ö£¬Èı¸ö
-	 * 	5.TruncBaseOnSplit£º	1£©½Ø¶ÏµÄ²ßÂÔ£º Hour|Day|Week|Month 
-	 * 						2£©ÊÇ·ñÒÔ¼°Âú×ã½Ø¶ÏµÄÒªÇóÁË£º·½·¨µ÷ÓÃÖ®ºó£¬·µ»ØµÄMyDate¶ÔÏóºÍÔ­À´Ò»Ñù¡£
-	 * 	6.addBaseOnSplit:	1£©Ôö¼ÓµÄ²ßÂÔ£º Hour|Day|Week|Month 
-	 * 						2£©Ô­ÈÕÆÚÔÚÔö¼ÓºóÊÇ·ñĞèÒª½øÎ»
-	 * 						3£©ÊäÈëµÄ²ßÂÔÊÇ·ñ²»ÔÚ Hour|Day|Week|Month ÖĞ¡£
-	 * 	7.equals:			1£©Á½ÕßÏàµÈ£¬²»ÏàµÈ
-	 * 						2£©ÊäÈëµÄÁ½¸ö¶ÔÏóÊÇ·ñÎªÍ¬Ò»¸ö¶ÔÏó
-	 * 						3£©Á½¸ö¶ÔÏóÊÇ·ñÎªÍ¬Ò»¸öÀàĞÍ¡£
-	 */
-	
-	@Test
-	public void testEqualsAndToString() {
-		MyDate d1=new MyDate(1,2,3,4,5,6);
-		MyDate d2=new MyDate(1,2,3,4,5,6);
-		MyDate d3=new MyDate(1,2,4,4,5,6);
-		String s1="sds";
-		assertFalse(d1.equals(s1));
-		assertTrue(d1.equals(d2));
-		assertTrue(d1.equals(d1));
-		assertFalse(d1.equals(d3));
-		
-		assertEquals("0001-02-03T04:05:06",d1.toString());
-	}
-	
-	@Test
-	public void testAddBaseOnSplit() {
-		MyDate d1=new MyDate(1,2,3,4,5,6);
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,5,5,6)),
-				MyDate.addBaseOnSplit("Hour", d1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,4,4,5,6)),
-				MyDate.addBaseOnSplit("Day", d1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,10,4,5,6)),
-				MyDate.addBaseOnSplit("Week", d1));
-		assertEquals(new MyDate(LocalDateTime.of(2,1,3,5,5,6)),
-				MyDate.addBaseOnSplit("Month", new MyDate(LocalDateTime.of(1,12,3,5,5,6))));
-		assertNull(MyDate.addBaseOnSplit("Second", d1));
-	}
-	@Test
-	public void testTruncBaseOnSplit() {
-		MyDate d1=new MyDate(1,2,3,4,5,6);
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,4,0,0)),
-						MyDate.TruncBaseOnSplit("Hour", d1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,0,0,0)),
-						MyDate.TruncBaseOnSplit("Month", d1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,0,0,0)),
-				MyDate.TruncBaseOnSplit("Day", d1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,0,0,0)),
-				MyDate.TruncBaseOnSplit("Week", d1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,0,0,0)),
-				MyDate.TruncBaseOnSplit("Week", new MyDate(LocalDateTime.of(1,2,3,0,0,0))));
-		assertNull(MyDate.TruncBaseOnSplit("Second", d1));
-	}
-	@Test
-	public void testAddAndTrunc() {
-		MyDate d1=new MyDate(1,2,3,4,5,6);
-		MyDate d2=new MyDate(2,2,3,4,5,6);
-		MyDate d3=new MyDate(1,3,3,4,5,6);
-		MyDate d4=new MyDate(1,2,4,4,5,6);
-		MyDate d5=new MyDate(1,2,3,5,5,6);
-		MyDate d6=new MyDate(1,2,3,4,6,6);
-		MyDate d7=new MyDate(1,2,3,4,5,7);
-		MyDate d8=new MyDate(LocalDateTime.of(1,2,3,4,5,6));
-		
-		assertEquals(new MyDate(LocalDateTime.of(2,2,3,4,5,6)),d1.addYear(1));
-		assertEquals(new MyDate(LocalDateTime.of(1,3,3,4,5,6)),d1.addMonth(1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,4,4,5,6)),d1.addDay(1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,5,5,6)),d1.addHour(1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,4,6,6)),d1.addMinute(1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,4,5,7)),d1.addSecond(1));
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,4,6,6)),d1.addSecond(60));
-		
-		assertEquals(d1,d1.addDay(0));
-		assertEquals(d1,d1.addHour(0));
-		assertEquals(d1,d1.addMinute(0));
-		assertEquals(d1,d1.addMonth(0));
-		assertEquals(d1,d1.addSecond(0));
-		assertEquals(d1,d1.addYear(0));
-		
-		
-		
-		
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,4,5,6)),d1.truncSecond());
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,4,5,0)),d1.truncMinute());
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,4,0,0)),d1.truncHour());
-		assertEquals(new MyDate(LocalDateTime.of(1,2,3,0,0,0)),d1.truncDay());
-		
-	}
-	@Test
-	public void testGetter() {
-		MyDate d1=new MyDate(1,1,1,1,1,1);
-		assertEquals(1,d1.getDay());
-		assertEquals(1,d1.getHour());
-		assertEquals(1,d1.getMinute());
-		assertEquals(1,d1.getMonth());
-		assertEquals(1,d1.getSecond());
-		assertEquals(1,d1.getYear());
-	}
-	@Test
-	public void testGetMin() {
-		//d1<d2
-		MyDate d1=new MyDate(1,2,3,4,5,6);
-		MyDate d2=new MyDate(2,2,3,4,5,6);
-		MyDate d3=new MyDate(3,3,3,4,5,6);
-		MyDate d4=new MyDate(1,2,4,4,5,6);
-		//d5==d6
-		MyDate d5=new MyDate(1,2,3,4,5,6);
-		MyDate d6=new MyDate(1,2,3,4,5,6);
+    /*
+     * Testing Strategy: 1.ä¸åŠ æœ‰å…³çš„çš„å‡½æ•°ï¼š 1)è¾“å…¥ï¼š0ï¼Œ>0; 2)è¾“å…¥çš„æ—¶é—´ï¼šæ˜¯å¦æ¯”æœ€å¤§å€¼å¤§ï¼Œå³ï¼Œæ˜¯å¦éœ€è¦è¿›ä½ã€‚
+     * 2.ä¸é˜¶æ®µæœ‰å…³çš„å‡½æ•°ï¼š 1ï¼‰è¢«æˆªæ–­çš„æ—¶é—´åœ¨æŒ‡å®šæ¡ä»¶ä¸‹è¿˜æ˜¯å¦éœ€è¦è¢«æˆªæ–­ï¼Œä¾‹ï¼Œè‹¥æ—¶é—´ä¸º1999:01:01 13:00:00 è€Œè¦æ±‚æˆªæ–­åˆ°åˆ†é’Ÿã€‚
+     * 3.observeræ–¹æ³•ï¼š 1ï¼‰è·å–çš„æ—¶åˆ»ç±»å‹çš„æ—¶é—´å€¼ï¼š0, é0. 4.getminæ–¹æ³•ï¼š 1ï¼‰å“ªä¸ªæ—¶é—´ç‚¹æœ€é å‰ï¼šç¬¬ä¸€ä¸ªï¼Œç¬¬äºŒä¸ªï¼Œç¬¬ä¸‰ä¸ª
+     * 2ï¼‰ä¸‰ä¸ªè¾“å…¥æ—¶é—´ç›¸åŒçš„ä¸ªæ•°ï¼šä¸€ä¸ªï¼Œä¸¤ä¸ªï¼Œä¸‰ä¸ª 5.TruncBaseOnSplitï¼š 1ï¼‰æˆªæ–­çš„ç­–ç•¥ï¼š Hour|Day|Week|Month
+     * 2ï¼‰æ˜¯å¦ä»¥åŠæ»¡è¶³æˆªæ–­çš„è¦æ±‚äº†ï¼šæ–¹æ³•è°ƒç”¨ä¹‹åï¼Œè¿”å›çš„MyDateå¯¹è±¡å’ŒåŸæ¥ä¸€æ ·ã€‚ 6.addBaseOnSplit: 1ï¼‰å¢åŠ çš„ç­–ç•¥ï¼š
+     * Hour|Day|Week|Month 2ï¼‰åŸæ—¥æœŸåœ¨å¢åŠ åæ˜¯å¦éœ€è¦è¿›ä½ 3ï¼‰è¾“å…¥çš„ç­–ç•¥æ˜¯å¦ä¸åœ¨ Hour|Day|Week|Month ä¸­ã€‚
+     * 7.equals: 1ï¼‰ä¸¤è€…ç›¸ç­‰ï¼Œä¸ç›¸ç­‰ 2ï¼‰è¾“å…¥çš„ä¸¤ä¸ªå¯¹è±¡æ˜¯å¦ä¸ºåŒä¸€ä¸ªå¯¹è±¡ 3ï¼‰ä¸¤ä¸ªå¯¹è±¡æ˜¯å¦ä¸ºåŒä¸€ä¸ªç±»å‹ã€‚
+     */
 
-		assertEquals(1,MyDate.getMin(d1, d2, d3));
-		assertEquals(2,MyDate.getMin(d2, d1, d3));
-		assertEquals(3,MyDate.getMin(d3, d2, d1));
-		assertEquals(3,MyDate.getMin(d2, d3, d1));
-		assertEquals(1,MyDate.getMin(d1, d3, d3));
-	}
-	@Test
-	public void testCompare() {
-		MyDate d1=new MyDate(1,2,3,4,5,6);
-		MyDate d2=new MyDate(2,2,3,4,5,6);
-		MyDate d3=new MyDate(1,3,3,4,5,6);
-		MyDate d4=new MyDate(1,2,4,4,5,6);
-		MyDate d5=new MyDate(1,2,3,5,5,6);
-		MyDate d6=new MyDate(1,2,3,4,6,6);
-		MyDate d7=new MyDate(1,2,3,4,5,7);
-		MyDate d8=new MyDate(LocalDateTime.of(1,2,3,4,5,6));
-		
-		assertTrue(d1.compareTo(d2)<0);
-		assertTrue(d1.compareTo(d3)<0);
-		assertTrue(d1.compareTo(d4)<0);
-		assertTrue(d1.compareTo(d5)<0);
-		assertTrue(d1.compareTo(d6)<0);
-		assertTrue(d1.compareTo(d7)<0);
-		assertTrue(d1.compareTo(d8)==0);
-		assertTrue(d1.compareTo(d1)==0);
-	}
-	
+    @Test
+    public void testEqualsAndToString() {
+        MyDate d1 = new MyDate(1, 2, 3, 4, 5, 6);
+        MyDate d2 = new MyDate(1, 2, 3, 4, 5, 6);
+        MyDate d3 = new MyDate(1, 2, 4, 4, 5, 6);
+        String s1 = "sds";
+        assertFalse(d1.equals(s1));
+        assertTrue(d1.equals(d2));
+        assertTrue(d1.equals(d1));
+        assertFalse(d1.equals(d3));
+
+        assertEquals("0001-02-03T04:05:06", d1.toString());
+    }
+
+    @Test
+    public void testAddBaseOnSplit() {
+        MyDate d1 = new MyDate(1, 2, 3, 4, 5, 6);
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 5, 5, 6)), MyDate.addBaseOnSplit("Hour", d1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 4, 4, 5, 6)), MyDate.addBaseOnSplit("Day", d1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 10, 4, 5, 6)), MyDate.addBaseOnSplit("Week", d1));
+        assertEquals(new MyDate(LocalDateTime.of(2, 1, 3, 5, 5, 6)),
+                MyDate.addBaseOnSplit("Month", new MyDate(LocalDateTime.of(1, 12, 3, 5, 5, 6))));
+        assertNull(MyDate.addBaseOnSplit("Second", d1));
+    }
+
+    @Test
+    public void testTruncBaseOnSplit() {
+        MyDate d1 = new MyDate(1, 2, 3, 4, 5, 6);
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 4, 0, 0)), MyDate.TruncBaseOnSplit("Hour", d1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 0, 0, 0)), MyDate.TruncBaseOnSplit("Month", d1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 0, 0, 0)), MyDate.TruncBaseOnSplit("Day", d1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 0, 0, 0)), MyDate.TruncBaseOnSplit("Week", d1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 0, 0, 0)),
+                MyDate.TruncBaseOnSplit("Week", new MyDate(LocalDateTime.of(1, 2, 3, 0, 0, 0))));
+        assertNull(MyDate.TruncBaseOnSplit("Second", d1));
+    }
+
+    @Test
+    public void testAddAndTrunc() {
+        MyDate d1 = new MyDate(1, 2, 3, 4, 5, 6);
+        MyDate d2 = new MyDate(2, 2, 3, 4, 5, 6);
+        MyDate d3 = new MyDate(1, 3, 3, 4, 5, 6);
+        MyDate d4 = new MyDate(1, 2, 4, 4, 5, 6);
+        MyDate d5 = new MyDate(1, 2, 3, 5, 5, 6);
+        MyDate d6 = new MyDate(1, 2, 3, 4, 6, 6);
+        MyDate d7 = new MyDate(1, 2, 3, 4, 5, 7);
+        MyDate d8 = new MyDate(LocalDateTime.of(1, 2, 3, 4, 5, 6));
+
+        assertEquals(new MyDate(LocalDateTime.of(2, 2, 3, 4, 5, 6)), d1.addYear(1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 3, 3, 4, 5, 6)), d1.addMonth(1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 4, 4, 5, 6)), d1.addDay(1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 5, 5, 6)), d1.addHour(1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 4, 6, 6)), d1.addMinute(1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 4, 5, 7)), d1.addSecond(1));
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 4, 6, 6)), d1.addSecond(60));
+
+        assertEquals(d1, d1.addDay(0));
+        assertEquals(d1, d1.addHour(0));
+        assertEquals(d1, d1.addMinute(0));
+        assertEquals(d1, d1.addMonth(0));
+        assertEquals(d1, d1.addSecond(0));
+        assertEquals(d1, d1.addYear(0));
+
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 4, 5, 6)), d1.truncSecond());
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 4, 5, 0)), d1.truncMinute());
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 4, 0, 0)), d1.truncHour());
+        assertEquals(new MyDate(LocalDateTime.of(1, 2, 3, 0, 0, 0)), d1.truncDay());
+
+    }
+
+    @Test
+    public void testGetter() {
+        MyDate d1 = new MyDate(1, 1, 1, 1, 1, 1);
+        assertEquals(1, d1.getDay());
+        assertEquals(1, d1.getHour());
+        assertEquals(1, d1.getMinute());
+        assertEquals(1, d1.getMonth());
+        assertEquals(1, d1.getSecond());
+        assertEquals(1, d1.getYear());
+    }
+
+    @Test
+    public void testGetMin() {
+        // d1<d2
+        MyDate d1 = new MyDate(1, 2, 3, 4, 5, 6);
+        MyDate d2 = new MyDate(2, 2, 3, 4, 5, 6);
+        MyDate d3 = new MyDate(3, 3, 3, 4, 5, 6);
+        MyDate d4 = new MyDate(1, 2, 4, 4, 5, 6);
+        // d5==d6
+        MyDate d5 = new MyDate(1, 2, 3, 4, 5, 6);
+        MyDate d6 = new MyDate(1, 2, 3, 4, 5, 6);
+
+        assertEquals(1, MyDate.getMin(d1, d2, d3));
+        assertEquals(2, MyDate.getMin(d2, d1, d3));
+        assertEquals(3, MyDate.getMin(d3, d2, d1));
+        assertEquals(3, MyDate.getMin(d2, d3, d1));
+        assertEquals(1, MyDate.getMin(d1, d3, d3));
+    }
+
+    @Test
+    public void testCompare() {
+        MyDate d1 = new MyDate(1, 2, 3, 4, 5, 6);
+        MyDate d2 = new MyDate(2, 2, 3, 4, 5, 6);
+        MyDate d3 = new MyDate(1, 3, 3, 4, 5, 6);
+        MyDate d4 = new MyDate(1, 2, 4, 4, 5, 6);
+        MyDate d5 = new MyDate(1, 2, 3, 5, 5, 6);
+        MyDate d6 = new MyDate(1, 2, 3, 4, 6, 6);
+        MyDate d7 = new MyDate(1, 2, 3, 4, 5, 7);
+        MyDate d8 = new MyDate(LocalDateTime.of(1, 2, 3, 4, 5, 6));
+
+        assertTrue(d1.compareTo(d2) < 0);
+        assertTrue(d1.compareTo(d3) < 0);
+        assertTrue(d1.compareTo(d4) < 0);
+        assertTrue(d1.compareTo(d5) < 0);
+        assertTrue(d1.compareTo(d6) < 0);
+        assertTrue(d1.compareTo(d7) < 0);
+        assertTrue(d1.compareTo(d8) == 0);
+        assertTrue(d1.compareTo(d1) == 0);
+    }
+
 }

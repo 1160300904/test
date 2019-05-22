@@ -1,28 +1,28 @@
 package applications;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
 import physicalObject.*;
 import java.util.*;
+
 public class TestAppUseNote {
 
-	/*Testing strategy:
-	 * 	1.¹¹Ôì·½·¨ÊäÈë²ÎÊıÊÇ·ñºÏ·¨
-	 * 	2.µÃµ½µÄ×ÛºÏÊôĞÔÊÇ·ñÎª0
-	 */
-	@Test
-	public void testAppUseNote() {
-		AppUseNote a1=new AppUseNote(1,1,"A");
-		assertEquals(1,a1.getFrequence());
-		assertEquals(1,a1.getTime());
-		assertEquals("A",a1.getName());
-		assertEquals(11,a1.getSynthesize());
-		
-		AppUseNote a2=new AppUseNote(1,2,"A");
-		assertEquals(-1,a1.compareTo(a2));
-		String a1s="A  frequence: 1time: 1";
-		assertEquals(a1s,a1.toString());
-		
-		
-	}
+    /*
+     * Testing strategy: 1.æ„é€ æ–¹æ³•è¾“å…¥å‚æ•°æ˜¯å¦åˆæ³• 2.å¾—åˆ°çš„ç»¼åˆå±æ€§æ˜¯å¦ä¸º0
+     */
+    @Test
+    public void testAppUseNote() {
+        AppUseNote a1 = new AppUseNote(1, 1, "A");
+        assertEquals(1, a1.getFrequence());
+        assertEquals(1, a1.getTime());
+        assertEquals("A", a1.getName());
+        assertEquals(11, a1.getSynthesize());
+
+        AppUseNote a2 = new AppUseNote(1, 2, "A");
+        assertEquals(-1, a1.compareTo(a2));
+        String a1s = "A  frequence: 1time: 1";
+        assertEquals(a1s, a1.toString());
+
+    }
 }

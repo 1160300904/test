@@ -12,151 +12,195 @@ import java.util.*;
 /**
  * Tests for instance methods of Graph.
  * 
- * <p>PS2 instructions: you MUST NOT add constructors, fields, or non-@Test
- * methods to this class, or change the spec of {@link #emptyInstance()}.
- * Your tests MUST only obtain Graph instances by calling emptyInstance().
- * Your tests MUST NOT refer to specific concrete implementations.
+ * <p>
+ * PS2 instructions: you MUST NOT add constructors, fields, or non-@Test methods
+ * to this class, or change the spec of {@link #emptyInstance()}. Your tests
+ * MUST only obtain Graph instances by calling emptyInstance(). Your tests MUST
+ * NOT refer to specific concrete implementations.
  */
 public abstract class GraphInstanceTest {
-    
+
     // Testing strategy
-    //   TODO
-	/*
-	 * vertices():	Í¼ÖÐ¶¥µã¸öÊý£º0£¬1£¬>1
-	 * 				
-	 * Add():		ÊäÈëµÄvertex£ºÎª¿Õ£¬ÔÚÔ­Í¼ÖÐÒÑ´æÔÚ£¬Ô­Í¼ÖÐ²»´æÔÚ
-	 * 
-	 * set():		weightÊäÈëÖµ£º0£¬·Ç0
-	 * 				sourceµ½targetµÄ±ß£ºÒÑ´æÔÚ£¬²»´æÔÚ
-	 * 				¶¥µãsourceÔÚÍ¼ÖÐ£ºÒÑ´æÔÚ£¬²»´æÔÚ
-	 * 				¶¥µãtargetÔÚÍ¼ÖÐ£ºÒÑ´æÔÚ£¬²»´æÔÚ
-	 * 
-	 * remove():	ÊäÈëÖµvertex:Îª¿Õ£¬ÔÚÔ­Í¼ÖÐÒÑ´æÔÚ£¬Ô­Í¼ÖÐ²»´æÔÚ
-	 * 				ÊÇ·ñÓÐÁÚ½ÓvertexµÄ±ß£ºÎÞ£¬ÓÐÒÔvertexÎªÆðµãµÄ±ß£¬ÓÐÒÔvertexÎªÖÕµãµÄ±ß
-	 * 
-	 * sources():	Í¼ÖÐÊÇ·ñ´æÔÚËü£ºÊÇ£¬·ñ
-	 * 				Í¼ÖÐÖ¸ÏòËüµÄ±ßµÄ¸öÊý£º0£¬1£¬>1
-	 * 
-	 * targets():	Í¼ÖÐÊÇ·ñ´æÔÚËü£ºÊÇ£¬·ñ
-	 * 				Í¼ÖÐÁÚ½ÓËüµÄ±ßµÄ¸öÊý£º0£¬1£¬>1
-	 */
-    
+    // TODO
+    /*
+     * vertices(): å›¾ä¸­é¡¶ç‚¹ä¸ªæ•°ï¼š0ï¼Œ1ï¼Œ>1
+     * 
+     * Add(): è¾“å…¥çš„vertexï¼šä¸ºç©ºï¼Œåœ¨åŽŸå›¾ä¸­å·²å­˜åœ¨ï¼ŒåŽŸå›¾ä¸­ä¸å­˜åœ¨
+     * 
+     * set(): weightè¾“å…¥å€¼ï¼š0ï¼Œéž0 sourceåˆ°targetçš„è¾¹ï¼šå·²å­˜åœ¨ï¼Œä¸å­˜åœ¨ é¡¶ç‚¹sourceåœ¨å›¾ä¸­ï¼šå·²å­˜åœ¨ï¼Œä¸å­˜åœ¨
+     * é¡¶ç‚¹targetåœ¨å›¾ä¸­ï¼šå·²å­˜åœ¨ï¼Œä¸å­˜åœ¨
+     * 
+     * remove(): è¾“å…¥å€¼vertex:ä¸ºç©ºï¼Œåœ¨åŽŸå›¾ä¸­å·²å­˜åœ¨ï¼ŒåŽŸå›¾ä¸­ä¸å­˜åœ¨
+     * æ˜¯å¦æœ‰é‚»æŽ¥vertexçš„è¾¹ï¼šæ— ï¼Œæœ‰ä»¥vertexä¸ºèµ·ç‚¹çš„è¾¹ï¼Œæœ‰ä»¥vertexä¸ºç»ˆç‚¹çš„è¾¹
+     * 
+     * sources(): å›¾ä¸­æ˜¯å¦å­˜åœ¨å®ƒï¼šæ˜¯ï¼Œå¦ å›¾ä¸­æŒ‡å‘å®ƒçš„è¾¹çš„ä¸ªæ•°ï¼š0ï¼Œ1ï¼Œ>1
+     * 
+     * targets(): å›¾ä¸­æ˜¯å¦å­˜åœ¨å®ƒï¼šæ˜¯ï¼Œå¦ å›¾ä¸­é‚»æŽ¥å®ƒçš„è¾¹çš„ä¸ªæ•°ï¼š0ï¼Œ1ï¼Œ>1
+     */
+
     /**
      * Overridden by implementation-specific test classes.
      * 
      * @return a new empty graph of the particular implementation being tested
      */
     public abstract Graph<String> emptyInstance();
-    
-    @Test(expected=AssertionError.class)
+
+    @Test(expected = AssertionError.class)
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
     }
-    
+
     @Test
     public void testInitialVerticesEmpty() {
         // TODO you may use, change, or remove this test
-        assertEquals("expected new graph to have no vertices",
-                Collections.emptySet(), emptyInstance().vertices());
+        assertEquals("expected new graph to have no vertices", Collections.emptySet(), emptyInstance().vertices());
     }
-    
+
     // TODO other tests for instance methods of Graph
     @Test
     public void testVertices() {
-    	Graph<String> g1=emptyInstance();
-    	//similar to testAdd
-    	String a ="a";String b="b";Set<String> answerset=new HashSet<>();
-    	
-    	assertEquals(Collections.emptySet(),g1.vertices());
-    	
-    	assertTrue(g1.add(b));answerset.add(b);
-     	assertEquals(answerset,g1.vertices());
-    	
-    	assertTrue(g1.add(a));answerset.add(a);
-    	assertEquals(answerset,g1.vertices());
+        Graph<String> g1 = emptyInstance();
+        // similar to testAdd
+        String a = "a";
+        String b = "b";
+        Set<String> answerset = new HashSet<>();
+
+        assertEquals(Collections.emptySet(), g1.vertices());
+
+        assertTrue(g1.add(b));
+        answerset.add(b);
+        assertEquals(answerset, g1.vertices());
+
+        assertTrue(g1.add(a));
+        answerset.add(a);
+        assertEquals(answerset, g1.vertices());
     }
+
     @Test
     public void testAdd() {
-    	Graph<String> g1=emptyInstance();
-    	//how to test null String?
-    	String a ="a";String b="b";Set<String> answerset=new HashSet<>();
-    	assertTrue(g1.add(a));answerset.add(a);
-    	assertEquals(answerset,g1.vertices());
-    	
-    	assertTrue(g1.add(b));answerset.add(b);
-    	assertEquals(answerset,g1.vertices());
-    	
-    	assertFalse(g1.add(a));
-    	assertEquals(answerset,g1.vertices());
+        Graph<String> g1 = emptyInstance();
+        // how to test null String?
+        String a = "a";
+        String b = "b";
+        Set<String> answerset = new HashSet<>();
+        assertTrue(g1.add(a));
+        answerset.add(a);
+        assertEquals(answerset, g1.vertices());
+
+        assertTrue(g1.add(b));
+        answerset.add(b);
+        assertEquals(answerset, g1.vertices());
+
+        assertFalse(g1.add(a));
+        assertEquals(answerset, g1.vertices());
     }
+
     @Test
     public void testSet() {
-    	Graph<String> g=emptyInstance();
-    	String a="a";String b="b";String c="c";String d="d";
-    	//g.add(a);g.add(b);g.add(c);g.add(d);
-    	Set<String> vertexset=new HashSet<>();
-    	assertEquals(0,g.set(a, b, 0));	
-    	assertEquals(vertexset,g.vertices());
-    	
-    	assertEquals(0,g.set(c, d, 1));	
-    	vertexset.add(c);vertexset.add(d);assertEquals(vertexset,g.vertices());
-    	
-    	assertEquals(1,g.set(c, d, 2));
-    	assertEquals(vertexset,g.vertices());
-    	
-    	assertEquals(2,g.set(c, d, 0));
-    	assertEquals(vertexset,g.vertices());
-    	
-    	assertEquals(0,g.set(c, d, 0));
+        Graph<String> g = emptyInstance();
+        String a = "a";
+        String b = "b";
+        String c = "c";
+        String d = "d";
+        // g.add(a);g.add(b);g.add(c);g.add(d);
+        Set<String> vertexset = new HashSet<>();
+        assertEquals(0, g.set(a, b, 0));
+        assertEquals(vertexset, g.vertices());
+
+        assertEquals(0, g.set(c, d, 1));
+        vertexset.add(c);
+        vertexset.add(d);
+        assertEquals(vertexset, g.vertices());
+
+        assertEquals(1, g.set(c, d, 2));
+        assertEquals(vertexset, g.vertices());
+
+        assertEquals(2, g.set(c, d, 0));
+        assertEquals(vertexset, g.vertices());
+
+        assertEquals(0, g.set(c, d, 0));
 
     }
+
     @Test
     public void testRemove() {
-    	Graph<String> g=emptyInstance();
-    	String a="a";String b="b";String c="c";String d="d";Set<String> vertexset=new HashSet<>();
-    	g.set(c, d, 1);g.set(c, a, 1);
-    	vertexset.add(a);vertexset.add(c);vertexset.add(d);
-    	assertFalse(g.remove(b));
-    	assertEquals(vertexset,g.vertices());
-    	
-    	assertTrue(g.remove(a));vertexset.remove(a);
-    	assertEquals(vertexset,g.vertices());
-    	
-    	assertTrue(g.remove(c));vertexset.remove(c);
-    	assertEquals(vertexset,g.vertices());
+        Graph<String> g = emptyInstance();
+        String a = "a";
+        String b = "b";
+        String c = "c";
+        String d = "d";
+        Set<String> vertexset = new HashSet<>();
+        g.set(c, d, 1);
+        g.set(c, a, 1);
+        vertexset.add(a);
+        vertexset.add(c);
+        vertexset.add(d);
+        assertFalse(g.remove(b));
+        assertEquals(vertexset, g.vertices());
 
-    	assertTrue(g.remove(d));vertexset.remove(d);
-    	assertEquals(vertexset,g.vertices());
-    	
+        assertTrue(g.remove(a));
+        vertexset.remove(a);
+        assertEquals(vertexset, g.vertices());
+
+        assertTrue(g.remove(c));
+        vertexset.remove(c);
+        assertEquals(vertexset, g.vertices());
+
+        assertTrue(g.remove(d));
+        vertexset.remove(d);
+        assertEquals(vertexset, g.vertices());
+
     }
+
     @Test
     public void testSources() {
-      	Graph<String> g=emptyInstance();
-    	String a="a";String b="b";String c="c";String d="d";String e="e";
-    	Map<String,Integer>answer=new TreeMap<>();
-    	g.add(a);g.add(b);g.add(c);g.set(d, e, 1);
-    	
-    	assertEquals(answer,g.sources(a));
-    	
-    	g.set(b,a,1);answer.put(b, 1);
-    	assertEquals(answer,g.sources(a));
-    	
-    	g.set(c,a,2);answer.put(c, 2);g.add(d);
-    	assertEquals(answer,g.sources(a));
+        Graph<String> g = emptyInstance();
+        String a = "a";
+        String b = "b";
+        String c = "c";
+        String d = "d";
+        String e = "e";
+        Map<String, Integer> answer = new TreeMap<>();
+        g.add(a);
+        g.add(b);
+        g.add(c);
+        g.set(d, e, 1);
+
+        assertEquals(answer, g.sources(a));
+
+        g.set(b, a, 1);
+        answer.put(b, 1);
+        assertEquals(answer, g.sources(a));
+
+        g.set(c, a, 2);
+        answer.put(c, 2);
+        g.add(d);
+        assertEquals(answer, g.sources(a));
     }
+
     @Test
     public void testTargets() {
-    	Graph<String> g=emptyInstance();
-    	String a="a";String b="b";String c="c";String d="d";String e="e";
-    	Map<String,Integer>answer=new TreeMap<>();
-    	g.add(a);g.add(b);g.add(c);g.set(d, e, 1);
-    	
-    	assertEquals(answer,g.targets(a));
-    	
-    	g.set(a,b,1);answer.put(b, 1);
-    	assertEquals(answer,g.targets(a));
-    	
-    	g.set(a,c,2);answer.put(c, 2);g.add(d);
-    	assertEquals(answer,g.targets(a));
+        Graph<String> g = emptyInstance();
+        String a = "a";
+        String b = "b";
+        String c = "c";
+        String d = "d";
+        String e = "e";
+        Map<String, Integer> answer = new TreeMap<>();
+        g.add(a);
+        g.add(b);
+        g.add(c);
+        g.set(d, e, 1);
+
+        assertEquals(answer, g.targets(a));
+
+        g.set(a, b, 1);
+        answer.put(b, 1);
+        assertEquals(answer, g.targets(a));
+
+        g.set(a, c, 2);
+        answer.put(c, 2);
+        g.add(d);
+        assertEquals(answer, g.targets(a));
     }
 }

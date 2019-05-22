@@ -1,55 +1,55 @@
 package errorHandling;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
+
 public class TestAtomHandler {
 
-	/*Testing strategy:
-	 * 1.FilesyntaxHandling			1£©ÊäÈëÊÇ·ñÎªnull
-	 * 								2£©ÊäÈëÖĞ°üÀ¨£ºNumberOfElectron/ElementName/NumberOfTracks/ÆäËû
-	 * 2.handleNumberOfElectron		1£©ÊäÈëÖĞµÄ´íÎóÀàĞÍ£ºÕûÌå¸ñÊ½´íÎó/¹ìµÀÉÏÎïÌåµÄ¸ñÊ½²»·ûºÏÓï·¨
-	 * 3.handleElementName			1£©ÊäÈëÖĞÊÇ·ñÓĞ´íÎó
-	 * 								2£©ÊäÈëµÄ´íÎóÀàĞÍ£ºÎŞÔªËØÃû³Æ/±í´ïÊ½ÖĞÎŞ'='·ûºÅ/ÔªËØÃû³Æ×ÖÄ¸¸ñÊ½´íÎó
-	 * 4.handleNumOfTracks			1£©ÊäÈëÖĞÊÇ·ñÓĞ´íÎó
-	 * 								2£©ÊäÈëµÄ´íÎóÀàĞÍ£º±í´ïÊ½ÖĞÎŞ'='·ûºÅ/¹ìµÀÊı²»ÊÇÕûÊı/¹ìµÀÊıÃ»ÓÃÊı×ÖÃèÊö£¬¶øÓÃ
-	 * 										ÆäËû¸ñÊ½
-	 * 
-	 */
-	@Test
-	public void testAtomHandler() {
-		AtomStructureHandler h=new AtomStructureHandler();
-		assertNull(h.FilesyntaxHandling("A"));
-		String str="The syntax of element numbers on track is \"int\\int\"";
-		assertEquals(str,h.FilesyntaxHandling("NumberOfElectron ::= 1/2;2/8;3/18.0;4/8;5/1"));
-		str="ElementName ::=";
-		h.FilesyntaxHandling(str);h.FilesyntaxHandling(null);
-		str="ElementName ::= Rba";
-		h.FilesyntaxHandling(str);
-		str="NumberOfTracks ::= 11.1";
-		h.FilesyntaxHandling(str);
-		str="NumberOfTracks ::= -5";
-		h.FilesyntaxHandling(str);
-		str="NumberOfElectron ::= 1/2,2/8,3/18,4/8,5/1";
-		h.FilesyntaxHandling(str);
-		str="NumberOfElectron ::= 1/2;2/8;3/18.0;4/8;5/1";
-		h.FilesyntaxHandling(str);
-		str="NumberOfElectron ::= one in the first orbit";
-		h.FilesyntaxHandling(str);
-		str="NumberOfElectron ::= one in the first orbit";
-		h.FilesyntaxHandling(str);
-		str="ElementName :: Rb";
-		h.FilesyntaxHandling(str);
-		str="ElementName ::= b";
-		h.FilesyntaxHandling(str);
-		str="ElementName ::= RD";
-		h.FilesyntaxHandling(str);
-		str="ElementName ::= Rb";
-		h.FilesyntaxHandling(str);
-		str="ElementName ::= R";
-		h.FilesyntaxHandling(str);
-		str="NumberOfTracks :: 5";
-		h.FilesyntaxHandling(str);
-		str="NumberOfTracks ::= 5";
-		h.FilesyntaxHandling(str);
-		
-	}
+    /*
+     * Testing strategy: 1.FilesyntaxHandling 1ï¼‰è¾“å…¥æ˜¯å¦ä¸ºnull
+     * 2ï¼‰è¾“å…¥ä¸­åŒ…æ‹¬ï¼šNumberOfElectron/ElementName/NumberOfTracks/å…¶ä»–
+     * 2.handleNumberOfElectron 1ï¼‰è¾“å…¥ä¸­çš„é”™è¯¯ç±»å‹ï¼šæ•´ä½“æ ¼å¼é”™è¯¯/è½¨é“ä¸Šç‰©ä½“çš„æ ¼å¼ä¸ç¬¦åˆè¯­æ³• 3.handleElementName
+     * 1ï¼‰è¾“å…¥ä¸­æ˜¯å¦æœ‰é”™è¯¯ 2ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šæ— å…ƒç´ åç§°/è¡¨è¾¾å¼ä¸­æ— '='ç¬¦å·/å…ƒç´ åç§°å­—æ¯æ ¼å¼é”™è¯¯ 4.handleNumOfTracks
+     * 1ï¼‰è¾“å…¥ä¸­æ˜¯å¦æœ‰é”™è¯¯ 2ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šè¡¨è¾¾å¼ä¸­æ— '='ç¬¦å·/è½¨é“æ•°ä¸æ˜¯æ•´æ•°/è½¨é“æ•°æ²¡ç”¨æ•°å­—æè¿°ï¼Œè€Œç”¨ å…¶ä»–æ ¼å¼
+     * 
+     */
+    @Test
+    public void testAtomHandler() {
+        AtomStructureHandler h = new AtomStructureHandler();
+        assertNull(h.FilesyntaxHandling("A"));
+        String str = "The syntax of element numbers on track is \"int\\int\"";
+        assertEquals(str, h.FilesyntaxHandling("NumberOfElectron ::= 1/2;2/8;3/18.0;4/8;5/1"));
+        str = "ElementName ::=";
+        h.FilesyntaxHandling(str);
+        h.FilesyntaxHandling(null);
+        str = "ElementName ::= Rba";
+        h.FilesyntaxHandling(str);
+        str = "NumberOfTracks ::= 11.1";
+        h.FilesyntaxHandling(str);
+        str = "NumberOfTracks ::= -5";
+        h.FilesyntaxHandling(str);
+        str = "NumberOfElectron ::= 1/2,2/8,3/18,4/8,5/1";
+        h.FilesyntaxHandling(str);
+        str = "NumberOfElectron ::= 1/2;2/8;3/18.0;4/8;5/1";
+        h.FilesyntaxHandling(str);
+        str = "NumberOfElectron ::= one in the first orbit";
+        h.FilesyntaxHandling(str);
+        str = "NumberOfElectron ::= one in the first orbit";
+        h.FilesyntaxHandling(str);
+        str = "ElementName :: Rb";
+        h.FilesyntaxHandling(str);
+        str = "ElementName ::= b";
+        h.FilesyntaxHandling(str);
+        str = "ElementName ::= RD";
+        h.FilesyntaxHandling(str);
+        str = "ElementName ::= Rb";
+        h.FilesyntaxHandling(str);
+        str = "ElementName ::= R";
+        h.FilesyntaxHandling(str);
+        str = "NumberOfTracks :: 5";
+        h.FilesyntaxHandling(str);
+        str = "NumberOfTracks ::= 5";
+        h.FilesyntaxHandling(str);
+
+    }
 }

@@ -5,31 +5,30 @@ import org.junit.Test;
 
 public class AthleteAndFactoryTest {
 
-	/*Testing strategy:
-	 * 	1.	equals:		1£©ÊäÈëµÄÁíÒ»¸ö¶ÔÏóÊÇ·ñÎªÒ»¸öÔË¶¯Ô±µÄ¶ÔÏó¡£
-	 * 					2£©ÁíÒ»¸ö¶ÔÏó£ºĞÕÃû/ÄêÁä/¹ú¼®/ºÅÂë/×îºÃ³É¼¨·Ö±ğÊÇ·ñÓë±¾¶ÔÏóÏàÍ¬
-	 * 											
-	 */
-	@Test
-	public void testAthleteAndFactory() {
-		Athlete a1=AthleteFactory.getInstance("1", 1, "ABC", 11, 10.0);
-		Athlete a3=AthleteFactory.getInstance("1", 1, "ABC", 11, 10.0);
-		Athlete a2=AthleteFactory.getInstance("2", 1, "ABC", 11, 10.0);
-		
-		Athlete a5=AthleteFactory.getInstance("1", 2, "ABC", 11, 10.0);
-		Athlete a6=AthleteFactory.getInstance("1", 1, "ADC", 11, 10.0);
-		Athlete a7=AthleteFactory.getInstance("1", 1, "ABC", 12, 10.0);
-		Athlete a8=AthleteFactory.getInstance("1", 1, "ABC", 11, 11.0);
-		assertTrue(a1.equals(a3));
-		assertFalse(a1.equals(a2));
-		assertFalse(a1.equals("A"));
-		
-		
-		assertFalse(a1.equals(a5));
-		assertFalse(a1.equals(a6));
-		assertFalse(a1.equals(a7));
-		assertFalse(a1.equals(a8));
-		
-		assertEquals("1",a1.toString());
-	}
+    /*
+     * Testing strategy: 1. equals: 1ï¼‰è¾“å…¥çš„å¦ä¸€ä¸ªå¯¹è±¡æ˜¯å¦ä¸ºä¸€ä¸ªè¿åŠ¨å‘˜çš„å¯¹è±¡ã€‚
+     * 2ï¼‰å¦ä¸€ä¸ªå¯¹è±¡ï¼šå§“å/å¹´é¾„/å›½ç±/å·ç /æœ€å¥½æˆç»©åˆ†åˆ«æ˜¯å¦ä¸æœ¬å¯¹è±¡ç›¸åŒ
+     * 
+     */
+    @Test
+    public void testAthleteAndFactory() {
+        Athlete a1 = AthleteFactory.getInstance("1", 1, "ABC", 11, 10.0);
+        Athlete a3 = AthleteFactory.getInstance("1", 1, "ABC", 11, 10.0);
+        Athlete a2 = AthleteFactory.getInstance("2", 1, "ABC", 11, 10.0);
+
+        Athlete a5 = AthleteFactory.getInstance("1", 2, "ABC", 11, 10.0);
+        Athlete a6 = AthleteFactory.getInstance("1", 1, "ADC", 11, 10.0);
+        Athlete a7 = AthleteFactory.getInstance("1", 1, "ABC", 12, 10.0);
+        Athlete a8 = AthleteFactory.getInstance("1", 1, "ABC", 11, 11.0);
+        assertTrue(a1.equals(a3));
+        assertFalse(a1.equals(a2));
+        assertFalse(a1.equals("A"));
+
+        assertFalse(a1.equals(a5));
+        assertFalse(a1.equals(a6));
+        assertFalse(a1.equals(a7));
+        assertFalse(a1.equals(a8));
+
+        assertEquals("1", a1.toString());
+    }
 }

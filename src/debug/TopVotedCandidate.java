@@ -41,58 +41,56 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 class TopVotedCandidate {
-	List<List<Vote>> A;
+    List<List<Vote>> A;
 
-	public TopVotedCandidate(int[] persons, int[] times) {
-		A = new ArrayList<>();
-		Map<Integer, Integer> count = new HashMap<>();
-		for (int i = 0; i < persons.length; ++i) {
-			int p = persons[i], t = times[i];
-			int c = count.getOrDefault(p, 0)+1;
-			//int c = count.getOrDefault(p, 1)---int c = count.getOrDefault(p, 0)+1
+    public TopVotedCandidate(int[] persons, int[] times) {
+        A = new ArrayList<>();
+        Map<Integer, Integer> count = new HashMap<>();
+        for (int i = 0; i < persons.length; ++i) {
+            int p = persons[i], t = times[i];
+            int c = count.getOrDefault(p, 0) + 1;
+            // int c = count.getOrDefault(p, 1)---int c = count.getOrDefault(p, 0)+1
 
-			count.put(p, c);
-			while (A.size() <= c)
-				A.add(new ArrayList<Vote>());
-			A.get(c).add(new Vote(p, t));
-		}
-	}
+            count.put(p, c);
+            while (A.size() <= c)
+                A.add(new ArrayList<Vote>());
+            A.get(c).add(new Vote(p, t));
+        }
+    }
 
-	public int q(int t) {
-		int lo = 1, hi = A.size();
-		while (lo < hi) {
-			int mi = lo + (hi - lo) / 2;
-			if (A.get(mi).get(0).time <= t)
-				lo = mi+1;//lo = mi;-----lo = mi+1
-			else
-				hi = mi;
-		}
-		int i = lo-1;//int i = lo;--int i = lo-1
-		
-		lo = 0;
-		hi = A.get(i).size();
-		while (lo < hi) {
-			int mi = lo + (hi - lo) / 2;
-			if (A.get(i).get(mi).time <= t)
-				//if (A.get(i).get(mi).time < t)---if (A.get(i).get(mi).time <= t)
-				lo = mi + 1;
-			else
-				hi = mi;
-		}
-		int j = Math.max(lo-1, 0);//int j = Math.max(lo, 0);----int j = Math.max(lo-1, 0);
-		return A.get(i).get(j).person;
-	}
+    public int q(int t) {
+        int lo = 1, hi = A.size();
+        while (lo < hi) {
+            int mi = lo + (hi - lo) / 2;
+            if (A.get(mi).get(0).time <= t)
+                lo = mi + 1;// lo = mi;-----lo = mi+1
+            else
+                hi = mi;
+        }
+        int i = lo - 1;// int i = lo;--int i = lo-1
+
+        lo = 0;
+        hi = A.get(i).size();
+        while (lo < hi) {
+            int mi = lo + (hi - lo) / 2;
+            if (A.get(i).get(mi).time <= t)
+                // if (A.get(i).get(mi).time < t)---if (A.get(i).get(mi).time <= t)
+                lo = mi + 1;
+            else
+                hi = mi;
+        }
+        int j = Math.max(lo - 1, 0);// int j = Math.max(lo, 0);----int j = Math.max(lo-1, 0);
+        return A.get(i).get(j).person;
+    }
 }
 
 class Vote {
-	int person, time;
+    int person, time;
 
-	Vote(int p, int t) {
-		person = p;
-		time = t;
-	}
-	
-	
+    Vote(int p, int t) {
+        person = p;
+        time = t;
+    }
+
 }

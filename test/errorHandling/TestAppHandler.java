@@ -1,123 +1,117 @@
 package errorHandling;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TestAppHandler {
-	/*Testing strategy:
-	 * 	1.FilesyntaxHandling			1£©ÊäÈëµÄ×Ö·û´®ÖĞÓĞÄÄÀàĞÅÏ¢£ºApp/User/Period/InstallLog/UninstallLog
-	 * 											UsageLog/Relation
-	 * 	2.handleRelation				1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢Ã»ÓĞ±»<,>À¨ÆğÀ´/½öÓĞÒ»¸ö»òÃ»ÓĞapp/ÈÎÒâÒ»¸öappµÄÃû³Æ
-	 * 														Îª·Ç·¨µÄ
-	 * 	3.handleUseLog					1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢Ã»ÓĞ±»<,>À¨ÆğÀ´/¾äÖĞĞÅÏ¢È±Ê§/Ò»¸öappµÄÃû³Æ
-	 * 														Îª·Ç·¨µÄ/Ê±¼äµÄ¸ñÊ½²»¶Ô/¾äÖĞµÄÊ±³¤²»ÊÇÒ»¸öÕıÊı
-	 * 	4.handleUnInstallLog			1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢Ã»ÓĞ±»<,>À¨ÆğÀ´/¾äÖĞĞÅÏ¢È±Ê§/Ò»¸öappµÄÃû³Æ
-	 * 														Îª·Ç·¨µÄ/Ê±¼äµÄ¸ñÊ½²»¶Ô/¾äÖĞµÄÊ±³¤²»ÊÇÒ»¸öÕıÊı
-	 * 	5.handleInstallLog				1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢Ã»ÓĞ±»<,>À¨ÆğÀ´/¾äÖĞĞÅÏ¢È±Ê§/Ò»¸öappµÄÃû³Æ
-	 * 														Îª·Ç·¨µÄ/Ê±¼äµÄ¸ñÊ½²»¶Ô/¾äÖĞµÄÊ±³¤²»ÊÇÒ»¸öÕıÊı
-	 * 	6.handleApp						1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢Ã»ÓĞ±»<,>À¨ÆğÀ´/¾äÖĞĞÅÏ¢È±Ê§/Ò»¸öappµÄÃû³Æ
-	 * 														Îª·Ç·¨µÄ/app¹«Ë¾ĞÅÏ¢·Ç·¨/app°æ±¾ĞÅÏ¢·Ç·¨/app¹¦ÄÜĞÅÏ¢·Ç·¨
-	 * 														appÉÌÒµÁìÓòĞÅÏ¢·Ç·¨
-	 * 	7.handleUser					1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢Ã»ÓĞ'-'·ûºÅ/¾äÖĞÎŞÓÃ»§Ãû/ÓÃ»§ÃûÖĞÓĞ¿Õ¸ñ/ÓÃ»§ÃûÖĞÓĞÆäËû·Ç·¨×Ö·û
-	 * 	8.handlePeriod					1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢Ã»ÓĞ'-'·ûºÅ/¾äÖĞÎŞ·Ö¸îĞÅÏ¢
-	 * 										/periodÖĞ²»ÊÇHour|Day|Week|MonthÖĞµÄÒ»¸ö
-	 * 														
-	 */		
-	@Test
-	public void testappHandlerNull() {
-		PersonalAppHandler h=new PersonalAppHandler();
-		assertNull(h.FilesyntaxHandling(null));
-		
-	}
-	
-	@Test
-	public void testRelation() {
-		PersonalAppHandler h=new PersonalAppHandler();
-		h.FilesyntaxHandling("Relaions ::= <Wechat1,QQ+>");
-		h.FilesyntaxHandling("Relation ::= <Wechat1,QQ+>");
-		h.FilesyntaxHandling("Relation ::= <Wechat1+,QQ>");
-		h.FilesyntaxHandling("Relation ::= Wechat1,QQ");
-		h.FilesyntaxHandling("Relation ::= <Wechat1>");
-		h.FilesyntaxHandling("Relation ::= <Wechat1,QQ>");
-	}
-	
-	@Test
-	public void testhandleUseLog() {
-		PersonalAppHandler h=new PersonalAppHandler();
-		
-		h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat,2>");
-		h.FilesyntaxHandling("UsageLog ::= 2019-01-01,15:00:00,Wechat,2");
-		h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat>");
-		h.FilesyntaxHandling("UsageLog ::= <2019=01=01,15:00:00,Wechat,2>");
-		h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15.00.00,Wechat,2>");
-		h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,We+chat,2>");
-		h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat,-2>");
-	}
-	
-	@Test
-	public void testhandleUnInstallLog() {
-		PersonalAppHandler h=new PersonalAppHandler();
-		
-		h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28,Didi>");
-		h.FilesyntaxHandling("UninstallLog ::= 2019-01-02,13:00:28,Didi>");
-		h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28>");
-		h.FilesyntaxHandling("UninstallLog ::= <2019=01-02,13:00:28,Didi>");
-		h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13.00:28,Didi>");
-		h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28,Didi+>");
-	}
-	
-	@Test
-	public void testhandleInstallLog() {
-		PersonalAppHandler h=new PersonalAppHandler();
-		
-		h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap>");
-		h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap");
-		h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30>");
-		h.FilesyntaxHandling("InstallLog ::= <2019=01-02,13:19:30,BaiduMap>");
-		h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13.19:30,BaiduMap>");
-		h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap+>");
-	}
-	
-	
-	@Test
-	public void testhandleApp() {
-		PersonalAppHandler h=new PersonalAppHandler();
-		
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel\">");
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel\"");
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\">");
-		h.FilesyntaxHandling("App ::= <Didi+,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel\">");
-		h.FilesyntaxHandling("App ::= <Didi,Didi~+,ver03.32,\"The most popular car sharing App in China\",\"Travel\">");
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.3~!2,\"The most popular car sharing App in China\",\"Travel\">");
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,The most popular car sharing App in China\",\"Travel\">");
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China,\"Travel\">");
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App!+ in China\",\"Travel\">");
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",Travel\">");
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel>");
-		h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Tra%$vel\">");
-	}
-	
-	@Test
-	public void testhandleUsername() {
-		PersonalAppHandler h=new PersonalAppHandler();
-		
-		h.FilesyntaxHandling("User ::= TimWong");
-		h.FilesyntaxHandling("User :: TimWong");
-		h.FilesyntaxHandling("User ::= Tim Wong");
-		h.FilesyntaxHandling("User ::= ");
-		h.FilesyntaxHandling("User ::= Tim!$%Wong");
-	}
-	
-	@Test
-	public void testhandlePeriod() {
-		PersonalAppHandler h=new PersonalAppHandler();
+    /*
+     * Testing strategy: 1.FilesyntaxHandling
+     * 1ï¼‰è¾“å…¥çš„å­—ç¬¦ä¸²ä¸­æœ‰å“ªç±»ä¿¡æ¯ï¼šApp/User/Period/InstallLog/UninstallLog UsageLog/Relation
+     * 2.handleRelation 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯æ²¡æœ‰è¢«<,>æ‹¬èµ·æ¥/ä»…æœ‰ä¸€ä¸ªæˆ–æ²¡æœ‰app/ä»»æ„ä¸€ä¸ªappçš„åç§° ä¸ºéæ³•çš„
+     * 3.handleUseLog 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯æ²¡æœ‰è¢«<,>æ‹¬èµ·æ¥/å¥ä¸­ä¿¡æ¯ç¼ºå¤±/ä¸€ä¸ªappçš„åç§° ä¸ºéæ³•çš„/æ—¶é—´çš„æ ¼å¼ä¸å¯¹/å¥ä¸­çš„æ—¶é•¿ä¸æ˜¯ä¸€ä¸ªæ­£æ•°
+     * 4.handleUnInstallLog 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯æ²¡æœ‰è¢«<,>æ‹¬èµ·æ¥/å¥ä¸­ä¿¡æ¯ç¼ºå¤±/ä¸€ä¸ªappçš„åç§°
+     * ä¸ºéæ³•çš„/æ—¶é—´çš„æ ¼å¼ä¸å¯¹/å¥ä¸­çš„æ—¶é•¿ä¸æ˜¯ä¸€ä¸ªæ­£æ•° 5.handleInstallLog
+     * 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯æ²¡æœ‰è¢«<,>æ‹¬èµ·æ¥/å¥ä¸­ä¿¡æ¯ç¼ºå¤±/ä¸€ä¸ªappçš„åç§° ä¸ºéæ³•çš„/æ—¶é—´çš„æ ¼å¼ä¸å¯¹/å¥ä¸­çš„æ—¶é•¿ä¸æ˜¯ä¸€ä¸ªæ­£æ•° 6.handleApp
+     * 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯æ²¡æœ‰è¢«<,>æ‹¬èµ·æ¥/å¥ä¸­ä¿¡æ¯ç¼ºå¤±/ä¸€ä¸ªappçš„åç§° ä¸ºéæ³•çš„/appå…¬å¸ä¿¡æ¯éæ³•/appç‰ˆæœ¬ä¿¡æ¯éæ³•/appåŠŸèƒ½ä¿¡æ¯éæ³•
+     * appå•†ä¸šé¢†åŸŸä¿¡æ¯éæ³• 7.handleUser 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯æ²¡æœ‰'-'ç¬¦å·/å¥ä¸­æ— ç”¨æˆ·å/ç”¨æˆ·åä¸­æœ‰ç©ºæ ¼/ç”¨æˆ·åä¸­æœ‰å…¶ä»–éæ³•å­—ç¬¦
+     * 8.handlePeriod 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯æ²¡æœ‰'-'ç¬¦å·/å¥ä¸­æ— åˆ†å‰²ä¿¡æ¯ /periodä¸­ä¸æ˜¯Hour|Day|Week|Monthä¸­çš„ä¸€ä¸ª
+     * 
+     */
+    @Test
+    public void testappHandlerNull() {
+        PersonalAppHandler h = new PersonalAppHandler();
+        assertNull(h.FilesyntaxHandling(null));
 
-		h.FilesyntaxHandling("Period ::= Day");
-		h.FilesyntaxHandling("Period ::= Hour");
-		h.FilesyntaxHandling("Period ::= Month");
-		h.FilesyntaxHandling("Period ::= Week");
-		h.FilesyntaxHandling("Period ::= Minute");
-		h.FilesyntaxHandling("Period ::= ");
-		h.FilesyntaxHandling("Period ::");
-		h.FilesyntaxHandling("Period ::= Da##y");
-	}
+    }
+
+    @Test
+    public void testRelation() {
+        PersonalAppHandler h = new PersonalAppHandler();
+        h.FilesyntaxHandling("Relaions ::= <Wechat1,QQ+>");
+        h.FilesyntaxHandling("Relation ::= <Wechat1,QQ+>");
+        h.FilesyntaxHandling("Relation ::= <Wechat1+,QQ>");
+        h.FilesyntaxHandling("Relation ::= Wechat1,QQ");
+        h.FilesyntaxHandling("Relation ::= <Wechat1>");
+        h.FilesyntaxHandling("Relation ::= <Wechat1,QQ>");
+    }
+
+    @Test
+    public void testhandleUseLog() {
+        PersonalAppHandler h = new PersonalAppHandler();
+
+        h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat,2>");
+        h.FilesyntaxHandling("UsageLog ::= 2019-01-01,15:00:00,Wechat,2");
+        h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat>");
+        h.FilesyntaxHandling("UsageLog ::= <2019=01=01,15:00:00,Wechat,2>");
+        h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15.00.00,Wechat,2>");
+        h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,We+chat,2>");
+        h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat,-2>");
+    }
+
+    @Test
+    public void testhandleUnInstallLog() {
+        PersonalAppHandler h = new PersonalAppHandler();
+
+        h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28,Didi>");
+        h.FilesyntaxHandling("UninstallLog ::= 2019-01-02,13:00:28,Didi>");
+        h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28>");
+        h.FilesyntaxHandling("UninstallLog ::= <2019=01-02,13:00:28,Didi>");
+        h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13.00:28,Didi>");
+        h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28,Didi+>");
+    }
+
+    @Test
+    public void testhandleInstallLog() {
+        PersonalAppHandler h = new PersonalAppHandler();
+
+        h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap>");
+        h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap");
+        h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30>");
+        h.FilesyntaxHandling("InstallLog ::= <2019=01-02,13:19:30,BaiduMap>");
+        h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13.19:30,BaiduMap>");
+        h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap+>");
+    }
+
+    @Test
+    public void testhandleApp() {
+        PersonalAppHandler h = new PersonalAppHandler();
+
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel\">");
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel\"");
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\">");
+        h.FilesyntaxHandling("App ::= <Didi+,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel\">");
+        h.FilesyntaxHandling("App ::= <Didi,Didi~+,ver03.32,\"The most popular car sharing App in China\",\"Travel\">");
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.3~!2,\"The most popular car sharing App in China\",\"Travel\">");
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,The most popular car sharing App in China\",\"Travel\">");
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China,\"Travel\">");
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App!+ in China\",\"Travel\">");
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",Travel\">");
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel>");
+        h.FilesyntaxHandling("App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Tra%$vel\">");
+    }
+
+    @Test
+    public void testhandleUsername() {
+        PersonalAppHandler h = new PersonalAppHandler();
+
+        h.FilesyntaxHandling("User ::= TimWong");
+        h.FilesyntaxHandling("User :: TimWong");
+        h.FilesyntaxHandling("User ::= Tim Wong");
+        h.FilesyntaxHandling("User ::= ");
+        h.FilesyntaxHandling("User ::= Tim!$%Wong");
+    }
+
+    @Test
+    public void testhandlePeriod() {
+        PersonalAppHandler h = new PersonalAppHandler();
+
+        h.FilesyntaxHandling("Period ::= Day");
+        h.FilesyntaxHandling("Period ::= Hour");
+        h.FilesyntaxHandling("Period ::= Month");
+        h.FilesyntaxHandling("Period ::= Week");
+        h.FilesyntaxHandling("Period ::= Minute");
+        h.FilesyntaxHandling("Period ::= ");
+        h.FilesyntaxHandling("Period ::");
+        h.FilesyntaxHandling("Period ::= Da##y");
+    }
 }

@@ -1,4 +1,5 @@
 package APIs;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -7,182 +8,193 @@ import circularOrbit.*;
 import physicalObject.*;
 
 public class TestAPI {
-	/*Testing strategy:
-	 * 	1.getObjectDistributionEntropy		1£©ÊäÈëµÄ¶à¹ìµÀÏµÍ³£¬ËùÓĞÎïÌåÊÇ·ñÅÅÔÚÒ»Ìõ¹ìµÀÉÏ
-	 * 										2£©ìØÖµ½á¹û==0,<1,>1
-	 * 	2.getAtomDifference					1£©¶şÕß¹ìµÀÊıµÄÇø±ğ£ºµÚÒ»¸ö¹ìµÀÉÙ£¬µÚ¶ş¸ö¹ìµÀÉÙ£¬Á½ÕßÒ»Ñù¶à
-	 * 										2£©Á½Õß¹ìµÀÉÏÎïÌåÊıÄ¿µÄ²î±ğ£ºµÚÒ»¸öÉÙ£¬µÚ¶ş¸öÉÙ£¬Á½ÕßÒ»Ñù¶à
-	 * 										3£©Á½ÕßÊÇ·ñÓĞÉÏÃæÒ»¸öÎïÌåÒ²Ã»ÓĞµÄ¹ìµÀ
-	 *  3.getPersonalAppDifference			1£©¶şÕß¹ìµÀÊıµÄÇø±ğ£ºµÚÒ»¸ö¹ìµÀÉÙ£¬µÚ¶ş¸ö¹ìµÀÉÙ£¬Á½ÕßÒ»Ñù¶à
-	 * 										2£©Á½Õß¹ìµÀÉÏÎïÌåÊıÄ¿µÄ²î±ğ£ºµÚÒ»¸öÉÙ£¬µÚ¶ş¸öÉÙ£¬Á½ÕßÒ»Ñù¶à
-	 * 										3£©Á½ÕßÊÇ·ñÓĞÉÏÃæÒ»¸öÎïÌåÒ²Ã»ÓĞµÄ¹ìµÀ
-	 * 										4£©ÎïÌå²îÒìÉÏ£ºÄ³Ìõ¹ìµÀÉÏ£¬µÚÒ»Ìõ¹ìµÀÉÏµÄÎïÌåÈ«°üº¬ÓÚµÚ¶şÌõ
-	 * 																  µÚÒ»Ìõ¹ìµÀÉÏµÄÎïÌåÈ«°üº¬ÓÚµÚ¶şÌõ
-	 * 																µÚÒ»Ìõ¹ìµÀÉÏµÄÎïÌå¡ÉµÚ¶şÌõµÄ==¿Õ
-	 * 																µÚÒ»Ìõ¹ìµÀÉÏµÄÎïÌå¡ÉµÚ¶şÌõµÄ!=¿Õ
-	 * 	4.getRaceGameDifference				1£©¶şÕß¹ìµÀÊıµÄÇø±ğ£ºµÚÒ»¸ö¹ìµÀÉÙ£¬µÚ¶ş¸ö¹ìµÀÉÙ£¬Á½ÕßÒ»Ñù¶à
-	 * 										2£©Á½Õß¹ìµÀÉÏÎïÌåÊıÄ¿µÄ²î±ğ£ºµÚÒ»¸öÉÙ£¬µÚ¶ş¸öÉÙ£¬Á½ÕßÒ»Ñù¶à
-	 * 										3£©Á½ÕßÊÇ·ñÓĞÉÏÃæÒ»¸öÎïÌåÒ²Ã»ÓĞµÄ¹ìµÀ
-	 * 										4£©ÎïÌå²îÒìÉÏ£ºÄ³Ìõ¹ìµÀÉÏ£¬µÚÒ»Ìõ¹ìµÀÉÏµÄÎïÌåÈ«°üº¬ÓÚµÚ¶şÌõ
-	 * 																  µÚÒ»Ìõ¹ìµÀÉÏµÄÎïÌåÈ«°üº¬ÓÚµÚ¶şÌõ
-	 * 																µÚÒ»Ìõ¹ìµÀÉÏµÄÎïÌå¡ÉµÚ¶şÌõµÄ==¿Õ
-	 * 																µÚÒ»Ìõ¹ìµÀÉÏµÄÎïÌå¡ÉµÚ¶şÌõµÄ!=¿Õ
-	 * 	5.getDifference						1£©ÊäÈëµÄ¹ìµÀÏµÍ³ÀàĞÍ£ºÔ­×Ó½á¹¹/appÉúÌ¬ÏµÍ³/¾ºÈüÏµÍ³
-	 */
-	@Test
-	public void testgetObjectDistributionEntropy() {
-		CircularOrbit<User,PersonalApp> c=CircularOrbit.empty();
-		for(int i=1;i<=4;i++) {
-			c.addInsideTrack(i);
-		}
-		CircularOrbitAPIs<User,PersonalApp> api=new CircularOrbitAPIs<>();
-		PersonalApp p1=PersonalAppFactory.getInstance("1", "1", "1", "1", "1");
-		PersonalApp p2=PersonalAppFactory.getInstance("2", "1", "1", "1", "1");
-		PersonalApp p3=PersonalAppFactory.getInstance("3", "1", "1", "1", "1");
-		PersonalApp p4=PersonalAppFactory.getInstance("4", "1", "1", "1", "1");
-		PersonalApp p5=PersonalAppFactory.getInstance("5", "1", "1", "1", "1");
-		PersonalApp p6=PersonalAppFactory.getInstance("6", "1", "1", "1", "1");
-		
-		c.addPhyToTrack(p3, -135, 3);c.addPhyToTrack(p6, 90, 3);
-		assertEquals(0,api.getObjectDistributionEntropy(c),0.01);
-		c.addPhyToTrack(p2, 0, 2);
-		assertEquals(0.63651,api.getObjectDistributionEntropy(c),0.01);
-		c.addPhyToTrack(p1, 90, 1);
-		c.addPhyToTrack(p4, -60, 4);c.addPhyToTrack(p5, 0, 4);
-		c.addPhyRelation(p1, p2);
-		assertEquals(1.32966,api.getObjectDistributionEntropy(c),0.01);
-		
-		assertEquals(2,api.getPhysicalDistance(c, p1, p6),0.01);
-		assertEquals(1,api.getLogicalDistance(c, p1, p2));
-		
-	}
-	@Test
-	public void testAtomDifference() {
-		CircularOrbitAPIs<Nucleus,Electron> api=new CircularOrbitAPIs<>();
-		CircularOrbit<Nucleus,Electron> c1=CircularOrbit.empty();
-		CircularOrbit<Nucleus,Electron> c2=CircularOrbit.empty();
-		for(int i=1;i<=3;i++) {
-			c1.addInsideTrack(i);c2.addInsideTrack(i);
-		}
-		assertEquals(0,api.getAtomDifference(c1, c2).getTrackNumDiff());
-		c1.addInsideTrack(4);
-		assertEquals(1,api.getAtomDifference(c1, c2).getTrackNumDiff());
-		c2.addInsideTrack(4);c2.addInsideTrack(5);
-		assertEquals(-1,api.getAtomDifference(c1, c2).getTrackNumDiff());
+    /*
+     * Testing strategy: 1.getObjectDistributionEntropy 1ï¼‰è¾“å…¥çš„å¤šè½¨é“ç³»ç»Ÿï¼Œæ‰€æœ‰ç‰©ä½“æ˜¯å¦æ’åœ¨ä¸€æ¡è½¨é“ä¸Š
+     * 2ï¼‰ç†µå€¼ç»“æœ==0,<1,>1 2.getAtomDifference 1ï¼‰äºŒè€…è½¨é“æ•°çš„åŒºåˆ«ï¼šç¬¬ä¸€ä¸ªè½¨é“å°‘ï¼Œç¬¬äºŒä¸ªè½¨é“å°‘ï¼Œä¸¤è€…ä¸€æ ·å¤š
+     * 2ï¼‰ä¸¤è€…è½¨é“ä¸Šç‰©ä½“æ•°ç›®çš„å·®åˆ«ï¼šç¬¬ä¸€ä¸ªå°‘ï¼Œç¬¬äºŒä¸ªå°‘ï¼Œä¸¤è€…ä¸€æ ·å¤š 3ï¼‰ä¸¤è€…æ˜¯å¦æœ‰ä¸Šé¢ä¸€ä¸ªç‰©ä½“ä¹Ÿæ²¡æœ‰çš„è½¨é“ 3.getPersonalAppDifference
+     * 1ï¼‰äºŒè€…è½¨é“æ•°çš„åŒºåˆ«ï¼šç¬¬ä¸€ä¸ªè½¨é“å°‘ï¼Œç¬¬äºŒä¸ªè½¨é“å°‘ï¼Œä¸¤è€…ä¸€æ ·å¤š 2ï¼‰ä¸¤è€…è½¨é“ä¸Šç‰©ä½“æ•°ç›®çš„å·®åˆ«ï¼šç¬¬ä¸€ä¸ªå°‘ï¼Œç¬¬äºŒä¸ªå°‘ï¼Œä¸¤è€…ä¸€æ ·å¤š
+     * 3ï¼‰ä¸¤è€…æ˜¯å¦æœ‰ä¸Šé¢ä¸€ä¸ªç‰©ä½“ä¹Ÿæ²¡æœ‰çš„è½¨é“ 4ï¼‰ç‰©ä½“å·®å¼‚ä¸Šï¼šæŸæ¡è½¨é“ä¸Šï¼Œç¬¬ä¸€æ¡è½¨é“ä¸Šçš„ç‰©ä½“å…¨åŒ…å«äºç¬¬äºŒæ¡ ç¬¬ä¸€æ¡è½¨é“ä¸Šçš„ç‰©ä½“å…¨åŒ…å«äºç¬¬äºŒæ¡
+     * ç¬¬ä¸€æ¡è½¨é“ä¸Šçš„ç‰©ä½“âˆ©ç¬¬äºŒæ¡çš„==ç©º ç¬¬ä¸€æ¡è½¨é“ä¸Šçš„ç‰©ä½“âˆ©ç¬¬äºŒæ¡çš„!=ç©º 4.getRaceGameDifference
+     * 1ï¼‰äºŒè€…è½¨é“æ•°çš„åŒºåˆ«ï¼šç¬¬ä¸€ä¸ªè½¨é“å°‘ï¼Œç¬¬äºŒä¸ªè½¨é“å°‘ï¼Œä¸¤è€…ä¸€æ ·å¤š 2ï¼‰ä¸¤è€…è½¨é“ä¸Šç‰©ä½“æ•°ç›®çš„å·®åˆ«ï¼šç¬¬ä¸€ä¸ªå°‘ï¼Œç¬¬äºŒä¸ªå°‘ï¼Œä¸¤è€…ä¸€æ ·å¤š
+     * 3ï¼‰ä¸¤è€…æ˜¯å¦æœ‰ä¸Šé¢ä¸€ä¸ªç‰©ä½“ä¹Ÿæ²¡æœ‰çš„è½¨é“ 4ï¼‰ç‰©ä½“å·®å¼‚ä¸Šï¼šæŸæ¡è½¨é“ä¸Šï¼Œç¬¬ä¸€æ¡è½¨é“ä¸Šçš„ç‰©ä½“å…¨åŒ…å«äºç¬¬äºŒæ¡ ç¬¬ä¸€æ¡è½¨é“ä¸Šçš„ç‰©ä½“å…¨åŒ…å«äºç¬¬äºŒæ¡
+     * ç¬¬ä¸€æ¡è½¨é“ä¸Šçš„ç‰©ä½“âˆ©ç¬¬äºŒæ¡çš„==ç©º ç¬¬ä¸€æ¡è½¨é“ä¸Šçš„ç‰©ä½“âˆ©ç¬¬äºŒæ¡çš„!=ç©º 5.getDifference
+     * 1ï¼‰è¾“å…¥çš„è½¨é“ç³»ç»Ÿç±»å‹ï¼šåŸå­ç»“æ„/appç”Ÿæ€ç³»ç»Ÿ/ç«èµ›ç³»ç»Ÿ
+     */
+    @Test
+    public void testgetObjectDistributionEntropy() {
+        CircularOrbit<User, PersonalApp> c = CircularOrbit.empty();
+        for (int i = 1; i <= 4; i++) {
+            c.addInsideTrack(i);
+        }
+        CircularOrbitAPIs<User, PersonalApp> api = new CircularOrbitAPIs<>();
+        PersonalApp p1 = PersonalAppFactory.getInstance("1", "1", "1", "1", "1");
+        PersonalApp p2 = PersonalAppFactory.getInstance("2", "1", "1", "1", "1");
+        PersonalApp p3 = PersonalAppFactory.getInstance("3", "1", "1", "1", "1");
+        PersonalApp p4 = PersonalAppFactory.getInstance("4", "1", "1", "1", "1");
+        PersonalApp p5 = PersonalAppFactory.getInstance("5", "1", "1", "1", "1");
+        PersonalApp p6 = PersonalAppFactory.getInstance("6", "1", "1", "1", "1");
 
-		Electron e1=ElectronFactory.getInstance(1);
-		Electron e2=ElectronFactory.getInstance(2);
-		Electron e3=ElectronFactory.getInstance(3);
-		Electron e4=ElectronFactory.getInstance(4);
-		Electron e5=ElectronFactory.getInstance(5);
-		Electron e6=ElectronFactory.getInstance(6);
-		Electron e7=ElectronFactory.getInstance(7);
-		Electron e8=ElectronFactory.getInstance(8);
-		c1.addPhyToTrack(e1, 0, 1);c1.addPhyToTrack(e2, 0, 2);
-		assertEquals(1,api.getAtomDifference(c1, c2).getObjNumDiff(1));
-		c2.addPhyToTrack(e3, 0, 1);c2.addPhyToTrack(e4, 0, 2);
-		assertEquals(0,api.getAtomDifference(c1, c2).getObjNumDiff(1));
-		c2.addPhyToTrack(e5, 0, 2);
-		assertEquals(-1,api.getAtomDifference(c1, c2).getObjNumDiff(2));
-		c1.addPhyToTrack(e6, 0, 2);c1.addPhyToTrack(e7, 0, 2);
-		assertEquals(1,api.getAtomDifference(c1, c2).getObjNumDiff(2));
-		Nucleus u1=NucleusFactory.getInstance("A");Nucleus u2=NucleusFactory.getInstance("B");
-		c1.setCentralObj(u1);c2.setCentralObj(u2);
-		api.getDifference(c1, c2);
-		
-	}
-	
-	@Test
-	public void testAppDifference() {
-		CircularOrbitAPIs<User,PersonalApp> api=new CircularOrbitAPIs<>();
-		CircularOrbit<User,PersonalApp> c1=CircularOrbit.empty();
-		CircularOrbit<User,PersonalApp> c2=CircularOrbit.empty();
-		for(int i=1;i<=3;i++) {
-			c1.addInsideTrack(i);c2.addInsideTrack(i);
-		}
-		assertEquals(0,api.getPersonalAppDifference(c1, c2).getTrackNumDiff());
-		//app ÖĞÁ½circular orbit¹ìµÀÊıÓ¦ÏàÍ¬
-		 c1.addInsideTrack(4);
-		assertNull(api.getPersonalAppDifference(c1, c2));
-		c1.deleteTrack(4);
-		/*
-		 * c2.addInsideTrack(4);c2.addInsideTrack(5);
-		assertEquals(-1,api.getPersonalAppDifference(c1, c2).getTrackNumDiff());
-		 */
+        c.addPhyToTrack(p3, -135, 3);
+        c.addPhyToTrack(p6, 90, 3);
+        assertEquals(0, api.getObjectDistributionEntropy(c), 0.01);
+        c.addPhyToTrack(p2, 0, 2);
+        assertEquals(0.63651, api.getObjectDistributionEntropy(c), 0.01);
+        c.addPhyToTrack(p1, 90, 1);
+        c.addPhyToTrack(p4, -60, 4);
+        c.addPhyToTrack(p5, 0, 4);
+        c.addPhyRelation(p1, p2);
+        assertEquals(1.32966, api.getObjectDistributionEntropy(c), 0.01);
 
-		 
-		PersonalApp e1=PersonalAppFactory.getInstance("1", "1", "1", "1", "1");
-		PersonalApp e2=PersonalAppFactory.getInstance("2", "1", "1", "1", "1");
-		PersonalApp e3=PersonalAppFactory.getInstance("3", "1", "1", "1", "1");
-		PersonalApp e4=PersonalAppFactory.getInstance("4", "1", "1", "1", "1");
-		PersonalApp e5=PersonalAppFactory.getInstance("5", "1", "1", "1", "1");
-		PersonalApp e6=PersonalAppFactory.getInstance("6", "1", "1", "1", "1");
-		PersonalApp e7=PersonalAppFactory.getInstance("7", "1", "1", "1", "1");
-		PersonalApp e8=PersonalAppFactory.getInstance("8", "1", "1", "1", "1");
-		c1.addPhyToTrack(e1, 0, 1);c1.addPhyToTrack(e2, 0, 2);
-		assertEquals(1,api.getPersonalAppDifference(c1, c2).getObjNumDiff(1));
-		c2.addPhyToTrack(e3, 0, 1);c2.addPhyToTrack(e4, 0, 2);
-		assertEquals(0,api.getPersonalAppDifference(c1, c2).getObjNumDiff(1));
-		c2.addPhyToTrack(e5, 0, 2);
-		assertEquals(-1,api.getPersonalAppDifference(c1, c2).getObjNumDiff(2));
-		c1.addPhyToTrack(e6, 0, 2);c1.addPhyToTrack(e7, 0, 2);
-		assertEquals(1,api.getPersonalAppDifference(c1, c2).getObjNumDiff(2));
-		
-		assertEquals("{1}-{3}",api.getPersonalAppDifference(c1, c2).getObjDetailDiff(1));
-		assertEquals("{2,6,7}-{4,5}",api.getPersonalAppDifference(c1, c2).getObjDetailDiff(2));
-		c1.addPhyToTrack(e8, 0, 3);
-		assertEquals("{8}-{ }",api.getPersonalAppDifference(c1, c2).getObjDetailDiff(3));
-		assertEquals("{ }-{8}",api.getPersonalAppDifference(c2, c1).getObjDetailDiff(3));
-		c1.addPhyToTrack(e4, 0, 2);c1.addPhyToTrack(e5, 0, 2);c2.addPhyToTrack(e6, 0, 2);
-		assertEquals("{ }-{2,7}",api.getPersonalAppDifference(c2, c1).getObjDetailDiff(2));
-		User u1=UserFactory.getInstance("1");User u2=UserFactory.getInstance("2");
-		c1.setCentralObj(u1);c2.setCentralObj(u2);
-		api.getDifference(c1, c2);
-	}
-	
-	@Test
-	public void testgetRaceGameDifference() {
-		CircularOrbitAPIs<String,Athlete> api=new CircularOrbitAPIs<>();
-		CircularOrbit<String,Athlete> c1=CircularOrbit.empty();
-		CircularOrbit<String,Athlete> c2=CircularOrbit.empty();
-		for(int i=1;i<=3;i++) {
-			c1.addInsideTrack(i);c2.addInsideTrack(i);
-		}
-		assertEquals(0,api.getRaceGameDifference(c1, c2).getTrackNumDiff());
-		//app ÖĞÁ½circular orbit¹ìµÀÊıÓ¦ÏàÍ¬
-		 c1.addInsideTrack(4);
-		assertNull(api.getRaceGameDifference(c1, c2));
-		 c2.addInsideTrack(4);
-		/*
-		 * c2.addInsideTrack(4);c2.addInsideTrack(5);
-		assertEquals(-1,api.getPersonalAppDifference(c1, c2).getTrackNumDiff());
-		 */
+        assertEquals(2, api.getPhysicalDistance(c, p1, p6), 0.01);
+        assertEquals(1, api.getLogicalDistance(c, p1, p2));
 
-		Athlete e1=AthleteFactory.getInstance("1", 1, "AAA", 1, 11.11);
-		Athlete e2=AthleteFactory.getInstance("2", 1, "AAA", 1, 11.11);
-		Athlete e3=AthleteFactory.getInstance("3", 1, "AAA", 1, 11.11);
-		Athlete e4=AthleteFactory.getInstance("4", 1, "AAA", 1, 11.11);
-		Athlete e5=AthleteFactory.getInstance("5", 1, "AAA", 1, 11.11);
-		Athlete e6=AthleteFactory.getInstance("6", 1, "AAA", 1, 11.11);
-		Athlete e7=AthleteFactory.getInstance("7", 1, "AAA", 1, 11.11);
-		Athlete e8=AthleteFactory.getInstance("8", 1, "AAA", 1, 11.11);
-		c1.addPhyToTrack(e1, 0, 1);c1.addPhyToTrack(e2, 0, 2);
-		assertEquals(1,api.getRaceGameDifference(c1, c2).getObjNumDiff(1));
-		c2.addPhyToTrack(e3, 0, 1);c2.addPhyToTrack(e4, 0, 2);
-		assertEquals(0,api.getRaceGameDifference(c1, c2).getObjNumDiff(1));
-		//c2.addPhyToTrack(e5, 0, 2);
-		//assertEquals(-1,api.getRaceGameDifference(c1, c2).getObjNumDiff(2));
-		//c1.addPhyToTrack(e6, 0, 2);c1.addPhyToTrack(e7, 0, 2);
-		//assertEquals(1,api.getRaceGameDifference(c1, c2).getObjNumDiff(2));
-		
-		assertEquals("1-3",api.getRaceGameDifference(c1, c2).getObjDetailDiff(1));
-		//System.out.println(api.getRaceGameDifference(c1, c2).getObjDetailDiff(2));
-		//assertEquals("6-4",api.getRaceGameDifference(c1, c2).getObjDetailDiff(2));
-		c1.addPhyToTrack(e8, 0, 3);
-		assertEquals("8-None",api.getRaceGameDifference(c1, c2).getObjDetailDiff(3));
-		assertEquals("None-8",api.getRaceGameDifference(c2, c1).getObjDetailDiff(3));
-		c1.addPhyToTrack(e5, 0, 4);c2.addPhyToTrack(e5, 0, 4);
-		assertEquals("None",api.getRaceGameDifference(c2, c1).getObjDetailDiff(4));
-		api.getDifference(c1, c2);
-	}
+    }
+
+    @Test
+    public void testAtomDifference() {
+        CircularOrbitAPIs<Nucleus, Electron> api = new CircularOrbitAPIs<>();
+        CircularOrbit<Nucleus, Electron> c1 = CircularOrbit.empty();
+        CircularOrbit<Nucleus, Electron> c2 = CircularOrbit.empty();
+        for (int i = 1; i <= 3; i++) {
+            c1.addInsideTrack(i);
+            c2.addInsideTrack(i);
+        }
+        assertEquals(0, api.getAtomDifference(c1, c2).getTrackNumDiff());
+        c1.addInsideTrack(4);
+        assertEquals(1, api.getAtomDifference(c1, c2).getTrackNumDiff());
+        c2.addInsideTrack(4);
+        c2.addInsideTrack(5);
+        assertEquals(-1, api.getAtomDifference(c1, c2).getTrackNumDiff());
+
+        Electron e1 = ElectronFactory.getInstance(1);
+        Electron e2 = ElectronFactory.getInstance(2);
+        Electron e3 = ElectronFactory.getInstance(3);
+        Electron e4 = ElectronFactory.getInstance(4);
+        Electron e5 = ElectronFactory.getInstance(5);
+        Electron e6 = ElectronFactory.getInstance(6);
+        Electron e7 = ElectronFactory.getInstance(7);
+        Electron e8 = ElectronFactory.getInstance(8);
+        c1.addPhyToTrack(e1, 0, 1);
+        c1.addPhyToTrack(e2, 0, 2);
+        assertEquals(1, api.getAtomDifference(c1, c2).getObjNumDiff(1));
+        c2.addPhyToTrack(e3, 0, 1);
+        c2.addPhyToTrack(e4, 0, 2);
+        assertEquals(0, api.getAtomDifference(c1, c2).getObjNumDiff(1));
+        c2.addPhyToTrack(e5, 0, 2);
+        assertEquals(-1, api.getAtomDifference(c1, c2).getObjNumDiff(2));
+        c1.addPhyToTrack(e6, 0, 2);
+        c1.addPhyToTrack(e7, 0, 2);
+        assertEquals(1, api.getAtomDifference(c1, c2).getObjNumDiff(2));
+        Nucleus u1 = NucleusFactory.getInstance("A");
+        Nucleus u2 = NucleusFactory.getInstance("B");
+        c1.setCentralObj(u1);
+        c2.setCentralObj(u2);
+        api.getDifference(c1, c2);
+
+    }
+
+    @Test
+    public void testAppDifference() {
+        CircularOrbitAPIs<User, PersonalApp> api = new CircularOrbitAPIs<>();
+        CircularOrbit<User, PersonalApp> c1 = CircularOrbit.empty();
+        CircularOrbit<User, PersonalApp> c2 = CircularOrbit.empty();
+        for (int i = 1; i <= 3; i++) {
+            c1.addInsideTrack(i);
+            c2.addInsideTrack(i);
+        }
+        assertEquals(0, api.getPersonalAppDifference(c1, c2).getTrackNumDiff());
+        // app ï¿½ï¿½ï¿½ï¿½circular orbitï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Í¬
+        c1.addInsideTrack(4);
+        assertNull(api.getPersonalAppDifference(c1, c2));
+        c1.deleteTrack(4);
+        /*
+         * c2.addInsideTrack(4);c2.addInsideTrack(5);
+         * assertEquals(-1,api.getPersonalAppDifference(c1, c2).getTrackNumDiff());
+         */
+
+        PersonalApp e1 = PersonalAppFactory.getInstance("1", "1", "1", "1", "1");
+        PersonalApp e2 = PersonalAppFactory.getInstance("2", "1", "1", "1", "1");
+        PersonalApp e3 = PersonalAppFactory.getInstance("3", "1", "1", "1", "1");
+        PersonalApp e4 = PersonalAppFactory.getInstance("4", "1", "1", "1", "1");
+        PersonalApp e5 = PersonalAppFactory.getInstance("5", "1", "1", "1", "1");
+        PersonalApp e6 = PersonalAppFactory.getInstance("6", "1", "1", "1", "1");
+        PersonalApp e7 = PersonalAppFactory.getInstance("7", "1", "1", "1", "1");
+        PersonalApp e8 = PersonalAppFactory.getInstance("8", "1", "1", "1", "1");
+        c1.addPhyToTrack(e1, 0, 1);
+        c1.addPhyToTrack(e2, 0, 2);
+        assertEquals(1, api.getPersonalAppDifference(c1, c2).getObjNumDiff(1));
+        c2.addPhyToTrack(e3, 0, 1);
+        c2.addPhyToTrack(e4, 0, 2);
+        assertEquals(0, api.getPersonalAppDifference(c1, c2).getObjNumDiff(1));
+        c2.addPhyToTrack(e5, 0, 2);
+        assertEquals(-1, api.getPersonalAppDifference(c1, c2).getObjNumDiff(2));
+        c1.addPhyToTrack(e6, 0, 2);
+        c1.addPhyToTrack(e7, 0, 2);
+        assertEquals(1, api.getPersonalAppDifference(c1, c2).getObjNumDiff(2));
+
+        assertEquals("{1}-{3}", api.getPersonalAppDifference(c1, c2).getObjDetailDiff(1));
+        assertEquals("{2,6,7}-{4,5}", api.getPersonalAppDifference(c1, c2).getObjDetailDiff(2));
+        c1.addPhyToTrack(e8, 0, 3);
+        assertEquals("{8}-{ }", api.getPersonalAppDifference(c1, c2).getObjDetailDiff(3));
+        assertEquals("{ }-{8}", api.getPersonalAppDifference(c2, c1).getObjDetailDiff(3));
+        c1.addPhyToTrack(e4, 0, 2);
+        c1.addPhyToTrack(e5, 0, 2);
+        c2.addPhyToTrack(e6, 0, 2);
+        assertEquals("{ }-{2,7}", api.getPersonalAppDifference(c2, c1).getObjDetailDiff(2));
+        User u1 = UserFactory.getInstance("1");
+        User u2 = UserFactory.getInstance("2");
+        c1.setCentralObj(u1);
+        c2.setCentralObj(u2);
+        api.getDifference(c1, c2);
+    }
+
+    @Test
+    public void testgetRaceGameDifference() {
+        CircularOrbitAPIs<String, Athlete> api = new CircularOrbitAPIs<>();
+        CircularOrbit<String, Athlete> c1 = CircularOrbit.empty();
+        CircularOrbit<String, Athlete> c2 = CircularOrbit.empty();
+        for (int i = 1; i <= 3; i++) {
+            c1.addInsideTrack(i);
+            c2.addInsideTrack(i);
+        }
+        assertEquals(0, api.getRaceGameDifference(c1, c2).getTrackNumDiff());
+        // app ï¿½ï¿½ï¿½ï¿½circular orbitï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Í¬
+        c1.addInsideTrack(4);
+        assertNull(api.getRaceGameDifference(c1, c2));
+        c2.addInsideTrack(4);
+        /*
+         * c2.addInsideTrack(4);c2.addInsideTrack(5);
+         * assertEquals(-1,api.getPersonalAppDifference(c1, c2).getTrackNumDiff());
+         */
+
+        Athlete e1 = AthleteFactory.getInstance("1", 1, "AAA", 1, 11.11);
+        Athlete e2 = AthleteFactory.getInstance("2", 1, "AAA", 1, 11.11);
+        Athlete e3 = AthleteFactory.getInstance("3", 1, "AAA", 1, 11.11);
+        Athlete e4 = AthleteFactory.getInstance("4", 1, "AAA", 1, 11.11);
+        Athlete e5 = AthleteFactory.getInstance("5", 1, "AAA", 1, 11.11);
+        Athlete e6 = AthleteFactory.getInstance("6", 1, "AAA", 1, 11.11);
+        Athlete e7 = AthleteFactory.getInstance("7", 1, "AAA", 1, 11.11);
+        Athlete e8 = AthleteFactory.getInstance("8", 1, "AAA", 1, 11.11);
+        c1.addPhyToTrack(e1, 0, 1);
+        c1.addPhyToTrack(e2, 0, 2);
+        assertEquals(1, api.getRaceGameDifference(c1, c2).getObjNumDiff(1));
+        c2.addPhyToTrack(e3, 0, 1);
+        c2.addPhyToTrack(e4, 0, 2);
+        assertEquals(0, api.getRaceGameDifference(c1, c2).getObjNumDiff(1));
+        // c2.addPhyToTrack(e5, 0, 2);
+        // assertEquals(-1,api.getRaceGameDifference(c1, c2).getObjNumDiff(2));
+        // c1.addPhyToTrack(e6, 0, 2);c1.addPhyToTrack(e7, 0, 2);
+        // assertEquals(1,api.getRaceGameDifference(c1, c2).getObjNumDiff(2));
+
+        assertEquals("1-3", api.getRaceGameDifference(c1, c2).getObjDetailDiff(1));
+        // System.out.println(api.getRaceGameDifference(c1, c2).getObjDetailDiff(2));
+        // assertEquals("6-4",api.getRaceGameDifference(c1, c2).getObjDetailDiff(2));
+        c1.addPhyToTrack(e8, 0, 3);
+        assertEquals("8-None", api.getRaceGameDifference(c1, c2).getObjDetailDiff(3));
+        assertEquals("None-8", api.getRaceGameDifference(c2, c1).getObjDetailDiff(3));
+        c1.addPhyToTrack(e5, 0, 4);
+        c2.addPhyToTrack(e5, 0, 4);
+        assertEquals("None", api.getRaceGameDifference(c2, c1).getObjDetailDiff(4));
+        api.getDifference(c1, c2);
+    }
 }

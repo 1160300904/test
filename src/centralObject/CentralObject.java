@@ -5,8 +5,5 @@ package centralObject;
  *
  */
 public interface CentralObject {
-	
-	
-	
-}
 
+}

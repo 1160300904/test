@@ -1,4 +1,5 @@
 package applications;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -8,36 +9,36 @@ import physicalObject.*;
 
 import java.io.*;
 import java.util.*;
+
 public class AtomStructureTest {
 
-	/*Testing strategy
-	 * 	¢Ùvoid initWithFile(File file) 	1£©ÊäÈëÎÄ¼şÖĞµÄÒì³£ÀàĞÍ£º
-				Óï·¨´íÎó£¬ĞÅÏ¢×ÔÃ¬¶Ü£¬ÓĞÖØ¸´µÄÎïÌå
-	 */
-	@Test
-	public void testAtomStructure() throws FileNotFoundException,
-							FileSyntaxException, FileInfoConflictException {
-		ApplicationFactory af=new AtomStructureFactory();
-		AtomStructure as=(AtomStructure)af.getApplication();
-		File file=new File("test\\testfile\\AtomStructure\\AtomicStructure.txt");
-		as.initWithFile(file);
-		assertEquals("Rb",as.getCenterName());
-		assertEquals(5,as.getEleOnTrack().keySet().size());
-		
-		as=(AtomStructure)af.getApplication();
-		File file1=new File("test\\testfile\\AtomStructure\\EleNameMoreLetter.txt");
-		
-		try{
-			as.initWithFile(file1);
-		}catch(Exception ex) {
-			assert ex instanceof FileSyntaxException;
-		}
-		as=(AtomStructure)af.getApplication();
-		File file2=new File("test\\testfile\\AtomStructure\\AtomicStructure1.txt");
-		try{
-			as.initWithFile(file2);
-		}catch(Exception ex) {
-			assert ex instanceof FileInfoConflictException;
-		}
-	}
+    /*
+     * Testing strategy â‘ void initWithFile(File file) 1ï¼‰è¾“å…¥æ–‡ä»¶ä¸­çš„å¼‚å¸¸ç±»å‹ï¼š
+     * è¯­æ³•é”™è¯¯ï¼Œä¿¡æ¯è‡ªçŸ›ç›¾ï¼Œæœ‰é‡å¤çš„ç‰©ä½“
+     */
+    @Test
+    public void testAtomStructure() throws FileNotFoundException, FileSyntaxException, FileInfoConflictException {
+        ApplicationFactory af = new AtomStructureFactory();
+        AtomStructure as = (AtomStructure) af.getApplication();
+        File file = new File("test\\testfile\\AtomStructure\\AtomicStructure.txt");
+        as.initWithFile(file);
+        assertEquals("Rb", as.getCenterName());
+        assertEquals(5, as.getEleOnTrack().keySet().size());
+
+        as = (AtomStructure) af.getApplication();
+        File file1 = new File("test\\testfile\\AtomStructure\\EleNameMoreLetter.txt");
+
+        try {
+            as.initWithFile(file1);
+        } catch (Exception ex) {
+            assert ex instanceof FileSyntaxException;
+        }
+        as = (AtomStructure) af.getApplication();
+        File file2 = new File("test\\testfile\\AtomStructure\\AtomicStructure1.txt");
+        try {
+            as.initWithFile(file2);
+        } catch (Exception ex) {
+            assert ex instanceof FileInfoConflictException;
+        }
+    }
 }

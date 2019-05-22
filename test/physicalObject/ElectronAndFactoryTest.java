@@ -4,19 +4,18 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ElectronAndFactoryTest {
-	/*TestingStrategy
-	 * 	1.electronÃû×ÖÊÇ·ñÎª¿Õ´®
-	 * 	2.¹ìµÀÊýÊÇ·ñÎª>0
-	 */
-	@Test
-	public void testElectronAndFactory() {
-		
-		Electron e1=ElectronFactory.getInstance(1);
-		Electron e2=ElectronFactory.getInstance(1);
-		
-		assertEquals("",e1.getName());
-		assertEquals(1,e1.getTrackItOn());
-		assertTrue(e1.equals(e1));
-		assertFalse(e1.equals(e2));
-	}
+    /*
+     * TestingStrategy 1.electronåå­—æ˜¯å¦ä¸ºç©ºä¸² 2.è½¨é“æ•°æ˜¯å¦ä¸º>0
+     */
+    @Test
+    public void testElectronAndFactory() {
+
+        Electron e1 = ElectronFactory.getInstance(1);
+        Electron e2 = ElectronFactory.getInstance(1);
+
+        assertEquals("", e1.getName());
+        assertEquals(1, e1.getTrackItOn());
+        assertTrue(e1.equals(e1));
+        assertFalse(e1.equals(e2));
+    }
 }

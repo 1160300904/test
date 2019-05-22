@@ -1,54 +1,56 @@
 package errorHandling;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
+
 public class TestTrackGameHandler {
 
-	/*Testing strategy:
-	 * 	1.handleAthlete			1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢Ã»±»<,>À¨ÆğÀ´/ĞÅÏ¢È±Ê§/ÔË¶¯Ô±ĞÕÃû¸ñÊ½´íÎó/
-	 * 								ÔË¶¯Ô±¹ú¼®ĞÅÏ¢²»ÊÇÈı¸ö´óĞ´×ÖÄ¸/ÄêÁäºÍºÅÂë²»ÊÇÕıÕûÊı/×îºÃ³É¼¨²»ÊÇÁ½Î»Ğ¡Êı
-	 * 	2.handleGame			1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢ÖĞÎŞ'='·ûºÅ/±ÈÈüÃû³Æ²»ÊÇÕûÊı/±ÈÈü²»ÊÇ100»ò200»ò400
-	 * 	3.handleNumOfTracks		1£©ÊäÈëµÄ´íÎóÀàĞÍ£ºĞÅÏ¢ÖĞÎŞ'='·ûºÅ/¹ìµÀÊıÄ¿²»ÊÇÕûÊı/¹ìµÀÊıÄ¿²»ÔÚ[4,10]Ö®¼ä
-	 */
-	@Test
-	public void testTrackGame() {
-		TrackGameHandler h=new TrackGameHandler();
-		assertNull(h.FilesyntaxHandling(null));
-		assertNull(h.FilesyntaxHandling("a"));
-	}
-	
-	@Test
-	public void testAthlete() {
-		TrackGameHandler h=new TrackGameHandler();
-		h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.94>");
-		h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.94");
-		h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38>");
-		h.FilesyntaxHandling("Athlete ::= <Bo#lt,1,JAM,38,9.94>");
-		h.FilesyntaxHandling("Athlete ::= <Bolt,1,JABM,38,9.94>");
-		h.FilesyntaxHandling("Athlete ::= <Bolt,1.0,JAM,38,9.94>");
-		h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38.0,9.94>");
-		h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.9>");
-		h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,nine>");
-		
-	}
-	
-	@Test
-	public void testGame() {
-		TrackGameHandler h=new TrackGameHandler();
-		h.FilesyntaxHandling("Game ::= 100");
-		h.FilesyntaxHandling("Game ::= 200");
-		h.FilesyntaxHandling("Game ::= 400");
-		h.FilesyntaxHandling("Game ::100");
-		h.FilesyntaxHandling("Game ::= one hundred");
-		h.FilesyntaxHandling("Game ::= 1000");
-	}
-	
-	@Test
-	public void testTrack() {
-		TrackGameHandler h=new TrackGameHandler();
-		h.FilesyntaxHandling("NumOfTracks ::= 5 ");
-		h.FilesyntaxHandling("NumOfTracks :: 5 ");
-		h.FilesyntaxHandling("NumOfTracks ::= five");
-		h.FilesyntaxHandling("NumOfTracks ::= 15");
-		h.FilesyntaxHandling("NumOfTracks ::= 1");
-	}
+    /*
+     * Testing strategy: 1.handleAthlete 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯æ²¡è¢«<,>æ‹¬èµ·æ¥/ä¿¡æ¯ç¼ºå¤±/è¿åŠ¨å‘˜å§“åæ ¼å¼é”™è¯¯/
+     * è¿åŠ¨å‘˜å›½ç±ä¿¡æ¯ä¸æ˜¯ä¸‰ä¸ªå¤§å†™å­—æ¯/å¹´é¾„å’Œå·ç ä¸æ˜¯æ­£æ•´æ•°/æœ€å¥½æˆç»©ä¸æ˜¯ä¸¤ä½å°æ•° 2.handleGame
+     * 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯ä¸­æ— '='ç¬¦å·/æ¯”èµ›åç§°ä¸æ˜¯æ•´æ•°/æ¯”èµ›ä¸æ˜¯100æˆ–200æˆ–400 3.handleNumOfTracks
+     * 1ï¼‰è¾“å…¥çš„é”™è¯¯ç±»å‹ï¼šä¿¡æ¯ä¸­æ— '='ç¬¦å·/è½¨é“æ•°ç›®ä¸æ˜¯æ•´æ•°/è½¨é“æ•°ç›®ä¸åœ¨[4,10]ä¹‹é—´
+     */
+    @Test
+    public void testTrackGame() {
+        TrackGameHandler h = new TrackGameHandler();
+        assertNull(h.FilesyntaxHandling(null));
+        assertNull(h.FilesyntaxHandling("a"));
+    }
+
+    @Test
+    public void testAthlete() {
+        TrackGameHandler h = new TrackGameHandler();
+        h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.94>");
+        h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.94");
+        h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38>");
+        h.FilesyntaxHandling("Athlete ::= <Bo#lt,1,JAM,38,9.94>");
+        h.FilesyntaxHandling("Athlete ::= <Bolt,1,JABM,38,9.94>");
+        h.FilesyntaxHandling("Athlete ::= <Bolt,1.0,JAM,38,9.94>");
+        h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38.0,9.94>");
+        h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.9>");
+        h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,nine>");
+
+    }
+
+    @Test
+    public void testGame() {
+        TrackGameHandler h = new TrackGameHandler();
+        h.FilesyntaxHandling("Game ::= 100");
+        h.FilesyntaxHandling("Game ::= 200");
+        h.FilesyntaxHandling("Game ::= 400");
+        h.FilesyntaxHandling("Game ::100");
+        h.FilesyntaxHandling("Game ::= one hundred");
+        h.FilesyntaxHandling("Game ::= 1000");
+    }
+
+    @Test
+    public void testTrack() {
+        TrackGameHandler h = new TrackGameHandler();
+        h.FilesyntaxHandling("NumOfTracks ::= 5 ");
+        h.FilesyntaxHandling("NumOfTracks :: 5 ");
+        h.FilesyntaxHandling("NumOfTracks ::= five");
+        h.FilesyntaxHandling("NumOfTracks ::= 15");
+        h.FilesyntaxHandling("NumOfTracks ::= 1");
+    }
 }
