@@ -1,6 +1,7 @@
 package errorHandling;
 
-import java.util.*;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,8 +18,10 @@ public class PersonalAppHandler {
    * 
    * @param str the string which cause the error.
    */
-  public String FilesyntaxHandling(String str) {
-    if (str == null) return null;
+  public String filesyntaxHandling(String str) {
+    if (str == null) {
+      return null;
+    }
     int athleteIndex = str.indexOf("App");
     if (athleteIndex != -1) {
       return handleApp(str);
@@ -44,8 +47,8 @@ public class PersonalAppHandler {
       return handleUnInstallLog(str);
     }
 
-    int UseLogIndex = str.indexOf("UsageLog");
-    if (UseLogIndex != -1) {
+    int useLogIndex = str.indexOf("UsageLog");
+    if (useLogIndex != -1) {
       return handleUseLog(str);
     }
 

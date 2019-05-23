@@ -14,34 +14,34 @@ public class CTRelationsTest {
 
   @Test
   public void testCTRelations() {
-    CTRelations<String, String> c1;
+    CTrelations<String, String> c1;
     try {
-      c1 = new CTRelations<>(null);
+      c1 = new CTrelations<>(null);
 
     } catch (Exception ex) {
       assert ex instanceof IllegalArgumentException;
     }
 
     try {
-      c1 = new CTRelations<>(null, null);
+      c1 = new CTrelations<>(null, null);
 
     } catch (Exception ex) {
       assert ex instanceof IllegalArgumentException;
     }
     Set<String> set = new HashSet<>();
     try {
-      c1 = new CTRelations<>(set, null);
+      c1 = new CTrelations<>(set, null);
 
     } catch (Exception ex) {
       assert ex instanceof IllegalArgumentException;
     }
     try {
-      c1 = new CTRelations<>(null, "A");
+      c1 = new CTrelations<>(null, "A");
 
     } catch (Exception ex) {
       assert ex instanceof IllegalArgumentException;
     }
-    c1 = new CTRelations<>("cen");
+    c1 = new CTrelations<>("cen");
     try {
       c1.setCentralObject(null);
 
@@ -53,7 +53,7 @@ public class CTRelationsTest {
     set.add("o1");
     set.add("o2");
     set.add("o3");
-    CTRelations<String, String> c2 = new CTRelations<>(set, "cen");
+    CTrelations<String, String> c2 = new CTrelations<>(set, "cen");
     assertEquals("cen", c1.getCentralObject());
     Set<String> retset = c2.getPhysicalObject();
     assertTrue(retset.contains("o1"));

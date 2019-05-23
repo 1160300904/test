@@ -1,6 +1,7 @@
 package errorHandling;
 
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,8 +18,10 @@ public class TrackGameHandler {
    * 
    * @param str the string which cause the error.
    */
-  public String FilesyntaxHandling(String str) {
-    if (str == null) return null;
+  public String filesyntaxHandling(String str) {
+    if (str == null) {
+      return null;
+    }
     int athleteIndex = str.indexOf("Athlete");
     if (athleteIndex != -1) {
       return handleAthlete(str);

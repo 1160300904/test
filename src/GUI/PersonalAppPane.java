@@ -1,23 +1,30 @@
 package GUI;
 
-import physicalObject.*;
-
-import java.io.*;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import applications.*;
-import centralObject.*;
-import circularOrbit.*;
-import errorHandling.*;
-import APIs.*;
+import APIs.CircularOrbitAPIs;
+import APIs.Difference;
 import appExceptions.FileInfoConflictException;
 import appExceptions.FileSyntaxException;
 import appExceptions.RepeatedObjectsException;
+import applications.AppEcosystemFactory;
+import applications.AppUseNote;
+import applications.ApplicationFactory;
+import applications.MyDate;
+import applications.PersonalAppEcosystem;
+import centralObject.User;
+import circularOrbit.CircularOrbit;
+import errorHandling.PersonalAppHandler;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.Button;
@@ -25,9 +32,12 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import physicalObject.PersonalApp;
+import physicalObject.PersonalAppFactory;
 
 /**
  * This is the class of pane of PersonalAppEcosystem. The circular orbit of app ecosystem will be
@@ -59,8 +69,8 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
   // exception fields
   PersonalAppHandler appHandler = new PersonalAppHandler();
 
-  List<CircularOrbit<User, PersonalApp>> orbitlist = new ArrayList<>();// oribitlist that contains
-                                                                       // orbits.
+  List<CircularOrbit<User, PersonalApp>> orbitlist = new ArrayList<>();
+  // oribitlist that contains orbits.
   /*
    * Abstract function: 1.ecos is used for generate the orbits. 2.timenode contains the time stamps
    * of each period of app ecosystem. 3.nametoappmap maps the names of the app to itselves.
@@ -84,9 +94,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
     // inner jobs
     ApplicationFactory perappfac = new AppEcosystemFactory();
     this.pereco = (PersonalAppEcosystem) perappfac.getApplication();
-    String apppstr = "([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]-_\\.]+),"
-        + "(\"[[a-z][A-Z][0-9]\\s]+\"),(\"[[a-z][A-Z][0-9]\\s]+\"),([0-9]+),([0-9]{1,3}\\.[0-9]{2})";
-    Pattern appp = Pattern.compile(apppstr);
+    
 
     // gui jobs
     specialuse.add(difBut, 0, 0);
@@ -148,7 +156,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
           this.pereco = (PersonalAppEcosystem) perappfac.getApplication();
           file = filechooser.showOpenDialog(stage);
         } catch (FileSyntaxException e1) {
-          String ret = this.appHandler.FilesyntaxHandling(e1.getMessage());
+          String ret = this.appHandler.filesyntaxHandling(e1.getMessage());
           this.outputfield.setText(ret);
           this.pereco = (PersonalAppEcosystem) perappfac.getApplication();
           file = filechooser.showOpenDialog(stage);
@@ -168,13 +176,16 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
       this.ecos = this.pereco.getEcos();
       this.timenode = this.pereco.getPeriodList();
       this.nametoappmap = this.pereco.getUseNoteToAppMap();
-      FromEcoToOrbit();
+      fromEcoToOrbit();
       LogRecord lr = new LogRecord(Level.INFO,
           "Operation" + ",Initialize," + "initialize from file" + ",succeed");
       this.log.log(lr);
       this.logsaver.add(lr);
     });
-
+    String apppstr = "([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]-_\\.]+),"
+        + "(\"[[a-z][A-Z][0-9]\\s]+\"),(\"[[a-z][A-Z][0-9]\\s]+\"),"
+        + "([0-9]+),([0-9]{1,3}\\.[0-9]{2})";
+    Pattern appp = Pattern.compile(apppstr);
     this.addObjBut.setOnAction(e -> {
       String str = this.inputfield.getText();
       Matcher matcher;
@@ -300,7 +311,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
   /**
    * A function that transit the ecosystem information read from file to the orbit system.
    */
-  private void FromEcoToOrbit() {
+  private void fromEcoToOrbit() {
     int size = this.ecos.size();
 
     int maxsynthensis = 0;
@@ -327,7 +338,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
       String aunname = null;
       List<String> aunnamelist = new ArrayList<>();
       for (AppUseNote aun : aulist) {
-        int onwhichtrack = this.OnWhichTrack(aun, maxsynthensis);
+        int onwhichtrack = this.onWhichTrack(aun, maxsynthensis);
         aunname = aun.getName();
         aunnamelist.add(aunname);
         PersonalApp pa = this.nametoappmap.get(aunname);
@@ -362,7 +373,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
    * @param maxsyn the max synthesis of apps on one circular orbit
    * @return which track should the app on
    */
-  private int OnWhichTrack(AppUseNote aun, int maxsyn) {
+  private int onWhichTrack(AppUseNote aun, int maxsyn) {
     int syn = aun.getSynthesize();
     if (syn > 0.1 * maxsyn) {
       return 1;
@@ -376,7 +387,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
   }
 
   @Override
-  void Draw() {
+  void draw() {
     List<Double> radiuses = this.orbit.getRadius();
     List<HashSet<PersonalApp>> objs = this.orbit.getObjOnTracks();
     Map<PersonalApp, Double> thetas = this.orbit.getThetas();
@@ -394,7 +405,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
     for (int i = 0; i < radiussize; i++) {
       double radiusi = radiuses.get(i);
       s.append("Track " + (i + 1) + " : radius is " + radiusi + "\n");
-      DrawOneOrbit(radiusi, maxradius, objs.get(i), thetas, s);
+      drawOneOrbit(radiusi, maxradius, objs.get(i), thetas, s);
     }
     this.outputmes = s.toString();
     this.outputfield.setText(outputmes);
@@ -481,7 +492,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
    * @param thetas the degree of each object on the track.
    * @param s a StringBuffer to put the message of the track in.
    */
-  void DrawOneOrbit(double radius, double maxrad, HashSet<PersonalApp> aonetra,
+  void drawOneOrbit(double radius, double maxrad, HashSet<PersonalApp> aonetra,
       Map<PersonalApp, Double> thetas, StringBuffer s) {
     // calculate radius
     DoubleProperty radongui = new SimpleDoubleProperty();

@@ -1,8 +1,11 @@
 package Relations;
 
-import java.util.*;
-
 import com.sun.istack.internal.NotNull;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+
 
 /**
  * This is a class represents the relations between CentralObject and PhysicalObject in a
@@ -11,7 +14,7 @@ import com.sun.istack.internal.NotNull;
  * @author Luke Skywalker
  *
  */
-public class CTRelations<L, E> {
+public class CTrelations<L, E> {
   private L central;
   private Set<E> phyobj;
 
@@ -41,7 +44,7 @@ public class CTRelations<L, E> {
    * @param central the CentralObject in these relations.
    */
 
-  public CTRelations(@NotNull L central) {
+  public CTrelations(@NotNull L central) {
 
     this.central = central;
     this.phyobj = new HashSet<E>();
@@ -54,7 +57,7 @@ public class CTRelations<L, E> {
    * @param central the CentralObject in these relations.
    * @param obj the initial object set of these relations.
    */
-  public CTRelations(Set<E> obj, L central) {
+  public CTrelations(Set<E> obj, L central) {
     if (obj == null || central == null) {
       throw new IllegalArgumentException();
     }
@@ -75,7 +78,6 @@ public class CTRelations<L, E> {
   /**
    * set the CentralObject in these relations.
    * 
-   * @return the CentralObject in these relations.
    */
   public void setCentralObject(L object) {
     if (object == null) {

@@ -3,16 +3,18 @@ package track;
 import java.util.Set;
 
 /**
- * This is a implementation of factory TrackFactory<E>.
+ * This is a implementation of factory TrackFactory.
  *
- * @param <E> the type of the PhysicalObject on the track. It MUST be IMMUTABLE. And it MUST
+ * @param the type of the PhysicalObject on the track. It MUST be IMMUTABLE. And it MUST
  *        implements the equals() method.
  */
 public class CircleTrackFactory implements TrackFactory {
 
   @Override
   public Track getInstance(double radius) {
-    if (radius <= 0) return null;
+    if (radius <= 0) {
+      return null;
+    }
     return new CircleTrack(radius);
   }
 

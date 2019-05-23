@@ -1,9 +1,11 @@
 package Relations;
 
+import Graph.Graph;
 import com.sun.istack.internal.NotNull;
+import java.util.Map;
+import java.util.Set;
 
-import Graph.*;
-import java.util.*;
+
 
 /**
  * This is a class represents the relations between PhysicalObjects in a CircularOrbit. This is
@@ -33,7 +35,7 @@ public class TRelations<E> {
   }
 
   /**
-   * check if the rep invariant is correct
+   * check if the rep invariant is correct.
    */
   private void checkRep() {
     for (E e : graph.vertices()) {

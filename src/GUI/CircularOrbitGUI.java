@@ -36,13 +36,9 @@ public class CircularOrbitGUI extends Application {
      * stage.show();
      */
     StackPane bp = new StackPane();
-    VBox vb = new VBox();
-    Text t = new Text("Please choose which app you want to use:");
     Button b1 = new Button("RaceGame");
     Button b2 = new Button("AtomStructure");
     Button b3 = new Button("PersonalAppEcosystem");
-    StackPane sp1 = new StackPane();
-    VBox sp2 = new VBox();
 
     b1.setOnAction(e -> {
       bp.getChildren().clear();
@@ -57,9 +53,14 @@ public class CircularOrbitGUI extends Application {
       bp.getChildren().clear();
       bp.getChildren().add(new PersonalAppPane());
     });
+    Text t = new Text("Please choose which app you want to use:");
+    StackPane sp1 = new StackPane();
     sp1.getChildren().add(t);
+    VBox sp2 = new VBox();
     sp2.getChildren().addAll(b1, b2, b3);
     sp2.setPadding(new Insets(110, 110, 110, 110));
+
+    VBox vb = new VBox();
     vb.getChildren().addAll(sp1, sp2);
     bp.getChildren().add(vb);
 

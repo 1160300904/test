@@ -12,12 +12,15 @@ class RemoveComments {
     for (String line : source) {
       int i = 0;
       char[] chars = line.toCharArray();
-      if (!inBlock) newline = new StringBuffer();
+      if (!inBlock) {
+        newline = new StringBuffer();
+      }
       while (i < line.length()) {
         // i+1 <= line.length()----i+1 < line.length()
         if (!inBlock && i + 1 < line.length() && chars[i] == '/' && chars[i + 1] == '*') {
           inBlock = true;
-        } else if (!inBlock && i + 1 < line.length() && chars[i] == '/' && chars[i + 1] == '/') {// consider'//'
+        } else if (!inBlock && i + 1 < line.length() && chars[i] == '/' && chars[i + 1] == '/') {
+          // consider'//'
           inBlock = false;
           break;
         } else if (inBlock && i + 1 < line.length() && chars[i] == '*' && chars[i + 1] == '/') {

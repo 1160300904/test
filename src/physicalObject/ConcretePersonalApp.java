@@ -91,7 +91,9 @@ class ConcretePersonalApp implements PersonalApp {
 
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof PersonalApp)) return false;
+    if (!(o instanceof PersonalApp)) {
+      return false;
+    }
     PersonalApp o1 = (PersonalApp) o;
     return o1.getName().equals(this.getName()) && (o1.getCompany()).equals(this.company)
         && o1.getVersion().equals(this.version)

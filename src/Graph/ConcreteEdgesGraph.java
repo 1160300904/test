@@ -2,19 +2,20 @@
  * Copyright (c) 2015-2016 MIT 6.005 course staff, all rights reserved. Redistribution of original
  * or derived work requires permission of course staff.
  */
+
 package Graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.*;
+import java.util.Set;
 
 /**
  * An implementation of Graph.
- * 
- * <p>
  * PS2 instructions: you MUST use the provided rep.
  */
 public class ConcreteEdgesGraph<L> implements Graph<L> {
@@ -63,7 +64,9 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
 
   @Override
   public boolean add(L vertex) {
-    if (vertices.contains(vertex)) return false;
+    if (vertices.contains(vertex)) {
+      return false;
+    }
     vertices.add(vertex);
     checkRep();
     return true;
@@ -92,8 +95,12 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
       }
     } else {
       if (existed == null) {
-        if (vertices.contains(source) == false) vertices.add(source);
-        if (vertices.contains(target) == false) vertices.add(target);
+        if (vertices.contains(source) == false) {
+          vertices.add(source);
+        }
+        if (vertices.contains(target) == false) {
+          vertices.add(target);
+        }
         edges.add(new Edge<L>(source, weight, target));
         // checkRep();
         return 0;
@@ -177,88 +184,4 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
 }
 
 
-/**
- * TODO specification Immutable. This class is internal to the rep of ConcreteEdgesGraph. an Edge
- * instance represent an edge of a graph. L must be an immutable type
- * 
- * <p>
- * PS2 instructions: the specification and implementation of this class is up to you.
- */
-class Edge<L> {
 
-  // TODO fields
-  private final L source;
-  private final L target;
-  private final int weight;
-  /*
-   * Abstraction function: source represents the source of the edge target represents the target of
-   * the edge weight represents the weight of the edge
-   */
-  /*
-   * Representation invariant: the weight must be a positive number source and target must not be
-   * null pointer
-   */
-  /*
-   * Safety from rep exposure: all fields are immutable all fields are private and final
-   */
-
-  /**
-   * constructor of an edge. it represents an directed weighted edge in the graph. L must be
-   * immutable.
-   * 
-   * @param source starting point of the edge
-   * @param weight an int type weight of the weighted edge
-   * @param target ending point of the edge
-   */
-  Edge(L source, int weight, L target) {
-    this.source = source;
-    this.target = target;
-    this.weight = weight;
-    checkRep();
-  }
-
-  /**
-   * check the rep invariant is true
-   */
-  private void checkRep() {
-    assert weight > 0;
-    assert source != null;
-    assert target != null;
-  }
-
-  // TODO methods
-
-  /**
-   * get the starting point of the edge.
-   * 
-   * @return an instance of the starting point.
-   */
-  L getSource() {
-    return this.source;
-  }
-
-  /**
-   * get the ending point of the edge.
-   * 
-   * @return an instance of the ending point.
-   */
-  L getTarget() {
-    return this.target;
-  }
-
-  /**
-   * get the weight of the edge.
-   * 
-   * @return weight of the edge.
-   */
-  int getWeight() {
-    return this.weight;
-  }
-
-  // TODO toString()
-  @Override
-  public String toString() {
-    return ("This edge is from " + source.toString() + " to " + target.toString()
-        + " with weight of " + weight);
-  }
-}

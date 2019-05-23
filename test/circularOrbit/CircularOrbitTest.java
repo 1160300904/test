@@ -51,7 +51,7 @@ public class CircularOrbitTest {
     Track t2 = tf.getInstance(2.2);
     Track t3 = tf.getInstance(3.3);
     Track t4 = tf.getInstance(4);
-    assertEquals(0, c.TrackAmount());
+    assertEquals(0, c.trackAmount());
     // test addOutsideTrack()
     try {
       c.addOutsideTrack(-1);
@@ -64,7 +64,7 @@ public class CircularOrbitTest {
     assertTrue(c.addOutsideTrack(4));
     assertFalse(c.addOutsideTrack(2.2));
     assertTrue(c.addOutsideTrack(5));
-    assertEquals(5, c.TrackAmount());
+    assertEquals(5, c.trackAmount());
 
     // test addInsideTrack() and getRadius()
     try {
@@ -81,9 +81,9 @@ public class CircularOrbitTest {
     assertTrue(c.addInsideTrack(6));
     assertFalse(c.addInsideTrack(6));
     assertTrue(c.addInsideTrack(0.1));
-    assertEquals(8, c.TrackAmount());
+    assertEquals(8, c.trackAmount());
     assertTrue(c2.addInsideTrack(1));
-    assertEquals(1, c2.TrackAmount());
+    assertEquals(1, c2.trackAmount());
     List<Double> lc = c.getRadius();
     assertEquals(0.1, lc.get(0).doubleValue(), 0.01);
     assertEquals(1, lc.get(1).doubleValue(), 0.01);
@@ -96,23 +96,23 @@ public class CircularOrbitTest {
 
     // test deleteTrack()
     c.deleteTrack(-2);
-    assertEquals(8, c.TrackAmount());
+    assertEquals(8, c.trackAmount());
     c.deleteTrack(9);
-    assertEquals(8, c.TrackAmount());
+    assertEquals(8, c.trackAmount());
     PersonalApp p1 = PersonalAppFactory.getInstance("1", "1", "1", "1", "1");
     c.addPhyToTrack(p1, 1, 4);
     c.deleteTrack(4);
-    assertEquals(7, c.TrackAmount());
+    assertEquals(7, c.trackAmount());
     c.deleteTrack(7);
-    assertEquals(6, c.TrackAmount());
+    assertEquals(6, c.trackAmount());
     c.deleteTrack(1);
-    assertEquals(5, c.TrackAmount());
+    assertEquals(5, c.trackAmount());
     List<Double> lcc = c.getRadius();
     for (int i = 0; i < 5; i++) {
       assertEquals(i + 1, lcc.get(i).doubleValue(), 0.01);
     }
     c2.deleteTrack(1);
-    assertEquals(0, c2.TrackAmount());
+    assertEquals(0, c2.trackAmount());
     assertTrue(c2.getRadius().isEmpty());
 
   }
@@ -141,10 +141,10 @@ public class CircularOrbitTest {
     assertTrue(c.addPhyToTrack(e2, Math.PI / 2, 2));
     assertTrue(c.addPhyToTrack(e3, Math.PI / 2, 1));
 
-    assertEquals(2, c.NumOnTrack(1));
-    assertEquals(1, c.NumOnTrack(2));
-    assertEquals(-1, c.NumOnTrack(-2));
-    assertEquals(-1, c.NumOnTrack(22));
+    assertEquals(2, c.numOnTrack(1));
+    assertEquals(1, c.numOnTrack(2));
+    assertEquals(-1, c.numOnTrack(-2));
+    assertEquals(-1, c.numOnTrack(22));
 
     try {
       c.removePhy(null, 1);
@@ -155,14 +155,14 @@ public class CircularOrbitTest {
     assertFalse(c.removePhy(e1, -9));
     assertTrue(c.removePhy(e1, 1));
     assertFalse(c.removePhy(e1, 1));
-    assertEquals(1, c.NumOnTrack(1));
-    assertEquals(1, c.NumOnTrack(2));
+    assertEquals(1, c.numOnTrack(1));
+    assertEquals(1, c.numOnTrack(2));
 
     assertTrue(c.removePhy(e2, 2));
     assertTrue(c.removePhy(e3, 1));
     assertFalse(c.removePhy(e3, 1));
-    assertTrue(c.NumOnTrack(1) == 0);
-    assertTrue(c.NumOnTrack(11) == -1);
+    assertTrue(c.numOnTrack(1) == 0);
+    assertTrue(c.numOnTrack(11) == -1);
   }
 
   @Test
@@ -242,7 +242,7 @@ public class CircularOrbitTest {
     assertFalse(c.transit(p1, 0, 1, -1));
     assertFalse(c.transit(p1, 0, 1, 10));
     assertFalse(c.transit(p7, 0, 1, 2));
-    assertEquals(-1, c.NumOnTrack(10));
+    assertEquals(-1, c.numOnTrack(10));
     c.transit(p6, 0, 3, 3);
     assertEquals(1, c.getPhysicalDistance(p5, p6), 0.1);
 

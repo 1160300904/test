@@ -1,6 +1,5 @@
 package track;
 
-import java.util.*;
 
 /**
  * This is a factory interface for type Track.
@@ -11,10 +10,10 @@ import java.util.*;
 public interface TrackFactory {
 
   /**
-   * Get an instance of a track
+   * Get an instance of a track.
    * 
-   * @param the radius of the track.
-   * @return An instance of Track<E> which has the radius of {@code radius}. If radius<=0, then the
+   * @param radius the radius of the track.
+   * @return An instance of Track which has the radius of {@code radius}. If radius<=0, then the
    *         method returns null.
    */
   public Track getInstance(double radius);

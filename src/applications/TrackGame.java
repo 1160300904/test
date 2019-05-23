@@ -226,7 +226,7 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
     if (c.getCentralObj() != null) {
       return false;
     }
-    int tracknum = c.TrackAmount();
+    int tracknum = c.trackAmount();
     if (tracknum < 4 || tracknum > 10) {
       return false;
     }
@@ -313,7 +313,7 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
       return false;
     }
     CircularOrbit<String, Athlete> lastorbit = clist.get(listsize - 1);
-    int tracknum = lastorbit.TrackAmount();
+    int tracknum = lastorbit.trackAmount();
     int lastOrbitAthelteNum = getAthleteNum(lastorbit, tracknum);
     if (lastOrbitAthelteNum < tracknum) {
       for (int i = 0; i < listsize - 1; i++) {
@@ -343,7 +343,7 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
    */
   public boolean isLegalForTwoOrbits(CircularOrbit<String, Athlete> c1,
       CircularOrbit<String, Athlete> c2) {
-    int tracknum = c1.TrackAmount();
+    int tracknum = c1.trackAmount();
     boolean retboo = true;
     retboo = isLegalOneGroup(c1);
     retboo = isLegalOneGroup(c2);

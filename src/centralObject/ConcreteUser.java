@@ -20,7 +20,6 @@ class ConcreteUser implements User {
   /**
    * Constructor of a concrete user.
    * 
-   * @param name
    */
   ConcreteUser(String name) {
     assert name.equals("") == false;
@@ -34,7 +33,9 @@ class ConcreteUser implements User {
 
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof User)) return false;
+    if (!(o instanceof User)) {
+      return false;
+    }
     User o1 = (User) o;
     return o1.getName().equals(this.getName());
   }

@@ -1,9 +1,18 @@
 package circularOrbit;
 
-import java.util.*;
-
-import Relations.*;
-import track.*;
+import Relations.CTrelations;
+import Relations.TRelations;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import track.CircleTrackFactory;
+import track.Track;
+import track.TrackFactory;
 
 public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
 
@@ -19,7 +28,7 @@ public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
   private HashMap<E, Double> thetas = new HashMap<>();
 
   // relations between objects
-  private CTRelations<L, E> ctr = new CTRelations<>(this.centralobj);
+  private CTrelations<L, E> ctr = new CTrelations<>(this.centralobj);
   private TRelations<E> tr = new TRelations<>();
 
   /*
@@ -74,7 +83,7 @@ public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
   }
 
   @Override
-  public int TrackAmount() {
+  public int trackAmount() {
     return tracks.size();
   }
 
@@ -86,7 +95,9 @@ public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
 
     if (radiuses.size() > 0) {
       Double outtrack = radiuses.get(radiuses.size() - 1);
-      if (radius <= outtrack) return false;
+      if (radius <= outtrack) {
+        return false;
+      }
     }
 
     TrackFactory tf = new CircleTrackFactory();
@@ -96,7 +107,10 @@ public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
     return tracks.add(t);
 
   }
-
+  
+  /**
+   * add inside track.
+   */
   public boolean addInsideTrack(double radius) {
     if (radius <= 0) {
       throw new IllegalArgumentException();
@@ -121,12 +135,14 @@ public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
 
   @Override
   public void deleteTrack(int tracknum) {
-    if (tracknum <= 0 || tracknum > radiuses.size()) return;
+    if (tracknum <= 0 || tracknum > radiuses.size()) {
+      return;
+    }
     int trackn = tracknum - 1;
-    HashSet<E> objontrack = obj.get(trackn);
     this.tracks.remove(trackn);
     this.obj.remove(trackn);
     this.radiuses.remove(trackn);
+    HashSet<E> objontrack = obj.get(trackn);
     for (E object : objontrack) {
       this.thetas.remove(object);
     }
@@ -215,7 +231,7 @@ public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
   }
 
   @Override
-  public int NumOnTrack(int tracknum) {
+  public int numOnTrack(int tracknum) {
     if (tracknum <= 0 || tracknum > tracks.size()) {
       // System.out.println("invalid input");
       return -1;
@@ -227,10 +243,13 @@ public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
   public double getPhysicalDistance(E e1, E e2) {
     Double theta1 = this.thetas.get(e1);
     Double theta2 = this.thetas.get(e2);
-    if (theta1 == null || theta2 == null) return Double.POSITIVE_INFINITY;
+    if (theta1 == null || theta2 == null) {
+      return Double.POSITIVE_INFINITY;
+    }
     theta1 = Math.toRadians(theta1);
     theta2 = Math.toRadians(theta2);
-    Double row1 = null, row2 = null;
+    Double row1 = null;
+    Double row2 = null;
     for (int i = 0; i < this.tracks.size(); i++) {
       if (obj.get(i).contains(e1)) {
         row1 = radiuses.get(i);
@@ -257,20 +276,22 @@ public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
     /*
      * if(!this.thetas.containsKey(p1)||!this.thetas.containsKey(p2)) return -1;
      */
-    if (p1.equals(p2)) return 0;
+    if (p1.equals(p2)) {
+      return 0;
+    }
     LinkedList<E> pque = new LinkedList<>();
     LinkedList<Integer> preque = new LinkedList<>();
     List<E> visited = new ArrayList<>();
     E quefront = null;
     Set<E> targets = new HashSet<E>();
     int distance = 0;
-    int index = 0;
     boolean visitedboo = false;
     // change visiting strategy?
     pque.add(p1);
     preque.add(-1);
     visited.add(p1);
     // �˴��п�Ҫע��
+    int index = 0;
     while (index < pque.size()) {
       quefront = pque.get(index++);
       targets = tr.targets(quefront).keySet();

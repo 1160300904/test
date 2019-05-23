@@ -13,43 +13,43 @@ public class TestTrackGameHandler {
   @Test
   public void testTrackGame() {
     TrackGameHandler h = new TrackGameHandler();
-    assertNull(h.FilesyntaxHandling(null));
-    assertNull(h.FilesyntaxHandling("a"));
+    assertNull(h.filesyntaxHandling(null));
+    assertNull(h.filesyntaxHandling("a"));
   }
 
   @Test
   public void testAthlete() {
     TrackGameHandler h = new TrackGameHandler();
-    h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.94>");
-    h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.94");
-    h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38>");
-    h.FilesyntaxHandling("Athlete ::= <Bo#lt,1,JAM,38,9.94>");
-    h.FilesyntaxHandling("Athlete ::= <Bolt,1,JABM,38,9.94>");
-    h.FilesyntaxHandling("Athlete ::= <Bolt,1.0,JAM,38,9.94>");
-    h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38.0,9.94>");
-    h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.9>");
-    h.FilesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,nine>");
+    h.filesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.94>");
+    h.filesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.94");
+    h.filesyntaxHandling("Athlete ::= <Bolt,1,JAM,38>");
+    h.filesyntaxHandling("Athlete ::= <Bo#lt,1,JAM,38,9.94>");
+    h.filesyntaxHandling("Athlete ::= <Bolt,1,JABM,38,9.94>");
+    h.filesyntaxHandling("Athlete ::= <Bolt,1.0,JAM,38,9.94>");
+    h.filesyntaxHandling("Athlete ::= <Bolt,1,JAM,38.0,9.94>");
+    h.filesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,9.9>");
+    h.filesyntaxHandling("Athlete ::= <Bolt,1,JAM,38,nine>");
 
   }
 
   @Test
   public void testGame() {
     TrackGameHandler h = new TrackGameHandler();
-    h.FilesyntaxHandling("Game ::= 100");
-    h.FilesyntaxHandling("Game ::= 200");
-    h.FilesyntaxHandling("Game ::= 400");
-    h.FilesyntaxHandling("Game ::100");
-    h.FilesyntaxHandling("Game ::= one hundred");
-    h.FilesyntaxHandling("Game ::= 1000");
+    h.filesyntaxHandling("Game ::= 100");
+    h.filesyntaxHandling("Game ::= 200");
+    h.filesyntaxHandling("Game ::= 400");
+    h.filesyntaxHandling("Game ::100");
+    h.filesyntaxHandling("Game ::= one hundred");
+    h.filesyntaxHandling("Game ::= 1000");
   }
 
   @Test
   public void testTrack() {
     TrackGameHandler h = new TrackGameHandler();
-    h.FilesyntaxHandling("NumOfTracks ::= 5 ");
-    h.FilesyntaxHandling("NumOfTracks :: 5 ");
-    h.FilesyntaxHandling("NumOfTracks ::= five");
-    h.FilesyntaxHandling("NumOfTracks ::= 15");
-    h.FilesyntaxHandling("NumOfTracks ::= 1");
+    h.filesyntaxHandling("NumOfTracks ::= 5 ");
+    h.filesyntaxHandling("NumOfTracks :: 5 ");
+    h.filesyntaxHandling("NumOfTracks ::= five");
+    h.filesyntaxHandling("NumOfTracks ::= 15");
+    h.filesyntaxHandling("NumOfTracks ::= 1");
   }
 }

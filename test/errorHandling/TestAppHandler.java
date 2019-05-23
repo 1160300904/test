@@ -18,85 +18,85 @@ public class TestAppHandler {
   @Test
   public void testappHandlerNull() {
     PersonalAppHandler h = new PersonalAppHandler();
-    assertNull(h.FilesyntaxHandling(null));
+    assertNull(h.filesyntaxHandling(null));
 
   }
 
   @Test
   public void testRelation() {
     PersonalAppHandler h = new PersonalAppHandler();
-    h.FilesyntaxHandling("Relaions ::= <Wechat1,QQ+>");
-    h.FilesyntaxHandling("Relation ::= <Wechat1,QQ+>");
-    h.FilesyntaxHandling("Relation ::= <Wechat1+,QQ>");
-    h.FilesyntaxHandling("Relation ::= Wechat1,QQ");
-    h.FilesyntaxHandling("Relation ::= <Wechat1>");
-    h.FilesyntaxHandling("Relation ::= <Wechat1,QQ>");
+    h.filesyntaxHandling("Relaions ::= <Wechat1,QQ+>");
+    h.filesyntaxHandling("Relation ::= <Wechat1,QQ+>");
+    h.filesyntaxHandling("Relation ::= <Wechat1+,QQ>");
+    h.filesyntaxHandling("Relation ::= Wechat1,QQ");
+    h.filesyntaxHandling("Relation ::= <Wechat1>");
+    h.filesyntaxHandling("Relation ::= <Wechat1,QQ>");
   }
 
   @Test
   public void testhandleUseLog() {
     PersonalAppHandler h = new PersonalAppHandler();
 
-    h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat,2>");
-    h.FilesyntaxHandling("UsageLog ::= 2019-01-01,15:00:00,Wechat,2");
-    h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat>");
-    h.FilesyntaxHandling("UsageLog ::= <2019=01=01,15:00:00,Wechat,2>");
-    h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15.00.00,Wechat,2>");
-    h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,We+chat,2>");
-    h.FilesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat,-2>");
+    h.filesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat,2>");
+    h.filesyntaxHandling("UsageLog ::= 2019-01-01,15:00:00,Wechat,2");
+    h.filesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat>");
+    h.filesyntaxHandling("UsageLog ::= <2019=01=01,15:00:00,Wechat,2>");
+    h.filesyntaxHandling("UsageLog ::= <2019-01-01,15.00.00,Wechat,2>");
+    h.filesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,We+chat,2>");
+    h.filesyntaxHandling("UsageLog ::= <2019-01-01,15:00:00,Wechat,-2>");
   }
 
   @Test
   public void testhandleUnInstallLog() {
     PersonalAppHandler h = new PersonalAppHandler();
 
-    h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28,Didi>");
-    h.FilesyntaxHandling("UninstallLog ::= 2019-01-02,13:00:28,Didi>");
-    h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28>");
-    h.FilesyntaxHandling("UninstallLog ::= <2019=01-02,13:00:28,Didi>");
-    h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13.00:28,Didi>");
-    h.FilesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28,Didi+>");
+    h.filesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28,Didi>");
+    h.filesyntaxHandling("UninstallLog ::= 2019-01-02,13:00:28,Didi>");
+    h.filesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28>");
+    h.filesyntaxHandling("UninstallLog ::= <2019=01-02,13:00:28,Didi>");
+    h.filesyntaxHandling("UninstallLog ::= <2019-01-02,13.00:28,Didi>");
+    h.filesyntaxHandling("UninstallLog ::= <2019-01-02,13:00:28,Didi+>");
   }
 
   @Test
   public void testhandleInstallLog() {
     PersonalAppHandler h = new PersonalAppHandler();
 
-    h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap>");
-    h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap");
-    h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30>");
-    h.FilesyntaxHandling("InstallLog ::= <2019=01-02,13:19:30,BaiduMap>");
-    h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13.19:30,BaiduMap>");
-    h.FilesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap+>");
+    h.filesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap>");
+    h.filesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap");
+    h.filesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30>");
+    h.filesyntaxHandling("InstallLog ::= <2019=01-02,13:19:30,BaiduMap>");
+    h.filesyntaxHandling("InstallLog ::= <2019-01-02,13.19:30,BaiduMap>");
+    h.filesyntaxHandling("InstallLog ::= <2019-01-02,13:19:30,BaiduMap+>");
   }
 
   @Test
   public void testhandleApp() {
     PersonalAppHandler h = new PersonalAppHandler();
 
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel\">");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel\"");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\">");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi+,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel\">");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi~+,ver03.32,\"The most popular car sharing App in China\",\"Travel\">");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.3~!2,\"The most popular car sharing App in China\",\"Travel\">");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.32,The most popular car sharing App in China\",\"Travel\">");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China,\"Travel\">");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App!+ in China\",\"Travel\">");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",Travel\">");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Travel>");
-    h.FilesyntaxHandling(
+    h.filesyntaxHandling(
         "App ::= <Didi,Didi,ver03.32,\"The most popular car sharing App in China\",\"Tra%$vel\">");
   }
 
@@ -104,24 +104,24 @@ public class TestAppHandler {
   public void testhandleUsername() {
     PersonalAppHandler h = new PersonalAppHandler();
 
-    h.FilesyntaxHandling("User ::= TimWong");
-    h.FilesyntaxHandling("User :: TimWong");
-    h.FilesyntaxHandling("User ::= Tim Wong");
-    h.FilesyntaxHandling("User ::= ");
-    h.FilesyntaxHandling("User ::= Tim!$%Wong");
+    h.filesyntaxHandling("User ::= TimWong");
+    h.filesyntaxHandling("User :: TimWong");
+    h.filesyntaxHandling("User ::= Tim Wong");
+    h.filesyntaxHandling("User ::= ");
+    h.filesyntaxHandling("User ::= Tim!$%Wong");
   }
 
   @Test
   public void testhandlePeriod() {
     PersonalAppHandler h = new PersonalAppHandler();
 
-    h.FilesyntaxHandling("Period ::= Day");
-    h.FilesyntaxHandling("Period ::= Hour");
-    h.FilesyntaxHandling("Period ::= Month");
-    h.FilesyntaxHandling("Period ::= Week");
-    h.FilesyntaxHandling("Period ::= Minute");
-    h.FilesyntaxHandling("Period ::= ");
-    h.FilesyntaxHandling("Period ::");
-    h.FilesyntaxHandling("Period ::= Da##y");
+    h.filesyntaxHandling("Period ::= Day");
+    h.filesyntaxHandling("Period ::= Hour");
+    h.filesyntaxHandling("Period ::= Month");
+    h.filesyntaxHandling("Period ::= Week");
+    h.filesyntaxHandling("Period ::= Minute");
+    h.filesyntaxHandling("Period ::= ");
+    h.filesyntaxHandling("Period ::");
+    h.filesyntaxHandling("Period ::= Da##y");
   }
 }

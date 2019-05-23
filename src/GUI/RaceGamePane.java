@@ -1,25 +1,41 @@
 package GUI;
 
-import java.io.*;
-import java.util.*;
+import APIs.CircularOrbitAPIs;
+import APIs.Difference;
+import appExceptions.FileSyntaxException;
+import appExceptions.RepeatedObjectsException;
+import applications.ApplicationFactory;
+import applications.GamePlan;
+import applications.RandomPlan;
+import applications.SortedPlan;
+import applications.TrackGame;
+import applications.TrackGameFactory;
+import circularOrbit.CircularOrbit;
+import errorHandling.TrackGameHandler;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import APIs.CircularOrbitAPIs;
-import APIs.Difference;
-import appExceptions.*;
-import applications.*;
-import circularOrbit.CircularOrbit;
-import errorHandling.*;
-import javafx.beans.property.*;
-import javafx.scene.control.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
-import javafx.stage.*;
-import physicalObject.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import physicalObject.Athlete;
+import physicalObject.AthleteFactory;
 
 /**
  * This is the class of pane of TrackGame. The circular orbit of TrackGame will be drawn on this
@@ -44,8 +60,8 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
   // exceptions fields
   TrackGameHandler trackHandler = new TrackGameHandler();
 
-  List<CircularOrbit<String, Athlete>> orbitlist = new ArrayList<>();// oribitlist that contains
-                                                                     // orbits.
+  List<CircularOrbit<String, Athlete>> orbitlist = new ArrayList<>();
+  // oribitlist that contains orbits.
   /*
    * Abstract function: 1.trackgame is used for generating the orbits of track game.
    * 2.arangeBut,setPlanBut,difBut,isLegalBut are buttons for users to use to operate the GUI.
@@ -65,9 +81,7 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
     // inner jobs
     ApplicationFactory trackfac = new TrackGameFactory();
     this.trackgame = (TrackGame) trackfac.getApplication();
-    String athletepstr = "([a-z[A-Z]]+),([0-9]+),([A-Z]{3}),([0-9]+),"
-        + "([0-9]{1,2}\\.[0-9]{2}),([0-9]+),([0-9]{1,3}\\.[0-9]{2})";
-    Pattern athletep = Pattern.compile(athletepstr);
+    
 
     // gui jobs
     specialuse.add(arangeBut, 0, 0);
@@ -104,7 +118,7 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
           this.trackgame = (TrackGame) trackfac.getApplication();
           file = filechooser.showOpenDialog(stage);
         } catch (FileSyntaxException e1) {
-          String ret = this.trackHandler.FilesyntaxHandling(e1.getMessage());
+          String ret = this.trackHandler.filesyntaxHandling(e1.getMessage());
           this.outputfield.setText(ret);
           this.trackgame = (TrackGame) trackfac.getApplication();
           file = filechooser.showOpenDialog(stage);
@@ -120,7 +134,9 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
       this.log.log(lr);
       this.logsaver.add(lr);
     });
-
+    String athletepstr = "([a-z[A-Z]]+),([0-9]+),([A-Z]{3}),([0-9]+),"
+        + "([0-9]{1,2}\\.[0-9]{2}),([0-9]+),([0-9]{1,3}\\.[0-9]{2})";
+    Pattern athletep = Pattern.compile(athletepstr);
     this.addObjBut.setOnAction(e -> {
       String str = this.inputfield.getText();
       Matcher matcher;
@@ -189,7 +205,7 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
         gp = new SortedPlan();
       }
       this.trackgame.arrangeGame(gp, tracknum);
-      this.FromPlanToOrbit();
+      this.fromPlanToOrbit();
       s.close();
       LogRecord lr =
           new LogRecord(Level.INFO, "Operation" + ",ArrangeGame," + inputtext + ",succeed");
@@ -205,7 +221,7 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
       int track2 = s.nextInt();
       // System.out.println(group1+" "+track1+" "+group2+" "+track2);
       this.trackgame.setGamePlan(group1, track1, group2, track2);
-      this.FromPlanToOrbit();
+      this.fromPlanToOrbit();
       s.close();
       LogRecord lr = new LogRecord(Level.INFO, "Operation" + ",SetPlan," + inputtext + ",succeed");
       this.log.log(lr);
@@ -270,14 +286,14 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
   /**
    * A function that transit the plan information read from file to the orbit system.
    */
-  private void FromPlanToOrbit() {
+  private void fromPlanToOrbit() {
     int size = this.orbitlist.size();
     for (int i = 0; i < size; i++) {
       this.orbitlist.remove(0);
     }
     List<List<Athlete>> gameplan = trackgame.getGamePlan();
     if ((gameplan.isEmpty() != false) && (gameplan.get(0).isEmpty() != false)) {
-
+      //
     }
     int i = 0;
     CircularOrbit<String, Athlete> cor = null;
@@ -297,7 +313,7 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
   }
 
   @Override
-  void Draw() {
+  void draw() {
     List<Double> radiuses = this.orbit.getRadius();
     List<HashSet<Athlete>> objs = this.orbit.getObjOnTracks();
     Map<Athlete, Double> thetas = this.orbit.getThetas();
@@ -310,7 +326,7 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
     for (int i = 0; i < radiussize; i++) {
       double radiusi = radiuses.get(i);
       s.append("Track " + (i + 1) + " : radius is " + radiusi + "\n");
-      DrawOneOrbit(radiusi, maxradius, objs.get(i), thetas, s);
+      drawOneOrbit(radiusi, maxradius, objs.get(i), thetas, s);
     }
     this.outputmes = s.toString();
     this.outputfield.setText(outputmes);
@@ -341,7 +357,7 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
    * @param thetas the degree of each object on the track.
    * @param s a StringBuffer to put the message of the track in.
    */
-  void DrawOneOrbit(double radius, double maxrad, HashSet<Athlete> aonetra,
+  void drawOneOrbit(double radius, double maxrad, HashSet<Athlete> aonetra,
       Map<Athlete, Double> thetas, StringBuffer s) {
     // calculate radius
     DoubleProperty radongui = new SimpleDoubleProperty();

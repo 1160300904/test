@@ -1,8 +1,8 @@
 package circularOrbit;
 
-import java.util.*;
-
-import track.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is a class represents a multiple tracks system. In this system, there is One or zero
@@ -46,7 +46,7 @@ public interface CircularOrbit<L, E> {
    * 
    * @return the total amount of tracks in this system.
    */
-  public int TrackAmount();
+  public int trackAmount();
 
   /**
    * add a track to the outside layer of the CircularOrbit.
@@ -158,14 +158,13 @@ public interface CircularOrbit<L, E> {
    *        and the minimum number of the current track in orbit.
    * @return the number of objects on that track.If tracknum is out of bound, then it returns -1.
    */
-  public int NumOnTrack(int tracknum);
+  public int numOnTrack(int tracknum);
 
   /**
    * Get the logical distance between two objects, not considering the connection between central
    * objects with physical objects. which is the minimum number of edges that connects two objects
    * on track. if these two objects aren't connected, then return value is INF.
    * 
-   * @param c the circular orbit system that contains these two objects.
    * @param e1 one of the object you want to calculate the distance with.
    * @param e2 another object you want to calculate the distance with.
    * @return the logical distance between two objects. if these two objects aren't connected, then

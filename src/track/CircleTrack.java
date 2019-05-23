@@ -1,6 +1,5 @@
 package track;
 
-import java.util.*;
 
 /**
  * This is an implementation of interface Track. It's a IMMUTABLE class.

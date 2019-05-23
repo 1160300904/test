@@ -1,21 +1,33 @@
 package GUI;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-
 import appExceptions.FileInfoConflictException;
 import appExceptions.FileSyntaxException;
-import applications.*;
-import centralObject.*;
+import applications.ApplicationFactory;
+import applications.AtomStructure;
+import applications.AtomStructureFactory;
+import centralObject.Nucleus;
+import centralObject.NucleusFactory;
 import errorHandling.AtomStructureHandler;
-import javafx.beans.property.*;
-import javafx.scene.control.*;
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
-import javafx.stage.*;
-import physicalObject.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import physicalObject.Electron;
+import physicalObject.ElectronFactory;
 
 /**
  * This is the class of pane of atom structure. The circular orbit of atom structure will be drawn
@@ -90,7 +102,7 @@ public class AtomStructurePane extends CircularOrbitPane<Nucleus, Electron> {
           this.atomstruc = (AtomStructure) atomfac.getApplication();
           file = filechooser.showOpenDialog(stage);
         } catch (FileSyntaxException e1) {
-          String ret = this.atomhandler.FilesyntaxHandling(e1.getMessage());
+          String ret = this.atomhandler.filesyntaxHandling(e1.getMessage());
           this.outputfield.setText(ret);
           this.atomstruc = (AtomStructure) atomfac.getApplication();
           file = filechooser.showOpenDialog(stage);
@@ -101,7 +113,7 @@ public class AtomStructurePane extends CircularOrbitPane<Nucleus, Electron> {
           file = filechooser.showOpenDialog(stage);
         }
       }
-      FromMapToOrbit();
+      fromMapToOrbit();
       LogRecord lr = new LogRecord(Level.INFO,
           "Operation" + ",Initialize," + "initialize from file" + ",succeed");
       this.log.log(lr);
@@ -190,7 +202,7 @@ public class AtomStructurePane extends CircularOrbitPane<Nucleus, Electron> {
   /**
    * A function that transit the atom structure information read from file to the orbit system.
    */
-  private void FromMapToOrbit() {
+  private void fromMapToOrbit() {
     Map<Integer, Integer> map = this.atomstruc.getEleOnTrack();
     int curtranum = 1;
     int numofeleonetra;
@@ -211,7 +223,7 @@ public class AtomStructurePane extends CircularOrbitPane<Nucleus, Electron> {
   }
 
   @Override
-  void Draw() {
+  void draw() {
 
     List<Double> radiuses = this.orbit.getRadius();
     List<HashSet<Electron>> objs = this.orbit.getObjOnTracks();
@@ -225,7 +237,7 @@ public class AtomStructurePane extends CircularOrbitPane<Nucleus, Electron> {
     for (int i = 0; i < radiussize; i++) {
       double radiusi = radiuses.get(i);
       s.append("Track " + (i + 1) + " : radius is " + radiusi + "\n");
-      DrawOneOrbit(radiusi, maxradius, objs.get(i), thetas, s);
+      drawOneOrbit(radiusi, maxradius, objs.get(i), thetas, s);
     }
     this.outputmes = s.toString();
     this.outputfield.setText(outputmes);
@@ -254,7 +266,7 @@ public class AtomStructurePane extends CircularOrbitPane<Nucleus, Electron> {
    * @param thetas the degree of each object on the track.
    * @param s a StringBuffer to put the message of the track in.
    */
-  void DrawOneOrbit(double radius, double maxrad, HashSet<Electron> aonetra,
+  void drawOneOrbit(double radius, double maxrad, HashSet<Electron> aonetra,
       Map<Electron, Double> thetas, StringBuffer s) {
     // calculate radius
     DoubleProperty radongui = new SimpleDoubleProperty();

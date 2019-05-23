@@ -16,40 +16,40 @@ public class TestAtomHandler {
   @Test
   public void testAtomHandler() {
     AtomStructureHandler h = new AtomStructureHandler();
-    assertNull(h.FilesyntaxHandling("A"));
+    assertNull(h.filesyntaxHandling("A"));
     String str = "The syntax of element numbers on track is \"int\\int\"";
-    assertEquals(str, h.FilesyntaxHandling("NumberOfElectron ::= 1/2;2/8;3/18.0;4/8;5/1"));
+    assertEquals(str, h.filesyntaxHandling("NumberOfElectron ::= 1/2;2/8;3/18.0;4/8;5/1"));
     str = "ElementName ::=";
-    h.FilesyntaxHandling(str);
-    h.FilesyntaxHandling(null);
+    h.filesyntaxHandling(str);
+    h.filesyntaxHandling(null);
     str = "ElementName ::= Rba";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "NumberOfTracks ::= 11.1";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "NumberOfTracks ::= -5";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "NumberOfElectron ::= 1/2,2/8,3/18,4/8,5/1";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "NumberOfElectron ::= 1/2;2/8;3/18.0;4/8;5/1";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "NumberOfElectron ::= one in the first orbit";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "NumberOfElectron ::= one in the first orbit";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "ElementName :: Rb";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "ElementName ::= b";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "ElementName ::= RD";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "ElementName ::= Rb";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "ElementName ::= R";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "NumberOfTracks :: 5";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
     str = "NumberOfTracks ::= 5";
-    h.FilesyntaxHandling(str);
+    h.filesyntaxHandling(str);
 
   }
 }

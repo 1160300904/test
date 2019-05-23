@@ -1,8 +1,8 @@
 package GUI;
 
-import centralObject.*;
-import circularOrbit.*;
-import physicalObject.*;
+import centralObject.Nucleus;
+import circularOrbit.CircularOrbit;
+import physicalObject.Electron;
 
 public class Memento {
 

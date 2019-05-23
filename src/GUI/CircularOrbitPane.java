@@ -1,22 +1,20 @@
 package GUI;
 
-import javafx.application.Application;
-import javafx.beans.property.*;
-import javafx.geometry.Insets;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
-import javafx.scene.text.*;
-import javafx.stage.Stage;
-import java.util.*;
+import APIs.CircularOrbitAPIs;
+import circularOrbit.CircularOrbit;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-
-import APIs.CircularOrbitAPIs;
-import circularOrbit.CircularOrbit;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * This is the circular orbit pane of the circular orbit GUI.
@@ -96,7 +94,7 @@ public class CircularOrbitPane<L, E> extends BorderPane {
     // add listener
     drawBut.setOnAction(e -> {
       this.circlepane.getChildren().clear();
-      this.Draw();
+      this.draw();
       LogRecord lr = new LogRecord(Level.INFO, "Operation" + ",Draw," + "draw orbit" + ",succeed");
       this.log.log(lr);
       this.logsaver.add(lr);
@@ -136,7 +134,7 @@ public class CircularOrbitPane<L, E> extends BorderPane {
   /**
    * the draw function to draw the orbit system on pane, which will be override by its subclasses.
    */
-  void Draw() {
+  void draw() {
     /*
      * Circle c1=new Circle(); c1.radiusProperty().bind(circlepane.heightProperty().divide(2));
      * c1.setFill(Color.GREEN); c1.centerXProperty().bind(circlepane.widthProperty().divide(2));

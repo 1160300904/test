@@ -26,11 +26,11 @@ public class CircularOrbitAPIs<L, E> {
    */
   public double getObjectDistributionEntropy(CircularOrbit<L, E> c) {
     assert c != null;
-    int trackamount = c.TrackAmount();
+    int trackamount = c.trackAmount();
     double[] objnum = new double[trackamount];
     double sum = 0.0;
     for (int i = 0; i < trackamount; i++) {
-      objnum[i] = c.NumOnTrack(i + 1);
+      objnum[i] = c.numOnTrack(i + 1);
       sum += objnum[i];
     }
     double resultsum = 0.0;
@@ -125,8 +125,8 @@ public class CircularOrbitAPIs<L, E> {
   public Difference getAtomDifference(CircularOrbit<Nucleus, Electron> c1,
       CircularOrbit<Nucleus, Electron> c2) {
     Difference d = Difference.getInstance();
-    int c1tracknum = c1.TrackAmount();
-    int c2tracknum = c2.TrackAmount();
+    int c1tracknum = c1.trackAmount();
+    int c2tracknum = c2.trackAmount();
     int maxtracknum = Math.max(c1tracknum, c2tracknum);
     int mintracknum = Math.min(c1tracknum, c2tracknum);
     d.setTrackNumDiff(c1tracknum - c2tracknum);
@@ -157,8 +157,8 @@ public class CircularOrbitAPIs<L, E> {
   public Difference getPersonalAppDifference(CircularOrbit<User, PersonalApp> c1,
       CircularOrbit<User, PersonalApp> c2) {
     Difference d = Difference.getInstance();
-    int c1tracknum = c1.TrackAmount();
-    int c2tracknum = c2.TrackAmount();
+    int c1tracknum = c1.trackAmount();
+    int c2tracknum = c2.trackAmount();
     if (c1tracknum != c2tracknum) {
       System.out.println("error: two orbits in a racegame have different track numbers.\n");
       return null;
@@ -250,8 +250,8 @@ public class CircularOrbitAPIs<L, E> {
   public Difference getRaceGameDifference(CircularOrbit<String, Athlete> c1,
       CircularOrbit<String, Athlete> c2) {
     Difference d = Difference.getInstance();
-    int c1tracknum = c1.TrackAmount();
-    int c2tracknum = c2.TrackAmount();
+    int c1tracknum = c1.trackAmount();
+    int c2tracknum = c2.trackAmount();
     if (c1tracknum != c2tracknum) {
       System.out.println("error: two orbits in a racegame have different track numbers.\n");
       return null;

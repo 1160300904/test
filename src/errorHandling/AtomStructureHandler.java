@@ -1,7 +1,8 @@
-
 package errorHandling;
 
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,10 +19,12 @@ public class AtomStructureHandler {
    * 
    * @param str the string which cause the error.
    */
-  public String FilesyntaxHandling(String str) {
-    if (str == null) return null;
-    int NumOfEleIndex = str.indexOf("NumberOfElectron");
-    if (NumOfEleIndex != -1) {
+  public String filesyntaxHandling(String str) {
+    if (str == null) {
+      return null;
+    }
+    int numOfEleIndex = str.indexOf("NumberOfElectron");
+    if (numOfEleIndex != -1) {
       return handleNumberOfElectron(str);
     }
 

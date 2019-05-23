@@ -4,8 +4,13 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
-import java.util.logging.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public class LogSaver {
 
@@ -40,7 +45,7 @@ public class LogSaver {
   }
 
   /**
-   * Get the instance in the singleton pattern
+   * Get the instance in the singleton pattern.
    * 
    * @return the instance in the singleton pattern
    */
@@ -59,7 +64,7 @@ public class LogSaver {
   }
 
   /**
-   * Add a LogRecord to the LogSaver
+   * Add a LogRecord to the LogSaver.
    * 
    * @param lr the LogRecord you want to add.
    */

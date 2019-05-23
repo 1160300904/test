@@ -36,7 +36,6 @@ class ConcreteNucleus implements Nucleus {
   /**
    * Constructor of a concrete Nucleus.
    * 
-   * @param Nucleus
    */
   ConcreteNucleus(String name) {
     if (name.length() == 1) {
@@ -61,7 +60,9 @@ class ConcreteNucleus implements Nucleus {
 
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof Nucleus)) return false;
+    if (!(o instanceof Nucleus)) {
+      return false;
+    }
     Nucleus o1 = (Nucleus) o;
     return o1.getName().equals(this.getName());
   }

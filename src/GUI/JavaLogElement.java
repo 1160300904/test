@@ -1,7 +1,6 @@
 package GUI;
 
 import java.time.LocalDateTime;
-import java.util.logging.*;
 
 public class JavaLogElement implements Comparable<JavaLogElement> {
   private LocalDateTime time = null;
@@ -34,7 +33,7 @@ public class JavaLogElement implements Comparable<JavaLogElement> {
   }
 
   /**
-   * get the time of this log element
+   * get the time of this log element.
    * 
    * @return the time of this log element
    */
@@ -43,7 +42,7 @@ public class JavaLogElement implements Comparable<JavaLogElement> {
   }
 
   /**
-   * get the type of this log element
+   * get the type of this log element.
    * 
    * @return the type of this log element
    */
@@ -52,7 +51,7 @@ public class JavaLogElement implements Comparable<JavaLogElement> {
   }
 
   /**
-   * get the detail of the type of this log element
+   * get the detail of the type of this log element.
    * 
    * @return the detail of the type of this log element
    */
@@ -61,7 +60,7 @@ public class JavaLogElement implements Comparable<JavaLogElement> {
   }
 
   /**
-   * Get the message of this log element
+   * Get the message of this log element.
    * 
    * @return the message of this log element
    */
@@ -70,7 +69,7 @@ public class JavaLogElement implements Comparable<JavaLogElement> {
   }
 
   /**
-   * Get the source class of this log element
+   * Get the source class of this log element.
    * 
    * @return Get the source class of this log element
    */
@@ -79,7 +78,7 @@ public class JavaLogElement implements Comparable<JavaLogElement> {
   }
 
   /**
-   * Get the source method of this log element
+   * Get the source method of this log element.
    * 
    * @return Get the source method of this log element
    */
@@ -88,7 +87,7 @@ public class JavaLogElement implements Comparable<JavaLogElement> {
   }
 
   /**
-   * Get the answer of this log element
+   * Get the answer of this log element.
    * 
    * @return Get the answer of this log element
    */

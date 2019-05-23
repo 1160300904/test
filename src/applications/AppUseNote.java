@@ -28,7 +28,7 @@ public class AppUseNote implements Comparable<AppUseNote> {
   }
 
   /**
-   * Creator of an AppUseNote
+   * Creator of an AppUseNote.
    * 
    * @param frequence the frequence used to creat an instance of AppUseNote.
    * @param time the time used to creat an instance of AppUseNote.

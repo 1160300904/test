@@ -86,7 +86,9 @@ class ConcreteAthlete implements Athlete {
 
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof Athlete)) return false;
+    if (!(o instanceof Athlete)) {
+      return false;
+    }
     Athlete o1 = (Athlete) o;
     return o1.getName().equals(this.getName()) && o1.getNumber() == this.number
         && o1.getNation().equals(this.nation) && o1.getAge() == this.age
