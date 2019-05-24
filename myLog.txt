@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2019-05-24T17:07:58</date>
-  <millis>1558688878814</millis>
+  <date>2019-05-24T17:10:50</date>
+  <millis>1558689050340</millis>
   <sequence>0</sequence>
   <level>INFO</level>
   <class>GUI.RaceGamePane</class>
@@ -12,13 +12,13 @@
   <message>Operation,Initialize,initialize from file,succeed</message>
 </record>
 <record>
-  <date>2019-05-24T17:08:27</date>
-  <millis>1558688907687</millis>
+  <date>2019-05-24T17:11:08</date>
+  <millis>1558689068763</millis>
   <sequence>1</sequence>
   <level>INFO</level>
   <class>GUI.RaceGamePane</class>
   <method>lambda$6</method>
   <thread>13</thread>
-  <message>Operation,ArrangeGame,sorted 5,succeed</message>
+  <message>Operation,ArrangeGame,sorted 7,succeed</message>
 </record>
 </log>
