@@ -15,7 +15,9 @@ import circularOrbit.CircularOrbit;
 import errorHandling.PersonalAppHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +40,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import physicalObject.PersonalApp;
 import physicalObject.PersonalAppFactory;
+import writefilestrategy.WriteAppBufferedWritter;
+import writefilestrategy.WriteAppChannel;
+import writefilestrategy.WriteAppFile;
+import writefilestrategy.WriteAppPrintWritter;
+import writefilestrategy.WriteTrackGameBufferedWritter;
+import writefilestrategy.WriteTrackGameChannel;
+import writefilestrategy.WriteTrackGameFile;
+import writefilestrategy.WriteTrackGamePrintWritter;
 
 /**
  * This is the class of pane of PersonalAppEcosystem. The circular orbit of app ecosystem will be
@@ -64,6 +74,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
   Button phyDisBut = new Button("PhysicalDis");
   Button isLegalBut = new Button("IsLegal");
   Button queryBut = new Button("QueryLog");
+  Button writeBut = new Button("WriteFile");
   FileChooser filechooser = new FileChooser();
   Stage stage = new Stage();
   // exception fields
@@ -102,6 +113,7 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
     specialuse.add(isLegalBut, 1, 0);
     specialuse.add(this.phyDisBut, 1, 1);
     specialuse.add(this.queryBut, 2, 1);
+    specialuse.add(this.writeBut, 2, 0);
     queryBut.setOnAction(e -> {
       String inputtext = this.inputfield.getText();
       String[] inputs = inputtext.split(",");
@@ -134,6 +146,20 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
       this.log.log(lr);
       this.logsaver.add(lr);
     });
+    //write file
+    this.writeBut.setOnAction(e->{
+      File file;
+      file = filechooser.showOpenDialog(stage);
+      String str = this.inputfield.getText();
+      WriteAppFile  writer=new WriteAppPrintWritter();
+      if(str.equals("buffered")) {
+        writer=new WriteAppBufferedWritter();
+      }else if(str.equals("channel")) {
+        writer=new WriteAppChannel();
+      }
+      long writetime=this.writeFile(writer, file);
+      this.outputfield.setText("Writting progress costs "+writetime+" ms");
+    });
     // initbut
     this.initBut.setOnAction(e -> {
       /*
@@ -143,13 +169,32 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
        * this.nametoappmap=this.pereco.getUseNoteToAppMap();
        */
 
+      String str = this.inputfield.getText();
       File file;
       file = filechooser.showOpenDialog(stage);
+      long readtime;
       while (true) {
         try {
-          this.pereco = (PersonalAppEcosystem) perappfac.getApplication();
+          /*
+           * this.pereco = (PersonalAppEcosystem) perappfac.getApplication();
           this.pereco.initFromFile(file);
           this.pereco.arrangeEcos();
+           */
+          this.pereco = (PersonalAppEcosystem) perappfac.getApplication();
+          if(str.equals("Scanner")||str.equals("scanner")) {
+            readtime=this.pereco.initFromFile(file);
+            this.pereco.arrangeEcos();
+          }else if(str.equals("Bufferedstream")||str.equals("bufferedstream")
+              ||str.equals("bufferstream")||str.equals("Bufferstream")) {
+            readtime=this.pereco.initFromFileBuffered(file);
+            this.pereco.arrangeEcos();
+          }else if(str.equals("bufferedreader")) {
+            readtime=this.pereco.initFromFileBufferedReader(file);
+            this.pereco.arrangeEcos();
+          }else {
+            readtime=this.pereco.initFromFile(file);
+            this.pereco.arrangeEcos();
+          }
           break;
         } catch (FileNotFoundException e1) {
           e1.printStackTrace();
@@ -170,9 +215,13 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
           this.outputfield.setText(e1.getMessage());
           this.pereco = (PersonalAppEcosystem) perappfac.getApplication();
           file = filechooser.showOpenDialog(stage);
+        } catch (IOException e1) {
+          // TODO Auto-generated catch block
+          e1.printStackTrace();
         }
       }
 
+      this.outputfield.setText("Reading cost is "+readtime+" ms");
       this.ecos = this.pereco.getEcos();
       this.timenode = this.pereco.getPeriodList();
       this.nametoappmap = this.pereco.getUseNoteToAppMap();
@@ -556,5 +605,10 @@ public class PersonalAppPane extends CircularOrbitPane<User, PersonalApp> {
        */
     }
 
+  }
+  
+  long writeFile(WriteAppFile writer,File file) {
+    return writer.writeFile(file, this.tracknum, 
+          Collections.unmodifiableList(this.orbitlist));
   }
 }

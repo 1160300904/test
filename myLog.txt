@@ -2,23 +2,13 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2019-05-24T17:10:50</date>
-  <millis>1558689050340</millis>
+  <date>2019-05-24T21:34:18</date>
+  <millis>1558704858671</millis>
   <sequence>0</sequence>
   <level>INFO</level>
-  <class>GUI.RaceGamePane</class>
-  <method>lambda$2</method>
+  <class>GUI.PersonalAppPane</class>
+  <method>lambda$3</method>
   <thread>13</thread>
   <message>Operation,Initialize,initialize from file,succeed</message>
-</record>
-<record>
-  <date>2019-05-24T17:11:08</date>
-  <millis>1558689068763</millis>
-  <sequence>1</sequence>
-  <level>INFO</level>
-  <class>GUI.RaceGamePane</class>
-  <method>lambda$6</method>
-  <thread>13</thread>
-  <message>Operation,ArrangeGame,sorted 7,succeed</message>
 </record>
 </log>

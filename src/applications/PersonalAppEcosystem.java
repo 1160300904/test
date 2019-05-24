@@ -7,8 +7,14 @@ import appExceptions.RepeatedObjectsException;
 import centralObject.User;
 import circularOrbit.CircularOrbit;
 import circularOrbit.ConcreteCircularOrbit;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -124,7 +130,7 @@ public class PersonalAppEcosystem extends ConcreteCircularOrbit<User, PersonalAp
    * @throws RepeatedObjectsException If there are duplicated names in the file you provides, throws
    *         RepeatedObjectsException.
    */
-  public boolean initFromFile(File file)
+  public long initFromFile(File file)
       throws FileNotFoundException, FileSyntaxException, RepeatedObjectsException {
     assert file != null;
     Scanner input = new Scanner(file);
@@ -159,6 +165,7 @@ public class PersonalAppEcosystem extends ConcreteCircularOrbit<User, PersonalAp
     Pattern perp = Pattern.compile(perpstr);
 
     Matcher matcher;
+    long begin=System.currentTimeMillis();
     while (input.hasNext()) {
       str = input.nextLine();
       if (str.matches(userpstr)) {
@@ -262,7 +269,7 @@ public class PersonalAppEcosystem extends ConcreteCircularOrbit<User, PersonalAp
 
     }
     input.close();
-    checkRep();
+    //checkRep();
     /*
      * debug System.out.println();System.out.println();System.out.println(); for(LogElement
      * le:this.inlog) { System.out.println(le.toString()); } System.out.println(); for(LogElement
@@ -274,7 +281,337 @@ public class PersonalAppEcosystem extends ConcreteCircularOrbit<User, PersonalAp
      * s1:set) { System.out.println(s+" "+s1); } } System.out.println();
      * System.out.println(this.splitby);
      */
-    return true;
+    return System.currentTimeMillis()-begin;
+  }
+  
+  /**
+   * initialize the app system from the file you provide. Then you can do other thing this
+   * application provides.
+   * 
+   * @param file The file you offer to initiate.
+   * @return true if the progress succeed.
+   * @throws FileSyntaxException If there are syntax errors in the file you provide, throws
+   *         FileSyntaxException.
+   * @throws RepeatedObjectsException If there are duplicated names in the file you provides, throws
+   *         RepeatedObjectsException.
+   * @throws IOException 
+   */
+  public long initFromFileBuffered(File file)
+      throws FileSyntaxException, RepeatedObjectsException, IOException {
+    assert file != null;
+    BufferedReader input=new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    int linenum = 1;
+    // User ::= TimWong
+    String userpstr = "User\\s*::=\\s*([[a-z][A-Z][0-9]]+)\\s*";
+    Pattern userp = Pattern.compile(userpstr);
+    // App ::= <Wechat,Tencent,13.2,"The most popular social networking App in
+    // China","Social network">
+    String apppstr =
+        "App\\s*::=\\s*<([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]-_\\.]+),"
+            + "(\"[[a-z][A-Z][0-9]\\s]+\"),(\"[[a-z][A-Z][0-9]\\s]+\")>\\s*";
+    Pattern appp = Pattern.compile(apppstr);
+    // InstallLog ::= <2019-01-01,13:00:00,Wechat>
+    String intpstr = "InstallLog\\s*::=\\s*<\\s*([0-9]{4})-([0-9]{2})-([0-9]{2}),"
+        + "([0-9]{2}):([0-9]{2}):([0-9]{2}),([[a-z][A-Z][0-9]]+)>";
+    Pattern intp = Pattern.compile(intpstr);
+    // UninstallLog ::= <2019-01-02,12:00:28,Eleme>
+    String unintpstr = "UninstallLog\\s*::=\\s*<\\s*([0-9]{4})-([0-9]{2})-([0-9]{2}),"
+        + "([0-9]{2}):([0-9]{2}):([0-9]{2}),([[a-z][A-Z][0-9]]+)>";
+    Pattern unintp = Pattern.compile(unintpstr);
+    // UsageLog ::= <2019-01-01,15:00:00,Wechat,2>
+    String usepstr = "UsageLog\\s*::=\\s*<\\s*([0-9]{4})-([0-9]{2})-([0-9]{2}),"
+        + "([0-9]{2}):([0-9]{2}):([0-9]{2}),([[a-z][A-Z][0-9]]+),([0-9]+)>";
+    Pattern usep = Pattern.compile(usepstr);
+    // Relation ::= <Wechat,QQ>
+    String relpstr = "Relation\\s*::=\\s*<([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]]+)>\\s*";
+    Pattern relp = Pattern.compile(relpstr);
+    // Period ::= Day
+    String perpstr = "Period\\s*::=\\s*(Hour|Day|Week|Month)\\s*";
+    Pattern perp = Pattern.compile(perpstr);
+
+    Matcher matcher;
+    long begin=System.currentTimeMillis();
+    String str = input.readLine();
+    while (str!=null) {
+      if (str.matches(userpstr)) {
+        matcher = userp.matcher(str);
+        matcher.find();
+        this.username = matcher.group(1);
+        // System.out.println("username is:"+this.username);
+      } else if (str.matches(apppstr)) {
+        matcher = appp.matcher(str);
+        matcher.find();
+        String appname = matcher.group(1);
+        String company = matcher.group(2);
+        String version = matcher.group(3);
+        String function = matcher.group(4);
+        String businessarea = matcher.group(5);
+        PersonalApp pa =
+            PersonalAppFactory.getInstance(appname, company, version, function, businessarea);
+        if (this.apps.put(appname, pa) != null) {
+          String mes = "duplicated apps in the file: " + appname;
+          LogRecord lr = new LogRecord(Level.INFO,
+              "Exception" + ",RepeatedObjectsException," + mes + ",try again");
+          this.log.log(lr);
+          this.logsaver.add(lr);
+          throw new RepeatedObjectsException(mes);
+        }
+
+        /*
+         * System.out.println(matcher.group(1)+"    "+matcher.group(2)+"   "+matcher. group(3));
+         * System.out.println(matcher.group(4)); System.out.println(matcher.group(5));
+         */
+      } else if (str.matches(intpstr)) {
+        matcher = intp.matcher(str);
+        matcher.find();
+        int year = Integer.valueOf(matcher.group(1));
+        int month = Integer.valueOf(matcher.group(2));
+        int day = Integer.valueOf(matcher.group(3));
+        int hour = Integer.valueOf(matcher.group(4));
+        int minute = Integer.valueOf(matcher.group(5));
+        int second = Integer.valueOf(matcher.group(6));
+        String appname = matcher.group(7);
+        MyDate d = new MyDate(year, month, day, hour, minute, second);
+        LogElement le = new LogElement(appname, d);
+        this.inlog.add(le);
+        // System.out.println("install: "+le.toString());
+      } else if (str.matches(unintpstr)) {
+        matcher = unintp.matcher(str);
+        matcher.find();
+        int year = Integer.valueOf(matcher.group(1));
+        int month = Integer.valueOf(matcher.group(2));
+        int day = Integer.valueOf(matcher.group(3));
+        int hour = Integer.valueOf(matcher.group(4));
+        int minute = Integer.valueOf(matcher.group(5));
+        int second = Integer.valueOf(matcher.group(6));
+        String appname = matcher.group(7);
+        MyDate d = new MyDate(year, month, day, hour, minute, second);
+        LogElement le = new LogElement(appname, d);
+        this.uninlog.add(le);
+        // System.out.println("uninstall: "+le.toString());
+      } else if (str.matches(usepstr)) {
+        matcher = usep.matcher(str);
+        matcher.find();
+        int year = Integer.valueOf(matcher.group(1));
+        int month = Integer.valueOf(matcher.group(2));
+        int day = Integer.valueOf(matcher.group(3));
+        int hour = Integer.valueOf(matcher.group(4));
+        int minute = Integer.valueOf(matcher.group(5));
+        int second = Integer.valueOf(matcher.group(6));
+        String appname = matcher.group(7);
+        int duration = Integer.valueOf(matcher.group(8));
+
+        MyDate d = new MyDate(year, month, day, hour, minute, second);
+        LogElement le = new LogElement(appname, d);
+        this.uselog.add(le);
+        this.durations.put(le, duration);
+        // System.out.println("use: "+le.toString()+" for "+duration+" minutes.");
+      } else if (str.matches(relpstr)) {
+        matcher = relp.matcher(str);
+        matcher.find();
+        String s1 = matcher.group(1);
+        String s2 = matcher.group(2);
+        this.addRelation(s1, s2);
+        this.addRelation(s2, s1);
+
+      } else if (str.matches(perpstr)) {
+        matcher = perp.matcher(str);
+        matcher.find();
+        this.splitby = matcher.group(1);
+      } else if (str.matches("")) {
+        //
+      } else {
+        System.out.println(linenum + ": " + str);
+        String mes = "FileSyntaxException: " + str;
+        LogRecord lr =
+            new LogRecord(Level.INFO, "Exception" + ",FileSyntaxException," + mes + ",try again");
+        this.log.log(lr);
+        this.logsaver.add(lr);
+        throw new FileSyntaxException(str);
+      }
+      // System.out.println(linenum+": "+str);
+      linenum++;
+      str=input.readLine();
+    }
+    input.close();
+    //checkRep();
+    /*
+     * debug System.out.println();System.out.println();System.out.println(); for(LogElement
+     * le:this.inlog) { System.out.println(le.toString()); } System.out.println(); for(LogElement
+     * le:this.uninlog) { System.out.println(le.toString()); } System.out.println(); for(LogElement
+     * le:this.uselog) { System.out.println(le.toString()); } System.out.println();
+     * for(Entry<LogElement,Integer> e:this.durations.entrySet()) {
+     * System.out.println(e.getKey().getName()+" for "+e.getValue()); } System.out.println();
+     * for(String s:this.relations.keySet()) { HashSet<String> set=this.relations.get(s); for(String
+     * s1:set) { System.out.println(s+" "+s1); } } System.out.println();
+     * System.out.println(this.splitby);
+     */
+    return System.currentTimeMillis()-begin;
+  }
+  
+  /**
+   * initialize the app system from the file you provide. Then you can do other thing this
+   * application provides.
+   * 
+   * @param file The file you offer to initiate.
+   * @return true if the progress succeed.
+   * @throws FileSyntaxException If there are syntax errors in the file you provide, throws
+   *         FileSyntaxException.
+   * @throws RepeatedObjectsException If there are duplicated names in the file you provides, throws
+   *         RepeatedObjectsException.
+   * @throws IOException If an I/O error occurs.
+   */
+  public long initFromFileBufferedReader(File file)
+      throws FileSyntaxException, RepeatedObjectsException, IOException {
+    assert file != null;
+    BufferedReader input=new BufferedReader(new FileReader(file));
+    int linenum = 1;
+    // User ::= TimWong
+    String userpstr = "User\\s*::=\\s*([[a-z][A-Z][0-9]]+)\\s*";
+    Pattern userp = Pattern.compile(userpstr);
+    // App ::= <Wechat,Tencent,13.2,"The most popular social networking App in
+    // China","Social network">
+    String apppstr =
+        "App\\s*::=\\s*<([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]-_\\.]+),"
+            + "(\"[[a-z][A-Z][0-9]\\s]+\"),(\"[[a-z][A-Z][0-9]\\s]+\")>\\s*";
+    Pattern appp = Pattern.compile(apppstr);
+    // InstallLog ::= <2019-01-01,13:00:00,Wechat>
+    String intpstr = "InstallLog\\s*::=\\s*<\\s*([0-9]{4})-([0-9]{2})-([0-9]{2}),"
+        + "([0-9]{2}):([0-9]{2}):([0-9]{2}),([[a-z][A-Z][0-9]]+)>";
+    Pattern intp = Pattern.compile(intpstr);
+    // UninstallLog ::= <2019-01-02,12:00:28,Eleme>
+    String unintpstr = "UninstallLog\\s*::=\\s*<\\s*([0-9]{4})-([0-9]{2})-([0-9]{2}),"
+        + "([0-9]{2}):([0-9]{2}):([0-9]{2}),([[a-z][A-Z][0-9]]+)>";
+    Pattern unintp = Pattern.compile(unintpstr);
+    // UsageLog ::= <2019-01-01,15:00:00,Wechat,2>
+    String usepstr = "UsageLog\\s*::=\\s*<\\s*([0-9]{4})-([0-9]{2})-([0-9]{2}),"
+        + "([0-9]{2}):([0-9]{2}):([0-9]{2}),([[a-z][A-Z][0-9]]+),([0-9]+)>";
+    Pattern usep = Pattern.compile(usepstr);
+    // Relation ::= <Wechat,QQ>
+    String relpstr = "Relation\\s*::=\\s*<([[a-z][A-Z][0-9]]+),([[a-z][A-Z][0-9]]+)>\\s*";
+    Pattern relp = Pattern.compile(relpstr);
+    // Period ::= Day
+    String perpstr = "Period\\s*::=\\s*(Hour|Day|Week|Month)\\s*";
+    Pattern perp = Pattern.compile(perpstr);
+
+    Matcher matcher;
+    long begin=System.currentTimeMillis();
+    String str = input.readLine();
+    while (str!=null) {
+      if (str.matches(userpstr)) {
+        matcher = userp.matcher(str);
+        matcher.find();
+        this.username = matcher.group(1);
+        // System.out.println("username is:"+this.username);
+      } else if (str.matches(apppstr)) {
+        matcher = appp.matcher(str);
+        matcher.find();
+        String appname = matcher.group(1);
+        String company = matcher.group(2);
+        String version = matcher.group(3);
+        String function = matcher.group(4);
+        String businessarea = matcher.group(5);
+        PersonalApp pa =
+            PersonalAppFactory.getInstance(appname, company, version, function, businessarea);
+        if (this.apps.put(appname, pa) != null) {
+          String mes = "duplicated apps in the file: " + appname;
+          LogRecord lr = new LogRecord(Level.INFO,
+              "Exception" + ",RepeatedObjectsException," + mes + ",try again");
+          this.log.log(lr);
+          this.logsaver.add(lr);
+          throw new RepeatedObjectsException(mes);
+        }
+
+        /*
+         * System.out.println(matcher.group(1)+"    "+matcher.group(2)+"   "+matcher. group(3));
+         * System.out.println(matcher.group(4)); System.out.println(matcher.group(5));
+         */
+      } else if (str.matches(intpstr)) {
+        matcher = intp.matcher(str);
+        matcher.find();
+        int year = Integer.valueOf(matcher.group(1));
+        int month = Integer.valueOf(matcher.group(2));
+        int day = Integer.valueOf(matcher.group(3));
+        int hour = Integer.valueOf(matcher.group(4));
+        int minute = Integer.valueOf(matcher.group(5));
+        int second = Integer.valueOf(matcher.group(6));
+        String appname = matcher.group(7);
+        MyDate d = new MyDate(year, month, day, hour, minute, second);
+        LogElement le = new LogElement(appname, d);
+        this.inlog.add(le);
+        // System.out.println("install: "+le.toString());
+      } else if (str.matches(unintpstr)) {
+        matcher = unintp.matcher(str);
+        matcher.find();
+        int year = Integer.valueOf(matcher.group(1));
+        int month = Integer.valueOf(matcher.group(2));
+        int day = Integer.valueOf(matcher.group(3));
+        int hour = Integer.valueOf(matcher.group(4));
+        int minute = Integer.valueOf(matcher.group(5));
+        int second = Integer.valueOf(matcher.group(6));
+        String appname = matcher.group(7);
+        MyDate d = new MyDate(year, month, day, hour, minute, second);
+        LogElement le = new LogElement(appname, d);
+        this.uninlog.add(le);
+        // System.out.println("uninstall: "+le.toString());
+      } else if (str.matches(usepstr)) {
+        matcher = usep.matcher(str);
+        matcher.find();
+        int year = Integer.valueOf(matcher.group(1));
+        int month = Integer.valueOf(matcher.group(2));
+        int day = Integer.valueOf(matcher.group(3));
+        int hour = Integer.valueOf(matcher.group(4));
+        int minute = Integer.valueOf(matcher.group(5));
+        int second = Integer.valueOf(matcher.group(6));
+        String appname = matcher.group(7);
+        int duration = Integer.valueOf(matcher.group(8));
+
+        MyDate d = new MyDate(year, month, day, hour, minute, second);
+        LogElement le = new LogElement(appname, d);
+        this.uselog.add(le);
+        this.durations.put(le, duration);
+        // System.out.println("use: "+le.toString()+" for "+duration+" minutes.");
+      } else if (str.matches(relpstr)) {
+        matcher = relp.matcher(str);
+        matcher.find();
+        String s1 = matcher.group(1);
+        String s2 = matcher.group(2);
+        this.addRelation(s1, s2);
+        this.addRelation(s2, s1);
+
+      } else if (str.matches(perpstr)) {
+        matcher = perp.matcher(str);
+        matcher.find();
+        this.splitby = matcher.group(1);
+      } else if (str.matches("")) {
+        //
+      } else {
+        System.out.println(linenum + ": " + str);
+        String mes = "FileSyntaxException: " + str;
+        LogRecord lr =
+            new LogRecord(Level.INFO, "Exception" + ",FileSyntaxException," + mes + ",try again");
+        this.log.log(lr);
+        this.logsaver.add(lr);
+        throw new FileSyntaxException(str);
+      }
+      // System.out.println(linenum+": "+str);
+      linenum++;
+      str = input.readLine();
+    }
+    input.close();
+    //checkRep();
+    /*
+     * debug System.out.println();System.out.println();System.out.println(); for(LogElement
+     * le:this.inlog) { System.out.println(le.toString()); } System.out.println(); for(LogElement
+     * le:this.uninlog) { System.out.println(le.toString()); } System.out.println(); for(LogElement
+     * le:this.uselog) { System.out.println(le.toString()); } System.out.println();
+     * for(Entry<LogElement,Integer> e:this.durations.entrySet()) {
+     * System.out.println(e.getKey().getName()+" for "+e.getValue()); } System.out.println();
+     * for(String s:this.relations.keySet()) { HashSet<String> set=this.relations.get(s); for(String
+     * s1:set) { System.out.println(s+" "+s1); } } System.out.println();
+     * System.out.println(this.splitby);
+     */
+    return System.currentTimeMillis()-begin;
   }
 
   /**
@@ -490,7 +827,7 @@ public class PersonalAppEcosystem extends ConcreteCircularOrbit<User, PersonalAp
   public String getUserName() {
     return this.username;
   }
-
+  
   /**
    * clear up the phone and add a new element with the information of the phone into the list of
    * ecos.

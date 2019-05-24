@@ -5,8 +5,13 @@ import appExceptions.FileSyntaxException;
 import appExceptions.RepeatedObjectsException;
 import circularOrbit.CircularOrbit;
 import circularOrbit.ConcreteCircularOrbit;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -87,7 +92,7 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
    * @throws FileSyntaxException if the syntax error of the file is avoided.
    * @throws RepeatedObjectsException if the athlete repeated in the file you provide.
    */
-  public boolean initFromFile(File file)
+  public long initFromFile(File file)
       throws FileNotFoundException, FileSyntaxException, RepeatedObjectsException {
     assert file != null;
     Scanner input = new Scanner(file);
@@ -102,6 +107,7 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
         + "([0-9]{1,2}\\.[0-9]{2})>\\s*";
     Pattern athletep = Pattern.compile(athletepstr);
     Matcher matcher;
+    long begin=System.currentTimeMillis();
     while (input.hasNext()) {
       str = input.nextLine();
       if (str.matches("Game\\s*::=\\s*(100|200|400)")) {
@@ -153,7 +159,169 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
     }
     input.close();
 
-    return true;
+    return System.currentTimeMillis()-begin;
+  }
+  
+  /**
+   * get the information from the file you provide.
+   * 
+   * @param file the file you provide to initialize. It cannot be null.
+   * @return if the process succeed or not.
+   * @throws FileSyntaxException if the syntax error of the file is avoided.
+   * @throws RepeatedObjectsException if the athlete repeated in the file you provide.
+   * @throws IOException If an I/O error occurs.
+   */
+  public long initFromFileBuffered(File file)
+      throws FileSyntaxException, RepeatedObjectsException, IOException {
+    assert file != null;
+    BufferedReader input=new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    int linenum = 1;
+    // Game ::= 100
+    Pattern gamep = Pattern.compile("Game\\s*::=\\s*(100|200|400)\\s*");
+    // NumOfTracks ::= 5
+    Pattern trackp = Pattern.compile("NumOfTracks\\s*::=\\s*([4-9]|10)\\s*");
+    // Athlete ::= <Cliton,8,USA,21,9.92>
+    String athletepstr = "Athlete\\s*::=\\s*<([a-z[A-Z]]+),([0-9]+),([A-Z]{3}),([0-9]+),"
+        + "([0-9]{1,2}\\.[0-9]{2})>\\s*";
+    Pattern athletep = Pattern.compile(athletepstr);
+    Matcher matcher;
+    long begin=System.currentTimeMillis();
+    String str = input.readLine();
+    while (str!=null) {
+      
+      if (str.matches("Game\\s*::=\\s*(100|200|400)")) {
+        matcher = gamep.matcher(str);
+        matcher.find();
+        this.game = Integer.valueOf(matcher.group(1));
+        // System.out.println("game is:"+this.game);
+      } else if (str.matches("NumOfTracks\\s*::=\\s*([4-9]|10)\\s*")) {
+        matcher = trackp.matcher(str);
+        matcher.find();
+        this.numoftracks = Integer.valueOf(matcher.group(1));
+        // System.out.println("track num is:"+this.numoftracks);
+      } else if (str.matches(athletepstr)) {
+        matcher = athletep.matcher(str);
+        matcher.find();
+        String name = matcher.group(1);
+        int num = Integer.valueOf(matcher.group(2));
+        String nation = matcher.group(3);
+        int age = Integer.valueOf(matcher.group(4));
+        double bestscore = Double.valueOf(matcher.group(5));
+        // System.out.println(name+" "+num+" "+nation+" "+age+" "+bestscore);
+        Athlete a = AthleteFactory.getInstance(name, num, nation, age, bestscore);
+        // it can be done with a set in the field, then a loop check will not be
+        // necessary
+        // also, two athlete are the same means, all info of athlete are same.(some
+        // might have
+        // the same name.
+        if (this.nameset.contains(name)) {
+          String mes = "Repeated athlete: " + a.getName();
+          LogRecord lr = new LogRecord(Level.INFO,
+              "Exception" + ",RepeatedObjectsException," + mes + ",try again");
+          this.log.log(lr);
+          this.logsaver.add(lr);
+          throw new RepeatedObjectsException(mes);
+        }
+        this.athletes.add(a);this.nameset.add(name);
+      } else if (str.matches("")) {
+          //
+      } else {
+        System.out.println(linenum + ": " + str);
+        String mes = "FileSyntaxException: " + str;
+        LogRecord lr =
+            new LogRecord(Level.INFO, "Exception" + ",FileSyntaxException," + mes + ",try again");
+        this.log.log(lr);
+        this.logsaver.add(lr);
+        throw new FileSyntaxException(str);
+      }
+      linenum++;
+      str=input.readLine();
+    }
+    input.close();
+   
+
+    return System.currentTimeMillis()-begin;
+  }
+  
+  /**
+   * get the information from the file you provide.
+   * 
+   * @param file the file you provide to initialize. It cannot be null.
+   * @return if the process succeed or not.
+   * @throws FileSyntaxException if the syntax error of the file is avoided.
+   * @throws RepeatedObjectsException if the athlete repeated in the file you provide.
+   * @throws IOException If an I/O error occurs.
+   */
+  public long initFromFileBufferedReader(File file)
+      throws FileSyntaxException, RepeatedObjectsException, IOException {
+    assert file != null;
+    BufferedReader input=new BufferedReader(new FileReader(file));
+    int linenum = 1;
+    // Game ::= 100
+    Pattern gamep = Pattern.compile("Game\\s*::=\\s*(100|200|400)\\s*");
+    // NumOfTracks ::= 5
+    Pattern trackp = Pattern.compile("NumOfTracks\\s*::=\\s*([4-9]|10)\\s*");
+    // Athlete ::= <Cliton,8,USA,21,9.92>
+    String athletepstr = "Athlete\\s*::=\\s*<([a-z[A-Z]]+),([0-9]+),([A-Z]{3}),([0-9]+),"
+        + "([0-9]{1,2}\\.[0-9]{2})>\\s*";
+    Pattern athletep = Pattern.compile(athletepstr);
+    Matcher matcher;
+    long begin=System.currentTimeMillis();
+    String str = input.readLine();
+    while (str!=null) {
+      
+      if (str.matches("Game\\s*::=\\s*(100|200|400)")) {
+        matcher = gamep.matcher(str);
+        matcher.find();
+        this.game = Integer.valueOf(matcher.group(1));
+        // System.out.println("game is:"+this.game);
+      } else if (str.matches("NumOfTracks\\s*::=\\s*([4-9]|10)\\s*")) {
+        matcher = trackp.matcher(str);
+        matcher.find();
+        this.numoftracks = Integer.valueOf(matcher.group(1));
+        // System.out.println("track num is:"+this.numoftracks);
+      } else if (str.matches(athletepstr)) {
+        matcher = athletep.matcher(str);
+        matcher.find();
+        String name = matcher.group(1);
+        int num = Integer.valueOf(matcher.group(2));
+        String nation = matcher.group(3);
+        int age = Integer.valueOf(matcher.group(4));
+        double bestscore = Double.valueOf(matcher.group(5));
+        // System.out.println(name+" "+num+" "+nation+" "+age+" "+bestscore);
+        Athlete a = AthleteFactory.getInstance(name, num, nation, age, bestscore);
+        // it can be done with a set in the field, then a loop check will not be
+        // necessary
+        // also, two athlete are the same means, all info of athlete are same.(some
+        // might have
+        // the same name.
+        if (this.nameset.contains(name)) {
+          String mes = "Repeated athlete: " + a.getName();
+          LogRecord lr = new LogRecord(Level.INFO,
+              "Exception" + ",RepeatedObjectsException," + mes + ",try again");
+          this.log.log(lr);
+          this.logsaver.add(lr);
+          throw new RepeatedObjectsException(mes);
+        }
+        this.athletes.add(a);this.nameset.add(name);
+      } else if (str.matches("")) {
+          //
+      } else {
+        System.out.println(linenum + ": " + str);
+        String mes = "FileSyntaxException: " + str;
+        LogRecord lr =
+            new LogRecord(Level.INFO, "Exception" + ",FileSyntaxException," + mes + ",try again");
+        this.log.log(lr);
+        this.logsaver.add(lr);
+        throw new FileSyntaxException(str);
+      }
+      linenum++;
+      str=input.readLine();
+    }
+    input.close();
+   
+
+    return System.currentTimeMillis()-begin;
   }
 
   /**

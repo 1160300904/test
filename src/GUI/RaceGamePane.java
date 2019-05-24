@@ -14,8 +14,10 @@ import circularOrbit.CircularOrbit;
 import errorHandling.TrackGameHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import physicalObject.Athlete;
 import physicalObject.AthleteFactory;
+import writefilestrategy.WriteTrackGameBufferedWritter;
+import writefilestrategy.WriteTrackGameChannel;
+import writefilestrategy.WriteTrackGameFile;
+import writefilestrategy.WriteTrackGamePrintWritter;
 
 /**
  * This is the class of pane of TrackGame. The circular orbit of TrackGame will be drawn on this
@@ -110,17 +116,35 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
     this.writeBut.setOnAction(e->{
       File file;
       file = filechooser.showOpenDialog(stage);
-      this.writeFile(file);
+      String str = this.inputfield.getText();
+      WriteTrackGameFile  writer=new WriteTrackGamePrintWritter();
+      if(str.equals("buffered")) {
+        writer=new WriteTrackGameBufferedWritter();
+      }else if(str.equals("channel")) {
+        writer=new WriteTrackGameChannel();
+      }
+      long writetime=this.writeFile(writer, file);
+      this.outputfield.setText("Writting progress costs "+writetime+" ms");
     });
     // initbut
     this.initBut.setOnAction(e -> {
-
+      String str = this.inputfield.getText();
       File file;
       file = filechooser.showOpenDialog(stage);
+      long readtime;
       while (true) {
         try {
           this.trackgame = (TrackGame) trackfac.getApplication();
-          this.trackgame.initFromFile(file);
+          if(str.equals("Scanner")||str.equals("scanner")) {
+            readtime=this.trackgame.initFromFile(file);
+          }else if(str.equals("Bufferedstream")||str.equals("bufferedstream")
+              ||str.equals("bufferstream")||str.equals("Bufferstream")) {
+            readtime=this.trackgame.initFromFileBuffered(file);
+          }else if(str.equals("bufferedreader")) {
+            readtime=this.trackgame.initFromFileBufferedReader(file);
+          }else {
+            readtime=this.trackgame.initFromFile(file);
+          }
           break;
         } catch (FileNotFoundException e1) {
           e1.printStackTrace();
@@ -136,8 +160,12 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
           this.outputfield.setText(e1.getMessage());
           this.trackgame = (TrackGame) trackfac.getApplication();
           file = filechooser.showOpenDialog(stage);
+        } catch (IOException e1) {
+          // TODO Auto-generated catch block
+          e1.printStackTrace();
         }
       }
+      this.outputfield.setText("Reading cost is "+readtime+" ms");
       LogRecord lr = new LogRecord(Level.INFO,
           "Operation" + ",Initialize," + "initialize from file" + ",succeed");
       this.log.log(lr);
@@ -206,14 +234,13 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
       String inputtext = this.inputfield.getText();
       Scanner s = new Scanner(inputtext);
       String category = s.next();
-      int tracknum = s.nextInt();
       GamePlan gp = null;
       if (category.equals("random")) {
         gp = new RandomPlan();
       } else if (category.equals("sorted")) {
         gp = new SortedPlan();
       }
-      this.trackgame.arrangeGame(gp, tracknum);
+      this.trackgame.arrangeGame(gp, this.trackgame.getNumOfTrack());
       this.fromPlanToOrbit();
       s.close();
       LogRecord lr =
@@ -442,33 +469,8 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
      */
   }
   
-  boolean writeFile(File file) {
-    PrintWriter output;
-    try {
-       output=new PrintWriter(file); 
-       output.println("CircularOrbitName::=TrackGame");
-       int numOfTrack=this.trackgame.getNumOfTrack();
-       output.println("NumOfTracks::="+numOfTrack);
-       int orbitSize=this.orbitlist.size();
-       output.println("TotalOribitAmount::="+orbitSize);
-       for(int i=1;i<=orbitSize;i++) {
-         output.println("OribitNumber::="+i);
-         CircularOrbit<String,Athlete> orbit=this.orbitlist.get(i-1);
-         List<HashSet<Athlete>> objects=orbit.getObjOnTracks();
-         for(int j=0;j<objects.size();j++) {
-           output.println("TrackIndex::="+(j+1));
-           HashSet<Athlete> athsOneTrack=objects.get(j);
-           for(Athlete a:athsOneTrack) {
-             output.println(a.toString());
-           }
-         }
-       }
-       output.close();
-       
-    } catch (FileNotFoundException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    return true;
+  long writeFile(WriteTrackGameFile writer,File file) {
+    return writer.writeFile(file, this.trackgame.getNumOfTrack(), 
+      Collections.unmodifiableList(this.orbitlist));
   }
 }
