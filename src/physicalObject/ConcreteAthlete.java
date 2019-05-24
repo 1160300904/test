@@ -97,7 +97,14 @@ class ConcreteAthlete implements Athlete {
 
   @Override
   public String toString() {
-    return this.getName();
+    //Athlete ::= <Tommy,3,JAM,19,10.11> 
+    StringBuffer b=new StringBuffer("Athlete ::= <");
+    b.append(this.name+",");
+    b.append(this.number+",");
+    b.append(this.nation+",");
+    b.append(this.age+",");
+    b.append(this.bestscore+">");
+    return b.toString();
   }
 
 }

@@ -2,13 +2,23 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2019-05-21T21:40:07</date>
-  <millis>1558446007575</millis>
+  <date>2019-05-24T15:52:34</date>
+  <millis>1558684354228</millis>
   <sequence>0</sequence>
   <level>INFO</level>
-  <class>applications.PersonalAppEcosystem</class>
-  <method>useSimu</method>
+  <class>GUI.RaceGamePane</class>
+  <method>lambda$2</method>
   <thread>13</thread>
-  <message>Exception,FileInfoConflictException,App1487 is not installed in the phone currently when use it.,try again</message>
+  <message>Operation,Initialize,initialize from file,succeed</message>
+</record>
+<record>
+  <date>2019-05-24T15:52:39</date>
+  <millis>1558684359511</millis>
+  <sequence>1</sequence>
+  <level>INFO</level>
+  <class>GUI.RaceGamePane</class>
+  <method>lambda$6</method>
+  <thread>13</thread>
+  <message>Operation,ArrangeGame,sorted 10,succeed</message>
 </record>
 </log>

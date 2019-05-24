@@ -103,7 +103,14 @@ class ConcretePersonalApp implements PersonalApp {
 
   @Override
   public String toString() {
-    return this.getName();
+    StringBuffer b=new StringBuffer("App ::= <");
+    //App ::= <App 名称,公司,版本,"功能描述","业务领域">， 
+    b.append(this.name+",");
+    b.append(this.company+",");
+    b.append(this.version+",\"");
+    b.append(this.functionality+"\",\"");
+    b.append(this.businessarea+"\">");
+    return b.toString();
   }
 
   @Override

@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -29,6 +30,7 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
   private List<List<Athlete>> gameplan;
   private int game;
   private int numoftracks;
+  private Set<String> nameset=new HashSet<>();
   // log
   private LogSaver logsaver = LogSaver.getInstance();
   private Logger log = logsaver.getLogger();
@@ -69,7 +71,13 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
     }
 
   }
-
+  /**
+   * Get number of track.
+   * @return    number of track.
+   */
+  public int getNumOfTrack() {
+    return this.numoftracks;
+  }
   /**
    * get the information from the file you provide.
    * 
@@ -121,7 +129,7 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
         // also, two athlete are the same means, all info of athlete are same.(some
         // might have
         // the same name.
-        if (this.athletes.contains(a)) {
+        if (this.nameset.contains(name)) {
           String mes = "Repeated athlete: " + a.getName();
           LogRecord lr = new LogRecord(Level.INFO,
               "Exception" + ",RepeatedObjectsException," + mes + ",try again");
@@ -129,7 +137,7 @@ public class TrackGame extends ConcreteCircularOrbit<String, Athlete> {
           this.logsaver.add(lr);
           throw new RepeatedObjectsException(mes);
         }
-        this.athletes.add(a);
+        this.athletes.add(a);this.nameset.add(name);
       } else if (str.matches("")) {
           //
       } else {

@@ -14,6 +14,7 @@ import circularOrbit.CircularOrbit;
 import errorHandling.TrackGameHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -55,6 +56,7 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
   Button difBut = new Button("Difference");
   Button isLegalBut = new Button("IsLegal");
   Button queryBut = new Button("QueryLog");
+  Button writeBut = new Button("WriteFile");
   FileChooser filechooser = new FileChooser();
   Stage stage = new Stage();
   // exceptions fields
@@ -89,6 +91,7 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
     specialuse.add(difBut, 1, 0);
     specialuse.add(isLegalBut, 1, 1);
     specialuse.add(this.queryBut, 2, 1);
+    specialuse.add(this.writeBut, 2, 0);
     queryBut.setOnAction(e -> {
       String inputtext = this.inputfield.getText();
       String[] inputs = inputtext.split(",");
@@ -102,6 +105,12 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
       LogRecord lr = new LogRecord(Level.INFO, "Operation" + ",QueryLog," + inputtext + ",succeed");
       this.log.log(lr);
       this.logsaver.add(lr);
+    });
+    //write file
+    this.writeBut.setOnAction(e->{
+      File file;
+      file = filechooser.showOpenDialog(stage);
+      this.writeFile(file);
     });
     // initbut
     this.initBut.setOnAction(e -> {
@@ -432,5 +441,34 @@ public class RaceGamePane extends CircularOrbitPane<String, Athlete> {
      * circlepane.getChildren().addAll(c1,l); }
      */
   }
-
+  
+  boolean writeFile(File file) {
+    PrintWriter output;
+    try {
+       output=new PrintWriter(file); 
+       output.println("CircularOrbitName::=TrackGame");
+       int numOfTrack=this.trackgame.getNumOfTrack();
+       output.println("NumOfTracks::="+numOfTrack);
+       int orbitSize=this.orbitlist.size();
+       output.println("TotalOribitAmount::="+orbitSize);
+       for(int i=1;i<=orbitSize;i++) {
+         output.println("OribitNumber::="+i);
+         CircularOrbit<String,Athlete> orbit=this.orbitlist.get(i-1);
+         List<HashSet<Athlete>> objects=orbit.getObjOnTracks();
+         for(int j=0;j<objects.size();j++) {
+           output.println("TrackIndex::="+(j+1));
+           HashSet<Athlete> athsOneTrack=objects.get(j);
+           for(Athlete a:athsOneTrack) {
+             output.println(a.toString());
+           }
+         }
+       }
+       output.close();
+       
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return true;
+  }
 }
