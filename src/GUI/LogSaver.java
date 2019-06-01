@@ -26,7 +26,7 @@ public class LogSaver {
    * 
    */
   /*
-   * Rep Invariant: 1.loglist������Ԫ�ز���Ϊnull
+   * Rep Invariant: 1.loglist不能为null
    */
   void checkRep() {
     for (JavaLogElement e : loglist) {
