@@ -2,43 +2,113 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2019-05-31T21:17:00</date>
-  <millis>1559308620826</millis>
+  <date>2019-06-01T15:40:52</date>
+  <millis>1559374852570</millis>
   <sequence>0</sequence>
   <level>INFO</level>
-  <class>GUI.RaceGamePane</class>
-  <method>lambda$2</method>
+  <class>GUI.PersonalAppPane</class>
+  <method>lambda$3</method>
   <thread>16</thread>
   <message>Operation,Initialize,initialize from file,succeed</message>
 </record>
 <record>
-  <date>2019-05-31T21:17:07</date>
-  <millis>1559308627411</millis>
+  <date>2019-06-01T15:42:35</date>
+  <millis>1559374955070</millis>
   <sequence>1</sequence>
   <level>INFO</level>
-  <class>GUI.RaceGamePane</class>
+  <class>GUI.PersonalAppPane</class>
   <method>lambda$6</method>
-  <thread>16</thread>
-  <message>Operation,ArrangeGame,sorted,succeed</message>
-</record>
-<record>
-  <date>2019-05-31T21:17:09</date>
-  <millis>1559308629819</millis>
-  <sequence>2</sequence>
-  <level>INFO</level>
-  <class>GUI.RaceGamePane</class>
-  <method>lambda$5</method>
   <thread>16</thread>
   <message>Operation,SetOrbit,1,succeed</message>
 </record>
 <record>
-  <date>2019-05-31T21:17:10</date>
-  <millis>1559308630489</millis>
-  <sequence>3</sequence>
+  <date>2019-06-01T15:42:35</date>
+  <millis>1559374955968</millis>
+  <sequence>2</sequence>
   <level>INFO</level>
   <class>GUI.CircularOrbitPane</class>
   <method>lambda$0</method>
   <thread>16</thread>
   <message>Operation,Draw,draw orbit,succeed</message>
+</record>
+<record>
+  <date>2019-06-01T15:42:39</date>
+  <millis>1559374959884</millis>
+  <sequence>3</sequence>
+  <level>INFO</level>
+  <class>GUI.PersonalAppPane</class>
+  <method>lambda$6</method>
+  <thread>16</thread>
+  <message>Operation,SetOrbit,122,succeed</message>
+</record>
+<record>
+  <date>2019-06-01T15:42:41</date>
+  <millis>1559374961381</millis>
+  <sequence>4</sequence>
+  <level>INFO</level>
+  <class>GUI.CircularOrbitPane</class>
+  <method>lambda$0</method>
+  <thread>16</thread>
+  <message>Operation,Draw,draw orbit,succeed</message>
+</record>
+<record>
+  <date>2019-06-01T15:42:45</date>
+  <millis>1559374965206</millis>
+  <sequence>5</sequence>
+  <level>INFO</level>
+  <class>GUI.PersonalAppPane</class>
+  <method>lambda$6</method>
+  <thread>16</thread>
+  <message>Operation,SetOrbit,3,succeed</message>
+</record>
+<record>
+  <date>2019-06-01T15:42:46</date>
+  <millis>1559374966117</millis>
+  <sequence>6</sequence>
+  <level>INFO</level>
+  <class>GUI.CircularOrbitPane</class>
+  <method>lambda$0</method>
+  <thread>16</thread>
+  <message>Operation,Draw,draw orbit,succeed</message>
+</record>
+<record>
+  <date>2019-06-01T15:42:50</date>
+  <millis>1559374970107</millis>
+  <sequence>7</sequence>
+  <level>INFO</level>
+  <class>GUI.PersonalAppPane</class>
+  <method>lambda$6</method>
+  <thread>16</thread>
+  <message>Operation,SetOrbit,34,succeed</message>
+</record>
+<record>
+  <date>2019-06-01T15:42:51</date>
+  <millis>1559374971192</millis>
+  <sequence>8</sequence>
+  <level>INFO</level>
+  <class>GUI.CircularOrbitPane</class>
+  <method>lambda$0</method>
+  <thread>16</thread>
+  <message>Operation,Draw,draw orbit,succeed</message>
+</record>
+<record>
+  <date>2019-06-01T15:42:57</date>
+  <millis>1559374977217</millis>
+  <sequence>9</sequence>
+  <level>INFO</level>
+  <class>GUI.PersonalAppPane</class>
+  <method>lambda$8</method>
+  <thread>16</thread>
+  <message>Operation,GetDifference,34 1,succeed</message>
+</record>
+<record>
+  <date>2019-06-01T15:43:10</date>
+  <millis>1559374990272</millis>
+  <sequence>10</sequence>
+  <level>INFO</level>
+  <class>GUI.PersonalAppPane</class>
+  <method>lambda$8</method>
+  <thread>16</thread>
+  <message>Operation,GetDifference,34 144,succeed</message>
 </record>
 </log>

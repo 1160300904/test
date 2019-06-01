@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -744,6 +745,12 @@ public class PersonalAppEcosystem extends ConcreteCircularOrbit<User, PersonalAp
     int min;
     HashMap<String, Integer> fremap = new HashMap<>();
     HashMap<String, Integer> timemap = new HashMap<>();
+   
+    /*replaced by HashMapPool
+     *  HashMapPool pool=new HashMapPool();
+    HashMap<String, Integer> fremap = pool.getHashMap();
+    HashMap<String, Integer> timemap = pool.getHashMap();
+     */
     // 1.find the min time for the total log.
     min = getMinMyDate(inindex, uninindex, useindex, insize, uninsize, usesize);
     MyDate periodend;
@@ -773,6 +780,11 @@ public class PersonalAppEcosystem extends ConcreteCircularOrbit<User, PersonalAp
         this.clear(fremap, periodend, timemap);
         fremap = new HashMap<>();
         timemap = new HashMap<>();
+        /*
+         * 
+        pool.returnHashMap(fremap);fremap=pool.getHashMap();
+        pool.returnHashMap(timemap);timemap=pool.getHashMap();
+         */
         this.timenode.add(periodend);
         periodend = MyDate.addBaseOnSplit(splitby, periodend);
       }
@@ -1047,4 +1059,61 @@ public class PersonalAppEcosystem extends ConcreteCircularOrbit<User, PersonalAp
 
 }
 
+class HashMapPool{
+  private List<Boolean> valid=new ArrayList<>();
+  private List<HashMap<String,Integer>> pool=new ArrayList<>();
+  private int size=0;
+  //true means available
+  HashMap<String,Integer> getHashMap(){
+    for(int i=0;i<size;i++) {
+      if(valid.get(i)==true) {
+        valid.set(i, false);
+        return pool.get(i);
+      }
+    }
+    HashMap<String,Integer> newmap=new HashMap<>();
+    valid.add(false);pool.add(newmap);size++;
+    return newmap;
+  }
+  
+  boolean returnHashMap(HashMap<String,Integer> retmap) {
+    for(int i=0;i<size;i++) {
+      if(pool.get(i)==retmap) {
+        retmap.clear();
+        valid.set(i, false);
+        return true;
+      }
+    }
+    System.out.print("error in returning the hashmap");
+    return false;
+  }
+}
 
+class HashMapPoolAdvanced{
+  private List<HashMap<String,Integer>> busypool=new LinkedList<>();
+  private List<HashMap<String,Integer>> freepool=new LinkedList<>();
+  private int busysize=0;
+
+  HashMap<String,Integer> getHashMap(){
+    if(freepool.size()!=0) {
+      HashMap<String,Integer> retmap=freepool.remove(0);
+      return retmap;
+    }
+    HashMap<String,Integer> newmap=new HashMap<>();
+    busypool.add(newmap);busysize++;
+    return newmap;
+  }
+  
+  boolean returnHashMap(HashMap<String,Integer> retmap) {
+    for(int i=0;i<busysize;i++) {
+      if(busypool.get(i)==retmap) {
+        busypool.remove(i);busysize--;
+        retmap.clear();
+        freepool.add(retmap);
+        return true;
+      }
+    }
+    System.out.print("error in returning the hashmap");
+    return false;
+  }
+}
