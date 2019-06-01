@@ -4,7 +4,7 @@ package physicalObject;
  * This is an implementation of Interface Electron.
  *
  */
-class ConcreteElectron implements Electron {
+class ConcreteElectron implements Electron,Cloneable {
 
   private int track;
 
@@ -36,4 +36,10 @@ class ConcreteElectron implements Electron {
   public int getTrackItOn() {
     return this.track;
   }
+  
+  @Override
+  public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+  }
+ 
 }

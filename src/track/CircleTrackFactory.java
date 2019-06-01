@@ -1,5 +1,7 @@
 package track;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -10,12 +12,18 @@ import java.util.Set;
  */
 public class CircleTrackFactory implements TrackFactory {
 
+  private static Map<Double,Track> flyweights=new HashMap<>();
+  
   @Override
   public Track getInstance(double radius) {
     if (radius <= 0) {
       return null;
     }
-    return new CircleTrack(radius);
+    Track t=flyweights.get(radius);
+    if(t!=null) return t;
+    t = new CircleTrack(radius);
+    flyweights.put(radius, t);
+    return t;
   }
 
   /*

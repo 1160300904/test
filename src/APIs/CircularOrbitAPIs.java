@@ -249,6 +249,7 @@ public class CircularOrbitAPIs<L, E> {
    */
   public Difference getRaceGameDifference(CircularOrbit<String, Athlete> c1,
       CircularOrbit<String, Athlete> c2) {
+    
     Difference d = Difference.getInstance();
     int c1tracknum = c1.trackAmount();
     int c2tracknum = c2.trackAmount();

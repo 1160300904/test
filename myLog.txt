@@ -2,43 +2,43 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2019-05-25T13:48:51</date>
-  <millis>1558763331743</millis>
+  <date>2019-05-31T21:17:00</date>
+  <millis>1559308620826</millis>
   <sequence>0</sequence>
   <level>INFO</level>
   <class>GUI.RaceGamePane</class>
   <method>lambda$2</method>
-  <thread>13</thread>
+  <thread>16</thread>
   <message>Operation,Initialize,initialize from file,succeed</message>
 </record>
 <record>
-  <date>2019-05-25T13:48:57</date>
-  <millis>1558763337599</millis>
+  <date>2019-05-31T21:17:07</date>
+  <millis>1559308627411</millis>
   <sequence>1</sequence>
   <level>INFO</level>
   <class>GUI.RaceGamePane</class>
   <method>lambda$6</method>
-  <thread>13</thread>
+  <thread>16</thread>
   <message>Operation,ArrangeGame,sorted,succeed</message>
 </record>
 <record>
-  <date>2019-05-25T13:49:00</date>
-  <millis>1558763340864</millis>
+  <date>2019-05-31T21:17:09</date>
+  <millis>1559308629819</millis>
   <sequence>2</sequence>
   <level>INFO</level>
   <class>GUI.RaceGamePane</class>
   <method>lambda$5</method>
-  <thread>13</thread>
+  <thread>16</thread>
   <message>Operation,SetOrbit,1,succeed</message>
 </record>
 <record>
-  <date>2019-05-25T13:49:01</date>
-  <millis>1558763341845</millis>
+  <date>2019-05-31T21:17:10</date>
+  <millis>1559308630489</millis>
   <sequence>3</sequence>
   <level>INFO</level>
   <class>GUI.CircularOrbitPane</class>
   <method>lambda$0</method>
-  <thread>13</thread>
+  <thread>16</thread>
   <message>Operation,Draw,draw orbit,succeed</message>
 </record>
 </log>

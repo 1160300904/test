@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="GBK" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-05-26T18:12:39</date>
+  <millis>1558865559141</millis>
+  <sequence>0</sequence>
+  <level>INFO</level>
+  <class>GUI.RaceGamePane</class>
+  <method>lambda$2</method>
+  <thread>13</thread>
+  <message>Operation,Initialize,initialize from file,succeed</message>
+</record>
+<record>
+  <date>2019-05-26T18:12:52</date>
+  <millis>1558865572953</millis>
+  <sequence>1</sequence>
+  <level>INFO</level>
+  <class>GUI.RaceGamePane</class>
+  <method>lambda$6</method>
+  <thread>13</thread>
+  <message>Operation,ArrangeGame,sorted,succeed</message>
+</record>
+<record>
+  <date>2019-05-26T18:12:54</date>
+  <millis>1558865574907</millis>
+  <sequence>2</sequence>
+  <level>INFO</level>
+  <class>GUI.RaceGamePane</class>
+  <method>lambda$5</method>
+  <thread>13</thread>
+  <message>Operation,SetOrbit,1,succeed</message>
+</record>
+<record>
+  <date>2019-05-26T18:12:55</date>
+  <millis>1558865575655</millis>
+  <sequence>3</sequence>
+  <level>INFO</level>
+  <class>GUI.CircularOrbitPane</class>
+  <method>lambda$0</method>
+  <thread>13</thread>
+  <message>Operation,Draw,draw orbit,succeed</message>
+</record>
+<record>
+  <date>2019-05-26T18:12:58</date>
+  <millis>1558865578167</millis>
+  <sequence>4</sequence>
+  <level>INFO</level>
+  <class>GUI.RaceGamePane</class>
+  <method>lambda$5</method>
+  <thread>13</thread>
+  <message>Operation,SetOrbit,2,succeed</message>
+</record>
+<record>
+  <date>2019-05-26T18:12:58</date>
+  <millis>1558865578873</millis>
+  <sequence>5</sequence>
+  <level>INFO</level>
+  <class>GUI.CircularOrbitPane</class>
+  <method>lambda$0</method>
+  <thread>13</thread>
+  <message>Operation,Draw,draw orbit,succeed</message>
+</record>
+<record>
+  <date>2019-05-26T18:13:01</date>
+  <millis>1558865581638</millis>
+  <sequence>6</sequence>
+  <level>INFO</level>
+  <class>GUI.RaceGamePane</class>
+  <method>lambda$5</method>
+  <thread>13</thread>
+  <message>Operation,SetOrbit,23,succeed</message>
+</record>
+<record>
+  <date>2019-05-26T18:13:02</date>
+  <millis>1558865582321</millis>
+  <sequence>7</sequence>
+  <level>INFO</level>
+  <class>GUI.CircularOrbitPane</class>
+  <method>lambda$0</method>
+  <thread>13</thread>
+  <message>Operation,Draw,draw orbit,succeed</message>
+</record>
+</log>

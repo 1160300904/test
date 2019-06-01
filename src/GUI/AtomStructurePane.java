@@ -38,7 +38,7 @@ import physicalObject.ElectronFactory;
  */
 public class AtomStructurePane extends CircularOrbitPane<Nucleus, Electron> {
 
-  // Trackgame instance
+  // AtomStructure instance
   AtomStructure atomstruc = null;
 
   // special

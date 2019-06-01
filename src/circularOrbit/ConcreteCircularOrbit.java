@@ -140,9 +140,9 @@ public class ConcreteCircularOrbit<L, E> implements CircularOrbit<L, E> {
     }
     int trackn = tracknum - 1;
     this.tracks.remove(trackn);
-    this.obj.remove(trackn);
+    HashSet<E> objontrack = this.obj.remove(trackn);
     this.radiuses.remove(trackn);
-    HashSet<E> objontrack = obj.get(trackn);
+    // = obj.get(trackn);
     for (E object : objontrack) {
       this.thetas.remove(object);
     }
